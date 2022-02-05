@@ -1,0 +1,20 @@
+/* google fonts links */
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+:root {
+
+/* ### Headings, Call-to-actions, Header Navigation */
+/* - Weights: 400, 700 */
+
+    --ff-primary: 'Raleway', sans-serif;
+
+/* ### Body */
+/* - Weights: 400 */
+
+--ff-body-secondary: 'Open Sans', sans-serif; /* [Open Sans] */
+
+
+
+}

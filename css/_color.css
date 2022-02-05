@@ -1,0 +1,20 @@
+
+:root {
+
+/* ### Primary */
+
+    --primary-color-Very-Dark-Blue: hsl(243, 85%, 18%);
+    --primary-color-Desaturated-Blue: hsl(238, 22%, 44%);
+
+/* ### Accent */
+
+    --accent-color-Bright-Blue: hsl(224, 93%, 58%);
+    --accent-color-Moderate-Cyan: hsl(170, 45%, 43%);
+
+/* ### Neutral */
+
+    --neutral-color-Light-Grayish-Blue: hsl(240, 75%, 98%);
+    --neutral-color-Light-Gray: hsl(0, 0%, 75%);
+    --neutral-color-White: #fff;
+
+}

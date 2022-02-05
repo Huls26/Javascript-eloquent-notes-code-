@@ -1,0 +1,10 @@
+{
+    "name": "Jules",
+    "isProgrammer": true,
+    "age": 26,
+    "skills": ["playing drums & guitar", "html", "css", "javascript"],
+    "address": {
+        "city": "Parian, Calamba city",
+        "province": "San Vicente, sta. elena cam. norte "
+    }
+}
