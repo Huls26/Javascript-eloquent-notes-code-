@@ -26,6 +26,7 @@ repeat(5, (i) => {
 })
 console.log(label)
 console.log(sumTotals)
+// study callback
 
 function greaterThan(n) {
     return m => m > n;
@@ -33,8 +34,10 @@ function greaterThan(n) {
 
 // console.log(greaterThan(10)(9))
 
+
 // Higher-Order Functions
 
+// remember this you may use this 
 function greaterThan(n) {
     return m => m > n;
 }
@@ -45,6 +48,36 @@ console.log(greaterThan10)
 // → true
 // recode this ^ code
     
+function sampledata(greet) {
+    return name => console.log(greet, name)
+}
+
+let sampledataGreet = sampledata("hello")
+sampledataGreet("Jules")
+
+function noisy(f) {
+    return (...args) => {
+        console.log(`calling with`, args)
+        let result = f(...args)
+        console.log(`called with`, args, `, returned`, result)
+    }
+}
+
+noisy(Math.min)(3, 2, 1);
+// → calling with [3, 2, 1]
+// → called with [3, 2, 1] , returned 1
+
+function unless(test, then) {
+    if (test) then();
+}
+
+repeat(3, i => {
+  unless(i % 2 === 0, () => console.log(`${i} is even`))
+})
+
+// → 0 is even
+// → 2 is even
+
 // study about callback it will help you man
 // callback https://www.youtube.com/watch?v=cNjIUSDnb9k
 // study again properties and methods
