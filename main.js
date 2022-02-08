@@ -303,7 +303,7 @@ console.log(employee)
 
 // study also Growing Function
 
-// eloquent javascript page 100
+// eloquent javascript page 101
 // eloquent sandbox (https://eloquentjavascript.net/code)
 
 // “There are two ways of constructing a software design: One way is
