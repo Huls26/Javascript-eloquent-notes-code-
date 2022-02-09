@@ -196,8 +196,38 @@ function getLetter(nth, func) {
 
 getLetter(2, x => 'hello world')
 
-// https://www.youtube.com/watch?v=T0eroJltRsM
+function foo(param, param2) {
+    console.log(param(), param2)
+}
 
+// foo(f)
+// console.log(f())
+
+setTimeout(() => foo(() => "hello", "world"), 3000)
+
+function transform(array, func) {
+    array.forEach((element, index) => {
+        array[index] = func(element)
+    });
+}
+
+const bets = [1, 5, 20]
+transform(bets, x => x * 2)
+console.log(bets) // [2, 10, 40]
+
+function nameSomething() {
+    console.log("print something")
+}
+
+let call = nameSomething()
+
+console.log(call)
+
+// do the filtering arrays
+
+// https://www.youtube.com/watch?v=T0eroJltRsM
+// https://www.youtube.com/watch?v=rkPUX5xXsC0&t=4011s
+ 
 // study about callback it will help you man
 // callback https://www.youtube.com/watch?v=cNjIUSDnb9k
 // study again properties and methods
