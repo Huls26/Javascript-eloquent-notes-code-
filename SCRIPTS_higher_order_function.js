@@ -1122,4 +1122,80 @@ module.exports = SCRIPTS;
 if (typeof global != "undefined" && !global.SCRIPTS)
 global.SCRIPTS = SCRIPTS;
 
+// filter
+function filter(array, test) {
+  let filtered = [];
+  for (let element of array) {
+    if (test(element)) {
+      filtered.push(element)
+    }
+  }
 
+  return filtered
+}
+
+console.log(filter(SCRIPTS, object => object.living))
+
+function filterTtb(array, test) {
+  let filtered = array.filter(element => element.living)
+
+  return filtered
+}
+
+console.log(filterTtb(SCRIPTS))
+
+// map
+function map(array, command) {
+  let name = [];
+
+  for (let element of array) {
+    name.push(command(element))
+  }
+
+  return name
+}
+
+let rtl = SCRIPTS.filter(element => element.direction === "rtl")
+console.log(map(SCRIPTS, element => element.name))
+console.log(SCRIPTS.map(element => element.name))
+
+console.log(map(rtl, element => element.name))
+
+function reduce(array, action, start = array[0]) {
+  let current = start;
+  for (let element of array) {
+    current = action(current, element)
+  }
+
+  return current
+}
+
+console.log(reduce([1, 2, 3, 4], (a, b) => a + b, 0))
+console.log([1, 2, 3, 4].reduce((current, element) => current + element))
+
+function mostCharacter(array) {
+  let highest = null;
+
+  let highchar = array.reduce((high, current) => {
+    let length = current.ranges.length
+
+    if (high > length) {
+      high = high;
+    } else {
+      high = length;
+      highest = current
+    }
+
+    return high
+  }, 0)
+
+  let filtered = array.filter(element => element.ranges.length === highchar)
+
+  console.log(filtered)
+  
+  return highest
+}
+
+console.log(mostCharacter(SCRIPTS))
+
+// session 3

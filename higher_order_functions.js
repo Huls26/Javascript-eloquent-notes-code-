@@ -203,7 +203,7 @@ function foo(param, param2) {
 // foo(f)
 // console.log(f())
 
-setTimeout(() => foo(() => "hello", "world"), 3000)
+// setTimeout(() => foo(() => "hello", "world"), 3000)
 
 function transform(array, func) {
     array.forEach((element, index) => {
@@ -225,6 +225,7 @@ console.log(call)
 
 // do the filtering arrays
 
+
 // https://www.youtube.com/watch?v=T0eroJltRsM
 // https://www.youtube.com/watch?v=rkPUX5xXsC0&t=4011s
  
@@ -233,5 +234,6 @@ console.log(call)
 // study again properties and methods
 // https://www.youtube.com/watch?v=rkPUX5xXsC0
 
-// session 3 
-// push to git hub
+// session 3
+// push to github
+// javascrip eloquent page 103
