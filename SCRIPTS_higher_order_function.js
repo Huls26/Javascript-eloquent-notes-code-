@@ -1173,29 +1173,34 @@ function reduce(array, action, start = array[0]) {
 console.log(reduce([1, 2, 3, 4], (a, b) => a + b, 0))
 console.log([1, 2, 3, 4].reduce((current, element) => current + element))
 
+function characterCount(character) {
+  let totalChar = character.ranges.reduce((total, [from, to]) => {
+    total = total + (to - from)
+
+    return total
+  }, 0)
+
+  return totalChar
+}
+
 function mostCharacter(array) {
   let highest = null;
 
   let highchar = array.reduce((high, current) => {
-    let length = current.ranges.length
-
-    if (high > length) {
-      high = high;
-    } else {
-      high = length;
-      highest = current
-    }
+    console.log(high)
+    if (characterCount(current) > characterCount(high)) {
+      high = current;
+    } 
 
     return high
-  }, 0)
+  })
 
-  let filtered = array.filter(element => element.ranges.length === highchar)
-
-  console.log(filtered)
-  
-  return highest
+  return highchar
 }
 
 console.log(mostCharacter(SCRIPTS))
+// console.log(characterCount(SCRIPTS[0]))
 
-// session 3
+
+
+// session 2

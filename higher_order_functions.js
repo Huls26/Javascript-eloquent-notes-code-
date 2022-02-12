@@ -223,8 +223,19 @@ let call = nameSomething()
 
 console.log(call)
 
-// do the filtering arrays
+// reduce
 
+function reduce(array, func, start = 0) {
+    let combine = start;
+    for (let element of array) {
+        combine = func(combine, element)
+    }
+
+    return combine
+}
+
+console.log(reduce([1, 2, 3], (a, b) => a + b));
+// → 10
 
 // https://www.youtube.com/watch?v=T0eroJltRsM
 // https://www.youtube.com/watch?v=rkPUX5xXsC0&t=4011s
@@ -234,6 +245,6 @@ console.log(call)
 // study again properties and methods
 // https://www.youtube.com/watch?v=rkPUX5xXsC0
 
-// session 3
+// session 2
 // push to github
 // javascrip eloquent page 103
