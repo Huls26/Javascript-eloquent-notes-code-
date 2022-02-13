@@ -1173,34 +1173,74 @@ function reduce(array, action, start = array[0]) {
 console.log(reduce([1, 2, 3, 4], (a, b) => a + b, 0))
 console.log([1, 2, 3, 4].reduce((current, element) => current + element))
 
-function characterCount(character) {
-  let totalChar = character.ranges.reduce((total, [from, to]) => {
-    total = total + (to - from)
 
-    return total
+function characterCount(scripts) {
+  let value = scripts.ranges.reduce((total, [from, to]) => {
+    return total + (to - from)
   }, 0)
 
-  return totalChar
+  return value
 }
 
-function mostCharacter(array) {
-  let highest = null;
+function highestChar(array) {
+  let total = null
+  let highestCount = array.reduce((previous, current) => {
+   
+    if (characterCount(current) > characterCount(previous)) {
+      previous = current
+      total = characterCount(current)
+    }
 
-  let highchar = array.reduce((high, current) => {
-    console.log(high)
-    if (characterCount(current) > characterCount(high)) {
-      high = current;
-    } 
+    return previous
+  })
+  
+  return {
+    highCharacted: highestCount, 
+    values: total}
+}
 
-    return high
+// console.log(characterCount(SCRIPTS[41]))
+console.log(highestChar(SCRIPTS))
+let object = highestChar(SCRIPTS)
+// console.log(object)
+for (let element in object) {
+  console.log(object[element])
+}
+
+// filter scripts
+
+function filtering(array, test) {
+  let empty = [];
+  
+  array.forEach(element => {
+    if (test(element)) {
+      console.log(test(element))
+      empty.push(element)
+    }
   })
 
-  return highchar
+  return empty
 }
 
-console.log(mostCharacter(SCRIPTS))
-// console.log(characterCount(SCRIPTS[0]))
+console.log(filtering(SCRIPTS, elements => {
+ return elements.living
+}))
+
+function reduceAdd(array, func, start) {
+
+  for (let element in array) {
+    if (!start) {
+      start = func(array[element], array[element+1])
+    }
+    else {
+      start = func(start, element)
+    }
+  }
+
+  return start
+}
+
+console.log(reduceAdd([1, 2, 3, 4], (a, b) => a + b))
 
 
-
-// session 2
+// session 3

@@ -244,7 +244,16 @@ console.log(reduce([1, 2, 3], (a, b) => a + b));
 // callback https://www.youtube.com/watch?v=cNjIUSDnb9k
 // study again properties and methods
 // https://www.youtube.com/watch?v=rkPUX5xXsC0
+// review higher order function: 
+    // methods like:
+        // forEach()
+        // filter()
+        // map()
+        // indexOf()
+        // lastIndexOF()
+        // reduce()
 
-// session 2
+
+// session 3
 // push to github
 // javascrip eloquent page 103
