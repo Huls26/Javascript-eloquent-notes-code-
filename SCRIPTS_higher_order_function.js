@@ -1226,11 +1226,14 @@ console.log(filtering(SCRIPTS, elements => {
  return elements.living
 }))
 
+// reduce my approach
+
 function reduceAdd(array, func, start) {
 
-  for (let element in array) {
+  for (let element of array) {
+    console.log(element)
     if (!start) {
-      start = func(array[element], array[element+1])
+     start = element
     }
     else {
       start = func(start, element)
@@ -1240,7 +1243,36 @@ function reduceAdd(array, func, start) {
   return start
 }
 
-console.log(reduceAdd([1, 2, 3, 4], (a, b) => a + b))
+// console.log(reduceAdd([1, 2, 3, 4], (a, b) => a + b))
+console.log(reduceAdd([], (a, b) => a + b, 10))
 
+function reverseWord(word) {
+  let reverse = word.split("").reduce((previous, current) => current + previous)
+
+  return reverse
+}
+
+// console.log(reverseWord("hello world"))
+
+// Composability
+
+function average(scripts) {
+  let ave = scripts.reduce((totalAve, current) => {
+    return totalAve + current.year
+  }, 0)
+
+  return ave/scripts.length
+}
+
+console.log(Math.round(average(SCRIPTS)));
+let living = SCRIPTS.filter(element => element.living);
+let notLiving = SCRIPTS.filter(element => !element.living)
+
+console.log(Math.round(average(living)))
+console.log(Math.round(average(notLiving)))
+
+
+// composability 
+// console.log(biggest); === "Han"
 
 // session 3

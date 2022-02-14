@@ -237,6 +237,25 @@ function reduce(array, func, start = 0) {
 console.log(reduce([1, 2, 3], (a, b) => a + b));
 // → 10
 
+// reduce my approach
+
+function reduceAdd(array, func, start) {
+    for (let element of array) {
+      if (!start) {
+       start = element
+      }
+      else {
+        start = func(start, element)
+      }
+    }
+  
+    return start
+}
+  
+console.log(reduceAdd([1, 2, 3, 4], (a, b) => a + b, 1))
+
+
+
 // https://www.youtube.com/watch?v=T0eroJltRsM
 // https://www.youtube.com/watch?v=rkPUX5xXsC0&t=4011s
  
