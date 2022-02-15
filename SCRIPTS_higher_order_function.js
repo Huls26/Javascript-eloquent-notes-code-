@@ -1112,6 +1112,15 @@ var SCRIPTS = [
       year: 1700,
       living: false,
       link: "https://en.wikipedia.org/wiki/Mongolian_writing_systems#Horizontal_square_script"
+    },
+    // sample
+    {
+      name: "Zanabazar Square",
+      ranges: [[72192, 72264]],
+      direction: "rtd",
+      year: 1700,
+      living: false,
+      link: "https://en.wikipedia.org/wiki/Mongolian_writing_systems#Horizontal_square_script"
     }
 ];
   
@@ -1256,23 +1265,76 @@ function reverseWord(word) {
 
 // Composability
 
-function average(scripts) {
-  let ave = scripts.reduce((totalAve, current) => {
-    return totalAve + current.year
-  }, 0)
+function biggest(array) {
+  let big = null;
 
-  return ave/scripts.length
+  for (let element of array) {
+    if (big === null) {
+      big = element
+    } 
+     if (characterCount(element) > characterCount(big)) {
+      big = element
+    }
+  }
+
+  return big
 }
 
-console.log(Math.round(average(SCRIPTS)));
-let living = SCRIPTS.filter(element => element.living);
-let notLiving = SCRIPTS.filter(element => !element.living)
+console.log(biggest(SCRIPTS)); 
 
-console.log(Math.round(average(living)))
-console.log(Math.round(average(notLiving)))
+// get the average year 
 
+/*
+{
+  name: "Zanabazar Square",
+  ranges: [[72192, 72264]],
+  direction: "ltr",
+  year: 1700,
+  living: false,
+  link: "https://en.wikipedia.org/wiki/Mongolian_writing_systems#Horizontal_square_script"
+} */
 
-// composability 
-// console.log(biggest); === "Han"
+let livingFilter = SCRIPTS.filter(element => element.living).map(element => element.year)
 
-// session 3
+function averageYear(array) {
+  return array.reduce((total, current) => {
+    return total + current
+  })/array.length
+}
+
+console.log(Math.round(averageYear(livingFilter)))
+console.log(Math.round(averageYear(SCRIPTS.filter(element => !element.living).map(element => element.year))))
+
+function averageYEAR(array) {
+  let total = 0;
+  let count = 0;
+  for (let element of array) {
+    if (element.living) {
+      total += element.year
+      count++
+    }
+  }
+
+  return Math.round(total/count)
+}
+
+console.log(averageYEAR(SCRIPTS))
+
+// get all the direction then count all
+
+function indentifyDirection(array) {
+  let direction = array.reduce((direc, current) => {
+    console.log(direc)
+    console.log(current)
+    if (direc) {
+      direc[current.direction] = 1
+    }
+
+    return direc
+  }, {})
+
+  return direction
+}
+
+console.log(indentifyDirection(SCRIPTS))
+// session 2
