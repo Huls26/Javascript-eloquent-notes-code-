@@ -1113,15 +1113,6 @@ var SCRIPTS = [
       living: false,
       link: "https://en.wikipedia.org/wiki/Mongolian_writing_systems#Horizontal_square_script"
     },
-    // sample
-    {
-      name: "Zanabazar Square",
-      ranges: [[72192, 72264]],
-      direction: "rtd",
-      year: 1700,
-      living: false,
-      link: "https://en.wikipedia.org/wiki/Mongolian_writing_systems#Horizontal_square_script"
-    }
 ];
   
 // This makes sure the data is exported in node.js —
@@ -1223,7 +1214,6 @@ function filtering(array, test) {
   
   array.forEach(element => {
     if (test(element)) {
-      console.log(test(element))
       empty.push(element)
     }
   })
@@ -1324,9 +1314,10 @@ console.log(averageYEAR(SCRIPTS))
 
 function indentifyDirection(array) {
   let direction = array.reduce((direc, current) => {
-    console.log(direc)
-    console.log(current)
-    if (direc) {
+    if (direc[current.direction]) {
+      direc[current.direction]++
+    }
+    else {
       direc[current.direction] = 1
     }
 
@@ -1337,4 +1328,61 @@ function indentifyDirection(array) {
 }
 
 console.log(indentifyDirection(SCRIPTS))
-// session 2
+
+function directionCount(array) {
+  let object = {};
+
+  for (let element of array) {
+    let direction = element.direction;
+
+    if (object[direction]) {
+      object[direction]++
+    } else {
+      object[direction] = 1
+    }
+  }
+
+  return object
+}
+
+console.log(directionCount(SCRIPTS))
+
+// Strings and character codes
+
+function characterScript(code) {
+  for (let element of SCRIPTS) {
+    for (let ranges of element.ranges) {
+      let [from, to] = ranges;
+
+      console.log(from, to)
+      if (code >= from && code <= to ) {
+        return element
+      }
+    }
+  }
+
+  return null
+}
+
+console.log(characterScript(121))
+console.log("hello world".charCodeAt(0))
+
+
+// Recognizing text
+
+// group the array
+
+function countBy(array, groupBy) {
+  let container = [];
+
+  for (let item of array) {
+    if ()
+  }
+
+}
+
+console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
+// → [{name: false, count: 2}, {name: true, count: 3}]
+
+
+// session 3
