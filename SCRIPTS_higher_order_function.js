@@ -1371,18 +1371,29 @@ console.log("hello world".charCodeAt(0))
 // Recognizing text
 
 // group the array
+// this group the object and count how many would pass the function
+// i think this is a important and should study and review
+
 
 function countBy(array, groupBy) {
   let container = [];
   
   for (let item of array) {
-    if (container.length === 0) {
+    let index = container.findIndex(element => { 
       if (groupBy(item)) {
+        return element.name === true
+      } else {
+        return element.name === false
+      }
+    }); 
+
+    console.log(index )
+
+      if (index === -1) {
         container.push({name: groupBy(item), count: 1})
       } else {
-        container.push({name: groupBy(item), count: 1})
+        container[index]["count"]++
       }
-    } 
   }
 
   return container
@@ -1392,4 +1403,4 @@ console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
 // → [{name: false, count: 2}, {name: true, count: 3}]
 
 
-// session 33:41.83 min, 44:29.17 min 
+// session 33:41.83 min, 44:29.17 min, 15:52.51 min 
