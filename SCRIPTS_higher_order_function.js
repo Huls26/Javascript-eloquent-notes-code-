@@ -1438,16 +1438,19 @@ function returnThis(array) {
     total += element.count
   })
 
-  console.log(scripts)
+  return scripts
   // return total
 
 }
 
 console.log(returnThis('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
+console.log(returnThis("你好世界"))
+
 // [{name: 'Han', count: 11}, {name: 'Latin', count: 4}, {name: 'Cyrillic', count: 3}]
 
 // console.log(characterScript("at".codePointAt(0)))
 
 // indexOf and findIndex
 // assignment make a findIndex function
+
 // session 3
