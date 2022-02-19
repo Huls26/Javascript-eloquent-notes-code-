@@ -1354,7 +1354,6 @@ function characterScript(code) {
     for (let ranges of element.ranges) {
       let [from, to] = ranges;
 
-      console.log(from, to)
       if (code >= from && code <= to ) {
         return element
       }
@@ -1374,23 +1373,23 @@ console.log("hello world".charCodeAt(0))
 // this group the object and count how many would pass the function
 // i think this is a important and should study and review
 
-
 function countBy(array, groupBy) {
   let container = [];
   
   for (let item of array) {
+    let name = groupBy(item)
     let index = container.findIndex(element => { 
-      if (groupBy(item)) {
-        return element.name === true
-      } else {
-        return element.name === false
-      }
+      // if (groupBy(item)) {
+      //   return element.name === true
+      // } else {
+      //   return element.name === false
+      // }
+
+      return element.name === name
     }); 
 
-    console.log(index )
-
       if (index === -1) {
-        container.push({name: groupBy(item), count: 1})
+        container.push({name, count: 1})
       } else {
         container[index]["count"]++
       }
@@ -1402,5 +1401,53 @@ function countBy(array, groupBy) {
 console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
 // → [{name: false, count: 2}, {name: true, count: 3}]
 
+// review and study this code
 
-// session 33:41.83 min, 44:29.17 min, 15:52.51 min 
+function textScripts(text) {
+  let scripts = countBy(text, char => {
+      let script = characterScript(char.codePointAt(0));
+      console.log(script)
+
+      return script ? script.name : "none";
+    }).filter(({name}) => name != "none");
+
+
+  // let total = scripts.reduce((n, {count}) => n + count, 0);
+
+  // if (total == 0) return "No scripts found";
+  //   return scripts.map(({name, count}) => {
+  //     return `${Math.round(count * 100 / total)}% ${name}`;
+  //   }).join(", ");
+
+  return scripts
+}
+
+// console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
+// → 61% Han, 22% Latin, 17% Cyrillic
+
+function returnThis(array) {
+  let scripts = countBy(array, char => {
+    let script = characterScript(char.codePointAt(0))
+
+    return script ? script.name : "none"
+  } )
+
+  let total = 0
+
+  scripts.forEach(element => {
+    total += element.count
+  })
+
+  console.log(scripts)
+  // return total
+
+}
+
+console.log(returnThis('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
+// [{name: 'Han', count: 11}, {name: 'Latin', count: 4}, {name: 'Cyrillic', count: 3}]
+
+// console.log(characterScript("at".codePointAt(0)))
+
+// indexOf and findIndex
+// assignment make a findIndex function
+// session 3

@@ -273,6 +273,6 @@ console.log(reduceAdd([1, 2, 3, 4], (a, b) => a + b, 1))
         // reduce()
 
 
-// session 3
+// session 1
 // push to github
 // javascrip eloquent page 103
