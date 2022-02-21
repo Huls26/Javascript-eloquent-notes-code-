@@ -1373,32 +1373,32 @@ console.log("hello world".charCodeAt(0))
 // this group the object and count how many would pass the function
 // i think this is a important and should study and review
 
-function countBy(array, groupBy) {
-  let container = [];
+// function countBy(array, groupBy) {
+//   let container = [];
   
-  for (let item of array) {
-    let name = groupBy(item)
-    let index = container.findIndex(element => { 
-      // if (groupBy(item)) {
-      //   return element.name === true
-      // } else {
-      //   return element.name === false
-      // }
+//   for (let item of array) {
+//     let name = groupBy(item)
+//     let index = container.findIndex(element => { 
+//       // if (groupBy(item)) {
+//       //   return element.name === true
+//       // } else {
+//       //   return element.name === false
+//       // }
 
-      return element.name === name
-    }); 
+//       return element.name === name
+//     }); 
 
-      if (index === -1) {
-        container.push({name, count: 1})
-      } else {
-        container[index]["count"]++
-      }
-  }
+//       if (index === -1) {
+//         container.push({name, count: 1})
+//       } else {
+//         container[index]["count"]++
+//       }
+//   }
 
-  return container
-}
+//   return container
+// }
 
-console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
+// console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
 // → [{name: false, count: 2}, {name: true, count: 3}]
 
 // review and study this code
@@ -1425,32 +1425,57 @@ function textScripts(text) {
 // console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
 // → 61% Han, 22% Latin, 17% Cyrillic
 
-function returnThis(array) {
-  let scripts = countBy(array, char => {
-    let script = characterScript(char.codePointAt(0))
 
-    return script ? script.name : "none"
-  } )
+const people = [
+    {
+      name: "Dom",
+      occupation: 'Software Developer',
+    },
+    {
+      name: "Eric",
+      occupation: 'Dentist',
+    },
+    {
+      name: "Kate",
+      occupation: 'Hair Dresser',
+    },
+]
 
-  let total = 0
-
-  scripts.forEach(element => {
-    total += element.count
+function findDentist(array) {
+  let find = array.findIndex(element => {
+    return element.occupation === "Dentist"
   })
 
-  return scripts
-  // return total
+  return find}
 
+// console.log(findDentist(people))
+
+function charCount(array, groupBy) {
+  let output = [];
+
+  for (let item of array) {
+    let name = groupBy(item)
+    let finds = output.findIndex(element => element.name == name);
+
+
+    if (finds === -1) {
+      output.push({name, count: 1})
+    } else {
+      output[finds]["count"]++
+    }
+  }
+
+  return output
 }
 
-console.log(returnThis('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
-console.log(returnThis("你好世界"))
+console.log(charCount([1, 2, 3, 4, 5], n => n > 2))
 
-// [{name: 'Han', count: 11}, {name: 'Latin', count: 4}, {name: 'Cyrillic', count: 3}]
-
-// console.log(characterScript("at".codePointAt(0)))
+// console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
+// → 61% Han, 22% Latin, 17% Cyrillic
 
 // indexOf and findIndex
 // assignment make a findIndex function
+// this day create a characterScript function
 
-// session 3
+
+// session 2

@@ -268,10 +268,13 @@ console.log(reduceAdd([1, 2, 3, 4], (a, b) => a + b, 1))
         // forEach()
         // filter()
         // map()
+        // some()
+        // every()
         // indexOf()
         // lastIndexOF()
         // reduce()
 
+// remember composability
 
 // session 1
 // push to github
