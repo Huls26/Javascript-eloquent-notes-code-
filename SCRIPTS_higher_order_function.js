@@ -1486,17 +1486,41 @@ function findIdx(array, func) {
 function totalScripts(text) {
   let count = countBy(text, element => {
     let script= characterScript(element.codePointAt(0));
-
-    console.log(script)
-
     return script ? script.name : "none"
   })
- 
-  return count
+  
+  let filter = count.filter(element => element.name !== "none")
+
+  let totalCount = filter.reduce((total, current) => {
+    return total += current.count
+  },0)
+
+  let mapName = filter.map(element => element.name)
+
+  let average = filter.map(element => {
+    return Math.floor((element.count/totalCount)*100) + "%"
+  })
+
+  function percentage() {
+    let updateArray = [];
+    let totalLength = mapName.length
+    let index = 0;
+
+    while (updateArray.length !== totalLength) {
+      updateArray.push(`${average[index]} ${mapName[index]}`)
+      index++
+    }
+
+    return updateArray.join(", ")
+  }
+  
+  return percentage()
 }
 
 console.log(totalScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
+console.log(totalScripts("hello world 的狗说"))
 
+// → 61% Han, 22% Latin, 17% Cyrillic
 // console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
 // → [{name: false, count: 2}, {name: true, count: 3}]
 

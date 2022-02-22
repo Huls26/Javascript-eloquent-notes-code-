@@ -208,12 +208,12 @@ activities.push(["total"])
 activities[5][2]= sum;
 console.log(activities,);
 
-for (let i = 0; i < activities.length; i++) {
-    let inner = activities[i].length; 
-    for (let j = 0; j < inner; j++) {
-        console.log(`[${i}, ${j}] = ` + activities[i][j])
-    }
-}
+// for (let i = 0; i < activities.length; i++) {
+//     let inner = activities[i].length; 
+//     for (let j = 0; j < inner; j++) {
+//         console.log(`[${i}, ${j}] = ` + activities[i][j])
+//     }
+// }
 
 Array.matrix = function(numrows, numcols, initial) {
     var arr = [];
