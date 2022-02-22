@@ -1363,8 +1363,8 @@ function characterScript(code) {
   return null
 }
 
-console.log(characterScript(121))
-console.log("hello world".charCodeAt(0))
+// console.log(characterScript(121))
+// console.log("hello world".charCodeAt(0))
 
 
 // Recognizing text
@@ -1373,30 +1373,30 @@ console.log("hello world".charCodeAt(0))
 // this group the object and count how many would pass the function
 // i think this is a important and should study and review
 
-// function countBy(array, groupBy) {
-//   let container = [];
+function countBy(array, groupBy) {
+  let container = [];
   
-//   for (let item of array) {
-//     let name = groupBy(item)
-//     let index = container.findIndex(element => { 
-//       // if (groupBy(item)) {
-//       //   return element.name === true
-//       // } else {
-//       //   return element.name === false
-//       // }
+  for (let item of array) {
+    let name = groupBy(item)
+    let index = container.findIndex(element => { 
+      // if (groupBy(item)) {
+      //   return element.name === true
+      // } else {
+      //   return element.name === false
+      // }
 
-//       return element.name === name
-//     }); 
+      return element.name === name
+    }); 
 
-//       if (index === -1) {
-//         container.push({name, count: 1})
-//       } else {
-//         container[index]["count"]++
-//       }
-//   }
+      if (index === -1) {
+        container.push({name, count: 1})
+      } else {
+        container[index]["count"]++
+      }
+  }
 
-//   return container
-// }
+  return container
+}
 
 // console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
 // → [{name: false, count: 2}, {name: true, count: 3}]
@@ -1450,32 +1450,56 @@ function findDentist(array) {
 
 // console.log(findDentist(people))
 
-function charCount(array, groupBy) {
-  let output = [];
 
-  for (let item of array) {
-    let name = groupBy(item)
-    let finds = output.findIndex(element => element.name == name);
+function charScript(code) {
+  for (let item of SCRIPTS) {
+    let find = item.ranges.some(([from, to]) => {
+      return code >= from && code <= to
+    })
 
-
-    if (finds === -1) {
-      output.push({name, count: 1})
-    } else {
-      output[finds]["count"]++
-    }
+    if (find) return item
+  
   }
 
-  return output
+  return null
 }
 
-console.log(charCount([1, 2, 3, 4, 5], n => n > 2))
-
+console.log(charScript(121))
 // console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
 // → 61% Han, 22% Latin, 17% Cyrillic
 
-// indexOf and findIndex
-// assignment make a findIndex function
-// this day create a characterScript function
 
+// findIndex function 
+
+function findIdx(array, func) {
+  for (let element in array ) {
+    if (func(array[element])) {
+      return element
+    }
+  }
+
+  return -1
+}
+
+// console.log(findIdx([1, 2, 3, 4, 5], n => n > 2 ))
+
+function totalScripts(text) {
+  let count = countBy(text, element => {
+    let script= characterScript(element.codePointAt(0));
+
+    console.log(script)
+
+    return script ? script.name : "none"
+  })
+ 
+  return count
+}
+
+console.log(totalScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
+
+// console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
+// → [{name: false, count: 2}, {name: true, count: 3}]
+
+// indexOf and findIndex
 
 // session 2
