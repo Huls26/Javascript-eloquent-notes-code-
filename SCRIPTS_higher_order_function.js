@@ -1529,6 +1529,30 @@ console.log(totalScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
 // console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
 // → [{name: false, count: 2}, {name: true, count: 3}]
 
+// Exercises 5.4 Dominant writing direction
+
+function dominantDirection(text) {
+  let direction = null;
+  let count = countBy(text, element => {
+    let script = characterScript(element.codePointAt(0))
+
+    return script ? script.direction : "none"
+  }).reduce((high, current) => {
+    if (current.count > high) {
+      high = current.count
+      direction = current.name
+    }
+
+    return high
+  }, 0)
+   
+  return direction
+}
+
+console.log(dominantDirection("Hello!"));
+// → ltr
+console.log(dominantDirection("Hey, مساء الخير"));
+// → rtl
 // indexOf and findIndex
 // go back to eloquent javascript 110
-// session 1
+// session 2

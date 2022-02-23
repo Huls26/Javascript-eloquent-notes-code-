@@ -379,10 +379,56 @@ console.log(flattening(arrays))
 // ================== 5.2 Your own loop ===============
 
 function loop(n, test, update, body) {
-    body(update(n))
+    if (!test(n)) return  ;
+
+    body(n);
+    return loop(update(n), test, update, body)
 }
 
-console.log(loop(3, n => n > 0, n => n - 1, console.log))
+loop(3, n => n > 0, n => n - 1, console.log)
+
+function loop2(n, test, update, body) {
+    let i = n;
+
+    while (test(i)) {
+        body(i);
+        i = update(i);
+    }
+}
+
+loop2(3, n => n > 0, n => n - 1, console.log)
+
+// ================== 5.3 Everything ================
+function every(array, test) {
+    for (let element of array) {
+        if (!test(element)) return false
+    }
+
+    return true
+}
+
+// console.log(every([1, 3, 5], n => n < 10));
+// // → true
+// console.log(every([2, 4, 16], n => n < 10));
+// // → false
+// console.log(every([], n => n < 10));
+// → true
+
+function everySome(array, test) {
+    for (let element of array) {
+        if (![element].some(test)) return false
+    }
+
+    return true
+}
+
+console.log(everySome([1, 3, 5], n => n < 10));
+// → true
+console.log(everySome([2, 4, 16], n => n < 10));
+// → false
+console.log(everySome([], n => n < 10));
+// → true
+
 // To try 
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
 
