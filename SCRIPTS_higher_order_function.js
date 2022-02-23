@@ -1484,22 +1484,27 @@ function findIdx(array, func) {
 // console.log(findIdx([1, 2, 3, 4, 5], n => n > 2 ))
 
 function totalScripts(text) {
-  let count = countBy(text, element => {
+  let counts = countBy(text, element => {
     let script= characterScript(element.codePointAt(0));
     return script ? script.name : "none"
-  })
+  }).filter(element => element.name !== "none")
   
-  let filter = count.filter(element => element.name !== "none")
+  // let filter = count.filter(element => element.name !== "none")
 
-  let totalCount = filter.reduce((total, current) => {
-    return total += current.count
-  },0)
+  console.log(counts)
+  let total = counts.reduce((total, {count}) => total += count
+  ,0)
 
-  let mapName = filter.map(element => element.name)
+  if (total === 0) return "No Scripts found"
 
-  let average = filter.map(element => {
-    return Math.floor((element.count/totalCount)*100) + "%"
-  })
+  return counts.map(({name, count}) => {
+    return `${Math.floor((count/total)*100)}% ${name}`
+  }).join(", ")
+  // let mapName = filter.map(element => element.name)
+
+  // let average = filter.map(element => {
+  //   return Math.floor((element.count/totalCount)*100) + "%"
+  // })
 
   function percentage() {
     let updateArray = [];
@@ -1514,16 +1519,16 @@ function totalScripts(text) {
     return updateArray.join(", ")
   }
   
-  return percentage()
+  // return percentage()
 }
 
 console.log(totalScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
-console.log(totalScripts("hello world 的狗说"))
+// console.log(totalScripts("hello world 的狗说"))
 
 // → 61% Han, 22% Latin, 17% Cyrillic
 // console.log(countBy([1, 2, 3, 4, 5], n => n > 2))
 // → [{name: false, count: 2}, {name: true, count: 3}]
 
 // indexOf and findIndex
-
-// session 2
+// go back to eloquent javascript 110
+// session 1

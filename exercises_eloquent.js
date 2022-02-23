@@ -355,6 +355,35 @@ function insertDashes() {
 
 // console.log(insertDashes())
 
+// ================= chapter 5: Higher-Order Function =============
 
+// ============ 5.1 Flattening ================
+
+let arrays = [[1, 2, 4], [4, 5], [6]]
+
+function flattening(array) {
+    let flat = array.reduce((array, element) => {
+        return array.concat(element)
+    }, [])
+
+    let flatAgain = array.reduce((array, element) => {
+        array.push(...element)
+        return array
+    })
+
+    return [flatAgain, flat]
+}
+
+console.log(flattening(arrays))
+
+// ================== 5.2 Your own loop ===============
+
+function loop(n, test, update, body) {
+    body(update(n))
+}
+
+console.log(loop(3, n => n > 0, n => n - 1, console.log))
 // To try 
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
+
+// session 1
