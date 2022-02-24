@@ -385,7 +385,7 @@ function loop(n, test, update, body) {
     return loop(update(n), test, update, body)
 }
 
-loop(3, n => n > 0, n => n - 1, console.log)
+// loop(3, n => n > 0, n => n - 1, console.log)
 
 function loop2(n, test, update, body) {
     let i = n;
@@ -396,7 +396,7 @@ function loop2(n, test, update, body) {
     }
 }
 
-loop2(3, n => n > 0, n => n - 1, console.log)
+// loop2(3, n => n > 0, n => n - 1, console.log)
 
 // ================== 5.3 Everything ================
 function every(array, test) {
@@ -415,15 +415,24 @@ function every(array, test) {
 // → true
 
 function everySome(array, test) {
-    for (let element of array) {
-        if (![element].some(test)) return false
-    }
+    // for (let element of array) {
+    //     if (![element].some(test)) return false
+    // }
 
-    return true
+    // return true
+    let com = array.some(element => {
+        return test(element) === false
+    })
+
+    if (!com) {
+        return true
+    } else {
+        return false
+    }
 }
 
 console.log(everySome([1, 3, 5], n => n < 10));
-// → true
+// // → true
 console.log(everySome([2, 4, 16], n => n < 10));
 // → false
 console.log(everySome([], n => n < 10));
