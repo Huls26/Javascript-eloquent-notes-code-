@@ -438,6 +438,7 @@ console.log(everySome([2, 4, 16], n => n < 10));
 console.log(everySome([], n => n < 10));
 // → true
 
+console.log(range(1, 5))
 // To try 
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
 

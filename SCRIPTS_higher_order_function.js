@@ -1532,21 +1532,35 @@ console.log(totalScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'))
 // Exercises 5.4 Dominant writing direction
 
 function dominantDirection(text) {
-  let direction = null;
-  let count = countBy(text, element => {
-    let script = characterScript(element.codePointAt(0))
+  // let direction = null;
+  // let count = countBy(text, element => {
+  //   let script = characterScript(element.codePointAt(0))
+
+  //   return script ? script.direction : "none"
+  // }).reduce((high, current) => {
+  //   if (current.count > high) {
+  //     high = current.count
+  //     direction = current.name
+  //   }
+
+  //   return high
+  // }, 0)
+   
+  // return direction
+
+  let counts = countBy(text, element => {
+    let script = charScript(element.codePointAt(0));
 
     return script ? script.direction : "none"
-  }).reduce((high, current) => {
-    if (current.count > high) {
-      high = current.count
-      direction = current.name
-    }
+  }).filter(element => element.name !== "none")
 
-    return high
-  }, 0)
-   
-  return direction
+  return counts.reduce((high, current) => {
+    if (current.count > high.count) {
+      return current 
+    }
+  }).name
+
+
 }
 
 console.log(dominantDirection("Hello!"));
