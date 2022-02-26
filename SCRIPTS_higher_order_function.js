@@ -1559,8 +1559,6 @@ function dominantDirection(text) {
       return current 
     }
   }).name
-
-
 }
 
 console.log(dominantDirection("Hello!"));
@@ -1569,4 +1567,68 @@ console.log(dominantDirection("Hey, مساء الخير"));
 // → rtl
 // indexOf and findIndex
 // go back to eloquent javascript 110
+
+
+// javascript challenges
+// link => https://edabit.com/challenges/javascript
+
+// let's fuel up!
+function calculateFuel(num) {
+  let computation = num*10
+  return computation < 100 ? 100 : computation
+}
+
+console.log(calculateFuel(15))
+// ➞ 150
+console.log(calculateFuel(23.5))
+// ➞ 235
+console.log(calculateFuel(3))
+// ➞ 100
+
+// How Much is True?
+function countTrue(array) {
+  let count = array.reduce((total, current) => {
+    if (current) total++
+    return total
+  }, 0)
+
+  return count
+}
+
+console.log(countTrue([true, false, false, true, false]))
+// ➞ 2
+console.log(countTrue([false, false, false, false])) 
+// ➞ 0
+console.log(countTrue([])) 
+// ➞ 0
+
+// Find the nth Tetrahedral Number
+// function tetra(n, total = 0) {
+//   if (n === 1) return 1
+
+//   let sides = n * 3
+// }
+
+// Function Factory 
+
+function makePlusFunction(n) {
+  return (m) => {
+    return n + m
+  } 
+}
+
+const plusFive = makePlusFunction(5);
+
+console.log(plusFive(2));
+console.log(plusFive(-8));
+
+const plusTen = makePlusFunction(10)
+
+console.log(plusTen(0)) 
+// ➞ 10
+console.log(plusTen(188)) 
+// ➞ 198
+console.log(plusFive(plusTen(0))) 
+// ➞ 15
+// https://www.jschallenger.com/
 // session 2
