@@ -116,11 +116,101 @@ function generation(num, char) {
     }
 }
 
-generation(0, "f")
-
-generation(2, "f") 
+generation(0, "f");
+generation(2, "f");
 // ➞ "granddaughter"
-generation(-3, "m") 
+generation(-3, "m"); 
 // ➞ "great grandfather"
-generation(1, "f") 
+generation(1, "f");
 // ➞ "daughter"
+
+// link => https://edabit.com/challenges/javascript
+console.log("➞".codePointAt(0))
+
+// All About Anonymous Functions: Adding Suffixes
+// https://edabit.com/challenge/Ra85gzkCTtXrNyCag
+
+function add_suffix(suffix) {
+    return function(word) {
+        return console.log(word+suffix)
+    }
+}
+
+add_ly = add_suffix("ly")
+
+add_ly("hopeless") 
+// ➞ "hopelessly"
+add_ly("total") 
+// ➞ "totally"
+
+add_less = add_suffix("less")
+
+add_less("fear") 
+// ➞ "fearless"
+add_less("ruth") 
+// ➞ "ruthless"
+
+// Convenience Store
+// https://edabit.com/challenge/erFxBbqzZPSegMwnc
+
+function changeEnough(array, amount) {
+    let values = [.25, .10, .05, .01]
+    
+    let totalAmount = array.reduce((total, current, index) => {
+        let convert = current * values[index];
+
+        return total + convert
+    }, 0)
+
+    return console.log(totalAmount >= amount)
+}
+
+// changeEnough([2, 100, 0, 0], 14.11) 
+// //➞ false
+// changeEnough([0, 0, 20, 5], 0.75) 
+// // ➞ true
+// changeEnough([30, 40, 20, 5], 12.55) 
+// //➞ true
+// changeEnough([10, 0, 0, 50], 3.85)
+// //➞ false
+// changeEnough([1, 0, 5, 219], 19.99) 
+// //➞ false
+
+// Seven Boom!
+// https://edabit.com/challenge/6R6gReGTGwzpwuffD
+
+function sevenBoom(array) {
+    let find7 = array.some(element => {
+        let str = String(element)
+        let condition = false
+
+       if (str .length > 1) {
+           for (let item of str.split("")) {
+               if (item === "7") {
+                   condition = true
+               }
+           }
+       } else {
+           if (str === "7") {
+               condition = true
+           }
+       }
+
+       return condition
+    })
+
+    return console.log(find7)
+}
+
+sevenBoom([1, 2, 3, 4, 5, 6, 7]) 
+// ➞ "Boom!"
+// 7 contains the number seven.
+
+sevenBoom([8, 6, 33, 100])
+// // ➞ "there is no 7 in the array"
+// // None of the items contain 7 within them.
+
+sevenBoom([2, 55, 60, 97, 86]) 
+// ➞ "Boom!"
+// 97 contains the number seven.
+
