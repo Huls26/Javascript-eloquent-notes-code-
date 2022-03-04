@@ -57,12 +57,58 @@ let video = {
 video.log()
 video.info()
 
+class Users {
+    constructor(name, email) {
+        this.name = name;
+        this.email = email;
+    }
+}
+
+let userSample = new Users("jules", "julesmoreno@gmail.com")
+
+console.log(userSample)
+
+class Person {
+    constructor(name, age, height) {
+        this.name = name;
+        this.age = age;
+        this.height = height;
+    }
+}
+
+let person1 = new Person("J7", 18, `5'4 or 6'3 or 171cm`)
+
+console.log(person1)
+
+class Rectangle {
+    constructor(height, width, color) {
+        this.height = height;
+        this.width = width; 
+        this.colors = color;
+       let message = function() {
+            console.log("rectangle has been created")
+        }
+        message()
+    }
+
+    area() {
+        return `The area is ${this.height * this.width}`
+    }
+}
+
+let rectangle1 = new Rectangle(3, 5, "yellow")
+
+console.log(rectangle1)
+console.log(rectangle1.area())
+
+
 // last topic
 // https://www.youtube.com/watch?v=hy-C4NY7A_8&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=6
-
+// https://www.youtube.com/watch?v=2ZphE5HcQPQ
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
 // study abstraction in oop
+// classes => https://www.youtube.com/watch?v=2ZphE5HcQPQ
 
 // session 2
 // page 112
