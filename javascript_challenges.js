@@ -214,3 +214,30 @@ sevenBoom([2, 55, 60, 97, 86])
 // ➞ "Boom!"
 // 97 contains the number seven.
 
+// Tower of Hanoi
+// try this 
+// https://edabit.com/challenge/3ZtykTsx3GSoPHyBb
+
+// Learn Lodash: Write Your Own Version of Partition, Split an Array in Two
+// https://edabit.com/challenge/3rGuRbe8nZ3mXdBRN
+
+const users = [
+    { 'user': 'barney',  'age': 36, 'active': false },
+    { 'user': 'fred',    'age': 40, 'active': true },
+    { 'user': 'pebbles', 'age': 1,  'active': false }
+];
+
+function partition(array, func) {
+    let active = [];
+
+    for (let item of array) {
+        let group = active.findIndex(func);
+
+        // if (func(item)) {
+        //     if ()
+        // }
+    }
+}
+
+console.log(partition(users, d => d.active))
+// link => https://edabit.com/challenges/javascript
