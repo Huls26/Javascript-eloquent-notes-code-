@@ -106,37 +106,84 @@ console.log(rectangle1.colors)
 console.log(rectangle1.area())
 console.log(rectangle1.printDescription())
 
-class square {
-    constructor(width) {
-        this.length = width;
-        this.width = width;
-        this.count = 0;
-    }
+// class square {
+//     constructor(width) {
+//         this.length = width;
+//         this.width = width;
+//         this.count = 0;
+//     }
 
-    get area() {
-        this.count++
-        return this.width * this.length;
-    }
+//     get area() {
+//         this.count++
+//         return this.width * this.length;
+//     }
 
-    set area(random) {
-        this.length = Math.sqrt(random);
-        this.width = this.length;
-    }
-}
+//     set area(random) {
+//         this.length = Math.sqrt(random);
+//         this.width = this.length;
+//     }
 
-let square1 = new square(3);
+//     get parameter() {
+//         return this.width +this.length
+//     }
+// }
 
-console.log(square1.area)
+// let square1 = new square(3);
+
+// console.log(square1.area)
 
  
-square1.area = 25
+// square1.area = 25
 
-console.log(square1)
-console.log(square1.length)
-console.log(square1.width)
-console.log(square1.area)
+// console.log(square1)
+// console.log(square1.length)
+// console.log(square1.width)
+// console.log(square1.area)
 
-console.log(square1)
+// console.log(square1.parameter)
+
+// console.log(square1)
+
+// class Square {
+//     constructor(length) {
+//         this.length = length;
+//         this.width = length
+//     }
+
+
+// }
+
+// let square1 = new Square(8);
+// console.log(square1) 
+
+// class List {
+//     constructor(id) {
+//         this.id = id
+//     }
+    
+//     changeId(id) {
+//         this.id = id
+//     }
+
+//     age(n) {
+//         return 2022 - n
+//     }
+
+//     static name = "Jules";
+//     static autoAge(year) {
+//         return 2022 - year
+//     }
+// }
+
+// console.log(List.name)
+// console.log(List.autoAge(1996))
+
+// let listInformation = new List(1);
+// console.log(listInformation.age(1996))
+
+// listInformation.changeId(2)
+// console.log(listInformation)
+
 
 // last topic
 // https://www.youtube.com/watch?v=hy-C4NY7A_8&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=6
@@ -144,10 +191,13 @@ console.log(square1)
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
 // classes => https://www.youtube.com/watch?v=2ZphE5HcQPQ
+
+// encapsulation
 // study abstraction in oop
 // study static method
+    // => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
 
 // javascript challenges on friday
 
-// session 1
+// session 2
 // page 112
