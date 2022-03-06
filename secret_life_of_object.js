@@ -87,28 +87,67 @@ class Rectangle {
         this.colors = color;
        let message = function() {
             console.log("rectangle has been created")
-        }
-        message()
+        };
+        message();
     }
 
     area() {
         return `The area is ${this.height * this.width}`
     }
+
+    printDescription() {
+        return `The color is ${this.colors} and the height and the width is ${this.height}, ${this.width}`
+    }
 }
 
 let rectangle1 = new Rectangle(3, 5, "yellow")
 
-console.log(rectangle1)
+console.log(rectangle1.colors)
 console.log(rectangle1.area())
+console.log(rectangle1.printDescription())
 
+class square {
+    constructor(width) {
+        this.length = width;
+        this.width = width;
+        this.count = 0;
+    }
+
+    get area() {
+        this.count++
+        return this.width * this.length;
+    }
+
+    set area(random) {
+        this.length = Math.sqrt(random);
+        this.width = this.length;
+    }
+}
+
+let square1 = new square(3);
+
+console.log(square1.area)
+
+ 
+square1.area = 25
+
+console.log(square1)
+console.log(square1.length)
+console.log(square1.width)
+console.log(square1.area)
+
+console.log(square1)
 
 // last topic
 // https://www.youtube.com/watch?v=hy-C4NY7A_8&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=6
 // https://www.youtube.com/watch?v=2ZphE5HcQPQ
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
-// study abstraction in oop
 // classes => https://www.youtube.com/watch?v=2ZphE5HcQPQ
+// study abstraction in oop
+// study static method
 
-// session 2
+// javascript challenges on friday
+
+// session 1
 // page 112
