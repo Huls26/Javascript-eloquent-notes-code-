@@ -184,8 +184,85 @@ console.log(rectangle1.printDescription())
 // listInformation.changeId(2)
 // console.log(listInformation)
 
+// ================== getter and setter =================
+// class Box {
+//     constructor(length, width) {
+//         this.length = length;
+//         this.width = width;
+//         this.color = [];
+//     }
+
+//     get parameter() {
+//         return this.length + this.width
+//     }
+
+//     set size(size) {
+//         this.length = size;
+//         this.width = this.length;
+//     }
+    
+//    set colors(pick) {
+//         this.color.push(...pick);
+//     }
+
+//     get hit() {
+//         let random = Math.floor(Math.random(0,1) * this.color.length);
+
+//         return this.color[random]
+//     }
+// }
+
+// let box1 = new Box(5, 5);
+
+// console.log(box1.parameter)
+// // box1.size = 3;
+// console.log(box1)
+
+// box1.colors = ["red"];
+// box1.colors = ["blue", "yellow"];
+// console.log(box1)
+
+// console.log(box1.hit)
+
+class Triple {
+    static customName = "Tripler";
+    static descripttion = "I triple something";
+    static calculate(n = 1) {
+        return n * 3
+    }
+
+    // for instance
+    calc(n=1) {
+        return n * 3
+    }
+}
+
+class SquaredTriple extends Triple {
+    static longDescription;
+    static descripttion = "I square the triple number you provide";
+    static calculate(n) {
+        return super.calculate(n) * super.calculate(n);
+    }
+}
+
+console.log(Triple.descripttion)
+console.log(Triple.calculate())
+console.log(Triple.calculate(3))
+
+console.log(SquaredTriple.customName)
+console.log(SquaredTriple.descripttion)
+console.log(SquaredTriple.calculate())
+
+let tp = new Triple()
+// console.log(tp.calculate())
+console.log(tp.calc(5))
+
+
+
+
 
 // last topic
+// https://www.youtube.com/watch?v=CwAU1wYeHiM
 // https://www.youtube.com/watch?v=hy-C4NY7A_8&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=6
 // https://www.youtube.com/watch?v=2ZphE5HcQPQ
 
@@ -196,6 +273,8 @@ console.log(rectangle1.printDescription())
 // study abstraction in oop
 // study static method
     // => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
+// getter and setter 
+
 
 // javascript challenges on friday
 
