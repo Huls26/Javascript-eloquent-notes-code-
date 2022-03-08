@@ -430,39 +430,101 @@
 // console.log(Rectangle.equal(rectangle2))
 
 // ============ extends and super ===============
-class Person {
-    constructor(name, age) {
+// class Person {
+//     constructor(name, age) {
+//         this.name = name;
+//         this.age = age
+//         this.programmer = false;
+//     }
+
+//     describe() {
+//         return `my name is ${this.name} and I am ${this.age}`
+//     }
+// }
+
+// class Programmer extends Person {
+//     constructor(names, ages, job) {
+//         super(names, ages);
+//         this.job = job;
+//         this.programmer = true;
+//     }
+
+//     description() {
+//         return super.describe() + " and i am a programmer"
+//     }
+// }
+
+// let programmer1 = new Programmer("jules", 25, "none");
+
+// console.log(programmer1)
+// console.log(programmer1.describe())
+// console.log(programmer1.description())
+
+// let listOfPerson = [
+//     new Person("jules", 24),
+//     new Programmer("Jules", 26, "Software Developer"),
+// ]
+
+// function listPerson(array) {
+//     for (let element of array) {
+//         if (element.programmer) {
+//             console.log(element.description())
+//         } else {
+//             console.log(element.describe())
+//         }
+//     }
+// }
+
+// listPerson(listOfPerson)
+
+// Polymorphism
+// class PersonName {
+//     static firstname = "Marites"
+//     static fullName(lastname) {
+//         return this.firstname + " "+ lastname
+//     }
+// }
+
+// class ChangeName extends PersonName {
+//     static firstname = "Claire";
+//     static fullName(lastname) {
+//         console.log("from", super.firstname)
+//         return this.firstname + " " + lastname
+//     } 
+// }
+
+// console.log(ChangeName.fullName("Manubat"))
+
+class User {
+    constructor(name, email) {
         this.name = name;
-        this.age = age
+        this.email = email;
+        this.score = 0;
     }
 
-    describe() {
-        return `my name is ${this.name} and I am ${this.age}`
+    static count = 0
+
+    updateScore() {
+        this.score++
+        User.count++
     }
 }
 
-class Programmer extends Person {
-    constructor(names, ages, job) {
-        super(names, ages);
-        this.job = job;
-    }
+let user1a = new User("jack", "asdsa");
 
-    description() {
-        return super.describe() + " and i am a programmer"
-    }
+user1a.updateScore()
+console.log(user1a)
 
+let user2a = new User("rose", "lsadj");
+user2a.updateScore()
+console.log(user2a)
+user1a.updateScore()
 
-}
-
-let programmer1 = new Programmer("jules", 25, "none");
-
-console.log(programmer1)
-console.log(programmer1.describe())
-console.log(programmer1.description())
+console.log(user1a)
+console.log(User.count)
 
 // last topic
-// https://www.youtube.com/watch?v=2ZphE5HcQPQ&t=1330s
-// https://www.youtube.com/watch?v=hy-C4NY7A_8&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=6
+// https://www.youtube.com/watch?v=8x1fygdWabY&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=7
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
 // classes => https://www.youtube.com/watch?v=2ZphE5HcQPQ
@@ -477,5 +539,5 @@ console.log(programmer1.description())
 
 // javascript challenges on friday
 
-// session 2
+// session 1 
 // page 112
