@@ -335,34 +335,133 @@
 // console.log(worker1.colorOfEye)
 // console.log(Worker.eyeColor())
 
-class CallSomething {
-    constructor() {
-        console.log(this.constructor.callSomething)
-        console.log(this.constructor.staticMethod())
-        console.log(CallSomething.callSomething)
-        console.log(CallSomething.staticMethod())
-        console.log(this.constructor)
+// class CallSomething {
+//     constructor() {
+//         console.log(this.constructor.callSomething)
+//         console.log(this.constructor.staticMethod())
+//         console.log(CallSomething.callSomething)
+//         console.log(CallSomething.staticMethod())
+//         console.log(this.constructor)
 
-        this.greet = "hello"
+//         this.greet = "hello"
+//     }
+
+//     static callSomething = "something is stored";
+//     static staticMethod() {
+//         return "static Method has been called"
+//     } 
+// }
+
+// let something = new CallSomething()
+// console.log(something.greet)
+
+// class Student {
+//     constructor() {
+//         let name, marks;
+//     }
+
+//     // setName(name) {
+//     //     this.name = name;
+//     // }
+
+//     // getName() {
+//     //     return this.name
+//     // }
+
+//     // setMarks(mark) {
+//     //     this.marks = mark;
+//     // }
+
+//     // getMarks() {
+//     //     return this.marks
+//     // }
+
+//     set setName(name) {
+//         this.name = name;
+//     }
+
+//     get getName() {
+//         return this.name
+//     }
+// }
+
+// let student1 = new Student()
+
+// student1.setName = "Ino"
+// console.log(student1.getName)
+
+// student1.setMarks("99")
+// console.log(student1.getMarks())
+// console.log(student1)
+
+// ========== static ===========
+
+// class Rectangle {
+//     constructor(length, width) {
+//         this.length = length;
+//         this.width = width;
+//     }
+
+//     // get the area of the rectangle
+//     get getArea() {
+//         return this.length * this.width
+//     }
+
+//     // check if the two rectangle are equal area
+//     static equalArea(a, b) {
+//         return a.getArea === b.getArea;
+//     }
+
+//     // check if the rectangle is a square
+//     static equal(rec) {
+//         return rec.length === rec.width
+//     }
+// }
+
+// let rectangle1 = new Rectangle(3, 4);
+// console.log(rectangle1.getArea)
+
+// let rectangle2 = new Rectangle(4, 4);
+// console.log(rectangle2.getArea)
+
+// console.log(Rectangle.equalArea(rectangle1, rectangle2))
+
+// console.log(Rectangle.equal(rectangle1))
+// console.log(Rectangle.equal(rectangle2))
+
+// ============ extends and super ===============
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age
     }
 
-    static callSomething = "something is stored";
-    static staticMethod() {
-        return "static Method has been called"
-    } 
+    describe() {
+        return `my name is ${this.name} and I am ${this.age}`
+    }
 }
 
-let something = new CallSomething()
-console.log(something.greet)
+class Programmer extends Person {
+    constructor(names, ages, job) {
+        super(names, ages);
+        this.job = job;
+    }
+
+    description() {
+        return super.describe() + " and i am a programmer"
+    }
 
 
-// extends and super
-// static
+}
 
+let programmer1 = new Programmer("jules", 25, "none");
+
+console.log(programmer1)
+console.log(programmer1.describe())
+console.log(programmer1.description())
 
 // last topic
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
-// https://www.youtube.com/watch?v=2ZphE5HcQPQ
+// https://www.youtube.com/watch?v=2ZphE5HcQPQ&t=1330s
 // https://www.youtube.com/watch?v=hy-C4NY7A_8&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=6
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
