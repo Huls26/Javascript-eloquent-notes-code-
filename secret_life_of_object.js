@@ -507,6 +507,7 @@ class User {
     updateScore() {
         this.score++
         User.count++
+        return this
     }
 }
 
@@ -522,6 +523,38 @@ user1a.updateScore()
 
 console.log(user1a)
 console.log(User.count)
+
+console.log(user2a.updateScore())
+
+class Admin extends User {
+    constructor(name, email, id) {
+        super(name, email)
+        this.id = id;
+        this.greet = function() {
+            return "hello"
+        }
+    }
+
+    deleteUser(user) {
+    //    usersA.splice(index, 1)
+    //    return usersA
+
+        let updateUser = users.filter(u => {
+            return u.name !== user.name
+        })
+
+        return updateUser
+    }   
+}
+
+let users = [user1a, user2a]
+let admin1 = new Admin("Jules", "jules@gmail.com", 3120119);
+
+console.log(admin1.greet())
+// console.log(users)
+
+// console.log(admin1.deleteUser(user1a))
+
 
 // last topic
 // https://www.youtube.com/watch?v=8x1fygdWabY&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=7
@@ -539,5 +572,5 @@ console.log(User.count)
 
 // javascript challenges on friday
 
-// session 1 
+// session 2
 // page 112
