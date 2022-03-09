@@ -495,65 +495,109 @@
 
 // console.log(ChangeName.fullName("Manubat"))
 
-class User {
-    constructor(name, email) {
-        this.name = name;
-        this.email = email;
-        this.score = 0;
-    }
+// class User {
+//     constructor(name, email) {
+//         this.name = name;
+//         this.email = email;
+//         this.score = 0;
+//     }
 
-    static count = 0
+//     static count = 0
 
-    updateScore() {
-        this.score++
-        User.count++
-        return this
-    }
-}
+//     updateScore() {
+//         this.score++
+//         User.count++
+//         return this
+//     }
+// }
 
-let user1a = new User("jack", "asdsa");
+// let user1a = new User("jack", "asdsa");
 
-user1a.updateScore()
-console.log(user1a)
+// user1a.updateScore()
+// console.log(user1a)
 
-let user2a = new User("rose", "lsadj");
-user2a.updateScore()
-console.log(user2a)
-user1a.updateScore()
+// let user2a = new User("rose", "lsadj");
+// user2a.updateScore()
+// console.log(user2a)
+// user1a.updateScore()
 
-console.log(user1a)
-console.log(User.count)
+// console.log(user1a)
+// console.log(User.count)
 
-console.log(user2a.updateScore())
+// console.log(user2a.updateScore())
 
-class Admin extends User {
-    constructor(name, email, id) {
-        super(name, email)
-        this.id = id;
-        this.greet = function() {
-            return "hello"
-        }
-    }
+// class Admin extends User {
+//     constructor(name, email, id) {
+//         super(name, email)
+//         this.id = id;
+//         this.greet = function() {
+//             return "hello"
+//         }
+//     }
 
-    deleteUser(user) {
-    //    usersA.splice(index, 1)
-    //    return usersA
+//     deleteUser(user) {
+//     //    usersA.splice(index, 1)
+//     //    return usersA
 
-        let updateUser = users.filter(u => {
-            return u.name !== user.name
-        })
+//         let updateUser = users.filter(u => {
+//             return u.name !== user.name
+//         })
 
-        return updateUser
-    }   
-}
+//         return updateUser
+//     }   
+// }
 
-let users = [user1a, user2a]
-let admin1 = new Admin("Jules", "jules@gmail.com", 3120119);
+// let users = [user1a, user2a]
+// let admin1 = new Admin("Jules", "jules@gmail.com", 3120119);
 
-console.log(admin1.greet())
+// console.log(admin1.greet())
 // console.log(users)
 
 // console.log(admin1.deleteUser(user1a))
+
+// ============= call =============
+function callSomething(greet) {
+    console.log(this.name + " " + greet)
+}
+
+callSomething.call({
+    name: "jules",
+    age: 26,
+}, "hello")
+
+function divide() {
+    return this.arrays.map(element => {
+        return element / this.length
+    })
+}
+
+console.log(divide.call({arrays: [0, 2, 3], length: 5}))
+
+// ============ prototype ==============
+// let zoo = {
+//     animals: ["crocodile", "swan", "giraffe"]
+// }
+
+// function Zoo(animals) {
+//     this.animals = animals;
+// }
+
+// let zoo1 = new Zoo(zoo.animals)
+
+// Zoo.prototype.count = function() {
+//     return this.animals.length
+// }
+
+// Zoo.prototype.add = function(animal) {
+//     this.animals.push(animal)
+// }
+
+// console.log(zoo1.count())
+// zoo1.add("lion")
+
+// console.log(zoo1)
+
+
 
 
 // last topic
@@ -564,6 +608,7 @@ console.log(admin1.greet())
 // extends and super => https://www.youtube.com/watch?v=CwAU1wYeHiM 
 
 // encapsulation
+// call() method
 // study abstraction in oop
 // study static method
     // => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
