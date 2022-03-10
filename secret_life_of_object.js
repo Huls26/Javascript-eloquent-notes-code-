@@ -556,22 +556,30 @@
 // console.log(admin1.deleteUser(user1a))
 
 // ============= call =============
-function callSomething(greet) {
-    console.log(this.name + " " + greet)
-}
+// function callSomething(greet) {
+//     console.log(this.name + " " + greet)
+// }
 
-callSomething.call({
-    name: "jules",
-    age: 26,
-}, "hello")
+// callSomething.call({
+//     name: "jules",
+//     age: 26,
+// }, "hello")
 
-function divide() {
-    return this.arrays.map(element => {
-        return element / this.length
-    })
-}
+// function divide() {
+//     return this.arrays.map(element => {
+//         return element / this.length
+//     })
+// }
 
-console.log(divide.call({arrays: [0, 2, 3], length: 5}))
+// console.log(divide.call({arrays: [0, 2, 3], length: 5}))
+
+// function callMe(name) {
+//     console.log(`hello ${name}`)
+//     console.log(this.number)
+//     console.log(this.id)
+// }
+
+// callMe.call({number: 12, id: 123}, "jules")
 
 // ============ prototype ==============
 // let zoo = {
@@ -597,6 +605,80 @@ console.log(divide.call({arrays: [0, 2, 3], length: 5}))
 
 // console.log(zoo1)
 
+// let empty = {}
+// console.log(empty.toString)
+// console.log(empty.toString())
+
+// console.log(Object.getPrototypeOf({}) ==
+// Object.prototype);
+// // → true
+// console.log(Object.getPrototypeOf(Object.prototype));
+// // → null
+
+// ============= getPrototypeof and prototype ============
+// console.log(Object.getPrototypeOf(zoo1))
+// console.log(Zoo.prototype)
+
+// console.log(Object.getPrototypeOf(Math.max) === Function.prototype)
+// // true
+// console.log(Object.getPrototypeOf([]) === Array.prototype)
+// // true
+
+class Object1 {
+    constructor() {
+        this.name = "Jules"
+    }
+
+    greet() {
+        console.log("hello")
+    }
+}
+
+class Object2 extends Object1 {
+    constructor(){
+        super()
+    }
+
+    greet() {
+        super.greet()
+    }
+    
+}
+
+let object1a = new Object1();
+let object2a = new Object2();
+
+console.log(object1a)
+console.log(object2a)
+
+console.log(Object1.prototype)
+console.log(Object2.prototype)
+
+let rabitSpeak = {
+    speak(line) {
+        console.log(`${line} my name is ${this.name}`)
+    }
+}
+
+let createProp = Object.create(rabitSpeak);
+createProp.name = "bunny"; 
+createProp.speak("hello")
+
+function makeRabbit(type) {
+    let rabbit = Object.create(rabitSpeak);
+    rabbit.type = type;
+    return rabbit;
+}
+    
+console.log(new makeRabbit("dwarf"))
+// let protoRabbit = {
+//     speak(line) {
+//         console.log(`The ${this.type} rabbit says '${line}'`);
+//     }
+// };
+// let killerRabbit = Object.create(protoRabbit);
+// killerRabbit.type = "killer";
+// killerRabbit.speak("SKREEEE!");
 
 
 
@@ -613,9 +695,10 @@ console.log(divide.call({arrays: [0, 2, 3], length: 5}))
 // study static method
     // => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
 // getter and setter 
-
+// Object.create()
+// Object.getPrototypeof() and Object.prototype
 
 // javascript challenges on friday
 
 // session 2
-// page 112
+// page 118
