@@ -301,6 +301,7 @@ console.log(employee)
 // remember "this"
 // how to traverse in tree object in javascript
 
+// lexical structure in definitive guide of javascript
 // study also Growing Function
 
 // eloquent javascript page 110

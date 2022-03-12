@@ -624,53 +624,53 @@
 // console.log(Object.getPrototypeOf([]) === Array.prototype)
 // // true
 
-class Object1 {
-    constructor() {
-        this.name = "Jules"
-    }
+// class Object1 {
+//     constructor() {
+//         this.name = "Jules"
+//     }
 
-    greet() {
-        console.log("hello")
-    }
-}
+//     greet() {
+//         console.log("hello")
+//     }
+// }
 
-class Object2 extends Object1 {
-    constructor(){
-        super()
-    }
+// class Object2 extends Object1 {
+//     constructor(){
+//         super()
+//     }
 
-    greet() {
-        super.greet()
-    }
+//     greet() {
+//         super.greet()
+//     }
     
-}
+// }
 
-let object1a = new Object1();
-let object2a = new Object2();
+// let object1a = new Object1();
+// let object2a = new Object2();
 
-console.log(object1a)
-console.log(object2a)
+// console.log(object1a)
+// console.log(object2a)
 
-console.log(Object1.prototype)
-console.log(Object2.prototype)
+// console.log(Object1.prototype)
+// console.log(Object2.prototype)
 
-let rabitSpeak = {
-    speak(line) {
-        console.log(`${line} my name is ${this.name}`)
-    }
-}
+// let rabitSpeak = {
+//     speak(line) {
+//         console.log(`${line} my name is ${this.name}`)
+//     }
+// }
 
-let createProp = Object.create(rabitSpeak);
-createProp.name = "bunny"; 
-createProp.speak("hello")
+// let createProp = Object.create(rabitSpeak);
+// createProp.name = "bunny"; 
+// createProp.speak("hello")
 
-function makeRabbit(type) {
-    let rabbit = Object.create(rabitSpeak);
-    rabbit.type = type;
-    return rabbit;
-}
+// function makeRabbit(type) {
+//     let rabbit = Object.create(rabitSpeak);
+//     rabbit.type = type;
+//     return rabbit;
+// }
     
-console.log(new makeRabbit("dwarf"))
+// console.log(new makeRabbit("dwarf"))
 // let protoRabbit = {
 //     speak(line) {
 //         console.log(`The ${this.type} rabbit says '${line}'`);
@@ -680,9 +680,76 @@ console.log(new makeRabbit("dwarf"))
 // killerRabbit.type = "killer";
 // killerRabbit.speak("SKREEEE!");
 
+// ======== prototype and object create =========
+// function Rabbit(name) {
+//     this.name = name;
+// }
 
+// Rabbit.prototype.speak = function(line) {
+//     return `hello my name is ${this.name} and ${line}`
+// }
+
+// let rabbit1 = new Rabbit("jeorge")
+
+// console.log(rabbit1.speak("i like to eat"))
+
+// function speak(line) {
+//     console.log(`hello my name is ${this.name} and ${line}`)
+// }
+
+// let rabbit = {
+//     name: "red",
+//     greet() {
+//         console.log("hello friend")
+//     }
+// }
+
+// let rabbit1 = Object.create(rabbit);
+// rabbit1.speak = speak;
+// rabbit1.speak("i like to eat")
+
+// console.log(rabbit.greet())
+// console.log(Object.getPrototypeOf(rabbit1))
+
+// function Animal(name, age) {
+//     let animal = Object.create(Animal.prototype);
+//     animal.name = name;
+//     animal.age = age;
+
+//     return animal
+// }
+
+// Animal.prototype.sound = function() {
+//     console.log("Moooo")
+// }
+// console.log(Animal(null, null))
+// console.log(Animal.prototype)
+
+class Rabbit {
+    constructor() {
+        this.name = "red"
+    }
+
+    speak(line) {
+        console.log(`Hello my name is ${this.name} and ${line}`)
+    } 
+
+}
+
+let rabbit1 = new Rabbit();
+Rabbit.prototype.sound = function() {
+    console.log("ugik")
+}
+
+let breed = Object.create(new Rabbit());
+breed.type = "dwarf"
+console.log(breed)
+
+console.log(Object.getPrototypeOf(rabbit1) === Rabbit.prototype)
 
 // last topic
+// https://www.freecodecamp.org/news/a-beginners-guide-to-javascripts-prototype/
+// https://www.youtube.com/watch?v=hKWBxkXWMVs
 // https://www.youtube.com/watch?v=8x1fygdWabY&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=7
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
@@ -702,3 +769,5 @@ console.log(new makeRabbit("dwarf"))
 
 // session 2
 // page 118
+
+// composability
