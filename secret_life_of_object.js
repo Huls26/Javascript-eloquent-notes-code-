@@ -725,27 +725,90 @@
 // console.log(Animal(null, null))
 // console.log(Animal.prototype)
 
+// class Rabbit {
+//     constructor() {
+//         this.name = "red"
+//     }
+
+//     speak(line) {
+//         console.log(`Hello my name is ${this.name} and ${line}`)
+//     } 
+
+// }
+
+// let rabbit1 = new Rabbit();
+// Rabbit.prototype.sound = function() {
+//     console.log("ugik")
+// }
+
+// let breed = Object.create(new Rabbit());
+// breed.type = "dwarf"
+// console.log(breed)
+
+// console.log(Object.getPrototypeOf(rabbit1) === Rabbit.prototype)
+
+// function Animal() {
+//     this.name = "add"
+// }
+
+// console.log(Object.getPrototypeOf(Animal))
+// console.log(Animal.prototype)
+
+
+// function speak(line) {
+//     return `hello ${line}`
+// }
+
+// let rabbit = {
+//     name: "dave"
+// }
+// let rabbit1 = Object.create(rabbit)
+// rabbit.speak = speak;
+// rabbit.name = "john"
+
+// console.log(rabbit1.speak("i want to eat"))
+// console.log(rabbit1.name)
+
 class Rabbit {
-    constructor() {
-        this.name = "red"
+    constructor(name, age) {
+        this.name = name;
+        this.age = age
     }
 
-    speak(line) {
-        console.log(`Hello my name is ${this.name} and ${line}`)
-    } 
+    play() {
+        return `play with the ball`
+    }
 
+    static rabbit = new Rabbit;
+
+    loop(instance) {
+        for (let element in instance) {
+            if (instance.hasOwnProperty(element)) {
+                console.log(instance[element])
+            }
+        }
+    }
 }
 
-let rabbit1 = new Rabbit();
-Rabbit.prototype.sound = function() {
-    console.log("ugik")
+let rabbit1 = new Rabbit("robert", 27);
+
+Rabbit.prototype.speak = function() {
+    return `hello im fat`
 }
 
-let breed = Object.create(new Rabbit());
-breed.type = "dwarf"
-console.log(breed)
+// console.log(rabbit1.speak())
+// console.log(Rabbit.prototype)
+// console.log(Object.getPrototypeOf(rabbit1))
 
-console.log(Object.getPrototypeOf(rabbit1) === Rabbit.prototype)
+rabbit1.loop(rabbit1)
+
+console.log([1,2] instanceof Array) 
+
+let className = new class {greet() {return `hello`}}
+console.log(className.greet())
+
+
+
 
 // last topic
 // https://www.freecodecamp.org/news/a-beginners-guide-to-javascripts-prototype/
@@ -755,6 +818,7 @@ console.log(Object.getPrototypeOf(rabbit1) === Rabbit.prototype)
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
 // classes => https://www.youtube.com/watch?v=2ZphE5HcQPQ
 // extends and super => https://www.youtube.com/watch?v=CwAU1wYeHiM 
+// class, getpropertyof, hasownproperty => https://www.freecodecamp.org/news/a-beginners-guide-to-javascripts-prototype/
 
 // encapsulation
 // call() method
@@ -768,6 +832,6 @@ console.log(Object.getPrototypeOf(rabbit1) === Rabbit.prototype)
 // javascript challenges on friday
 
 // session 2
-// page 118
+// page 120
 
 // composability
