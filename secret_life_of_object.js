@@ -769,49 +769,64 @@
 // console.log(rabbit1.speak("i want to eat"))
 // console.log(rabbit1.name)
 
-class Rabbit {
-    constructor(name, age) {
-        this.name = name;
-        this.age = age
-    }
+// class Rabbit {
+//     constructor(name, age) {
+//         this.name = name;
+//         this.age = age
+//     }
 
-    play() {
-        return `play with the ball`
-    }
+//     play() {
+//         return `play with the ball`
+//     }
 
-    static rabbit = new Rabbit;
+//     static rabbit = new Rabbit;
 
-    loop(instance) {
-        for (let element in instance) {
-            if (instance.hasOwnProperty(element)) {
-                console.log(instance[element])
-            }
-        }
-    }
-}
+//     loop(instance) {
+//         for (let element in instance) {
+//             if (instance.hasOwnProperty(element)) {
+//                 console.log(instance[element])
+//             }
+//         }
+//     }
+// }
 
-let rabbit1 = new Rabbit("robert", 27);
+// let rabbit1 = new Rabbit("robert", 27);
 
-Rabbit.prototype.speak = function() {
-    return `hello im fat`
-}
+// Rabbit.prototype.speak = function() {
+//     return `hello im fat`
+// }
 
 // console.log(rabbit1.speak())
 // console.log(Rabbit.prototype)
 // console.log(Object.getPrototypeOf(rabbit1))
 
-rabbit1.loop(rabbit1)
+// rabbit1.loop(rabbit1)
 
-console.log([1,2] instanceof Array) 
+// console.log([1,2] instanceof Array) 
 
-let className = new class {greet() {return `hello`}}
-console.log(className.greet())
+// let className = new class {greet() {return `hello`}}
+// console.log(className.greet())
 
+// ============= Maps ============
 
+let names = ["Julian", "Johnson", "Jonard"]
+let objectName = {
+    "Jules" : 26,
+    "Joj": 23,
+    "J7":23,
+}
+console.log("Marta" in names)
+console.log(26 in objectName)
 
+console.log(Object.getPrototypeOf(objectName))
+
+let objectNames = new Map();
+objectNames.set("Jules", 25)
+
+console.log(objectNames.get("Jules"))
+console.log({Jules: 26}.hasOwnProperty("Jules"))
 
 // last topic
-// https://www.freecodecamp.org/news/a-beginners-guide-to-javascripts-prototype/
 // https://www.youtube.com/watch?v=hKWBxkXWMVs
 // https://www.youtube.com/watch?v=8x1fygdWabY&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=7
 
@@ -828,6 +843,9 @@ console.log(className.greet())
 // getter and setter 
 // Object.create()
 // Object.getPrototypeof() and Object.prototype
+// Map()
+    // set, get and has
+    // hasOwnProperty()
 
 // javascript challenges on friday
 
