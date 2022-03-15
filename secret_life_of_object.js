@@ -809,24 +809,77 @@
 
 // ============= Maps ============
 
-let names = ["Julian", "Johnson", "Jonard"]
-let objectName = {
-    "Jules" : 26,
-    "Joj": 23,
-    "J7":23,
-}
-console.log("Marta" in names)
-console.log(26 in objectName)
+// let names = ["Julian", "Johnson", "Jonard"]
+// let objectName = {
+//     "Jules" : 26,
+//     "Joj": 23,
+//     "J7":23,
+// }
+// console.log("Marta" in names)
+// console.log(26 in objectName)
 
-console.log(Object.getPrototypeOf(objectName))
+// console.log(Object.getPrototypeOf(objectName))
 
-let objectNames = new Map();
-objectNames.set("Jules", 25)
+// let objectNames = new Map();
+// objectNames.set("Jules", 25)
+// objectNames.set("Jobert", 25)
 
-console.log(objectNames.get("Jules"))
-console.log({Jules: 26}.hasOwnProperty("Jules"))
+// console.log(objectNames.get("Jules"))
+// console.log({Jules: 26}.hasOwnProperty("Jules"))
+// console.log(objectNames.get("Jobert"))
+
+// ================= Polymorphism ====================
+// remember this method
+// class Rabbit {
+//     constructor(name, type) {
+//         this.name = name;
+//         this.type = type;
+//     }
+
+// }
+
+// Rabbit.prototype.toString = function() {
+//     console.log(`a ${this.type} rabbit`)
+// }
+
+// let rabbit1 = new Rabbit("George", "black");
+
+// String(rabbit1)
+
+// ============== symbols ================
+// let sym = Symbol("name")
+
+// console.log(sym === Symbol("name"))
+// Rabbit.prototype[sym] = 55;
+// console.log(rabbit1[sym])
+
+// let toStringSymbol = Symbol("toString");
+// Array.prototype[toStringSymbol] = function() {
+//     return `${this.length} cm of blue yarn`
+// }
+
+// console.log([1, 2].toString())
+// console.log([1, 2, 3][toStringSymbol]())
+
+// let id1 = Symbol("id");
+
+// let objectSample = {
+//     id: 12,
+//     name: "Stella",
+//     [Symbol("Hello")]: "greet",
+// }
+
+// objectSample[id1] = 32619;
+// console.log([id1])
+
+// console.log(Object.prototype)
+
+// ========= The iterator interface ==========
+
+
 
 // last topic
+// https://www.youtube.com/watch?v=2oU-DfdWM0c
 // https://www.youtube.com/watch?v=hKWBxkXWMVs
 // https://www.youtube.com/watch?v=8x1fygdWabY&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=7
 
@@ -846,10 +899,12 @@ console.log({Jules: 26}.hasOwnProperty("Jules"))
 // Map()
     // set, get and has
     // hasOwnProperty()
+// Polymorphism remember this method
+// The iterator interface
 
 // javascript challenges on friday
 
-// session 2
-// page 120
+// session 1
+// page 124
 
 // composability
