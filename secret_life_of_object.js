@@ -876,9 +876,134 @@
 
 // ========= The iterator interface ==========
 
+// let numberSample = [1, 2, 3, 4];
+
+// let iterate = numberSample[Symbol.iterator]()
+
+// console.log(Object.getPrototypeOf(iterate))
+
+// console.log(iterate.next())
+
+// iterate over 1 - 5 using the same function
+
+// function squared(nth) {
+//     let n = 0;
+
+//     return {
+//         next() {
+//            n = n + 1
+
+//            if (n <= nth) {
+//                return {
+//                    value: n * n,
+//                    done: false,
+//                }
+//            }
+
+//            return {
+//                value: undefined,
+//                done: true
+//            }
+//         }
+//     }
+// }
+
+// const iterated = squared(5);
+
+// console.log(iterated.next())
+// console.log(iterated.next())
+// console.log(iterated.next())
+// console.log(iterated.next())
+// console.log(iterated.next())
+// console.log(iterated.next())
+
+// function squared(nth) {
+//     return {
+//         [Symbol.iterator]() {
+//            return [1, 2, 3, 4]
+//         }
+//     }
+// }
+
+// console.log(squared(10))
+
+// let person1 = {
+//     name: "jules",
+//     age: 23,
+// }
+
+// let array1 = [1, 2, 3, 4]
+
+// console.log(typeof person1[Symbol.iterator])
+// console.log(typeof array1[Symbol.iterator])
+
+// console.dir(array1["pop"]())
+// console.log(Symbol.iterator)
+
+// let sym = Symbol.iterator
+// let mySym = Symbol("Symbol.iterator")
+
+// console.log(mySym === mySym)
+
+// let iterateOver = array1[Symbol.iterator]();
+
+// console.log(iterateOver.next())
+// console.log(iterateOver.next())
+
+class BoxSample {
+    constructor(height, width, element = (x, y) => {
+        for (let i = 0; i < x; i++) {
+            for (let k = 0; k < y; k++) {
+                this.container[i * width + k] = (i *width) + k;
+            }
+        }
+    }) {
+        this.height = height;
+        this.width = width;
+        this.container = [];
+        element(height, width)
+        
+    }
+}
+
+let box1 = new BoxSample(3, 4);
+console.log(box1)
+
+/*
+class Matrix {
+    constructor(width, height, element = (x, y) => undefined) {
+        this.width = width;
+        this.height = height;
+        this.content = [];
+
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                this.content[y * width + x] = element(x, y);
+            }
+        }
+    }
+    
+    get(x, y) {
+    return this.content[y * this.width + x];
+   
+    }
+
+    set(x, y, value) {
+    this.content[y * this.width + x] = value;
+    }
+}
+
+let matrix = new Matrix(3, 4);
+console.log(matrix.set(2, 2, 26))
+console.log(matrix)
+
+matrix.set(0, 1, 3)
+console.log(matrix)
+*/
 
 
 // last topic
+// https://www.youtube.com/watch?v=ZNrJPzjNt-o
 // https://www.youtube.com/watch?v=2oU-DfdWM0c
 // https://www.youtube.com/watch?v=hKWBxkXWMVs
 // https://www.youtube.com/watch?v=8x1fygdWabY&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=7
