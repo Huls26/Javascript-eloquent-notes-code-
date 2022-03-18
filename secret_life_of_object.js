@@ -968,45 +968,95 @@ class BoxSample {
 
 let box1 = new BoxSample(3, 4);
 console.log(box1)
-
-/*
 class Matrix {
     constructor(width, height, element = (x, y) => undefined) {
         this.width = width;
         this.height = height;
-        this.content = [];
+        this.container = [];
 
-        for (let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x++) {
-                this.content[y * width + x] = element(x, y);
+        for (let i = 0; i < height; i++) {
+            for (let k = 0; k < width; k++) {
+                this.container[i * width + k] = element()
             }
         }
     }
-    
-    get(x, y) {
-    return this.content[y * this.width + x];
-   
-    }
 
     set(x, y, value) {
-    this.content[y * this.width + x] = value;
+        this.container[x * this.width + y] = value;
+    }
+
+    get(x, y) {
+        return this.container[x * this.width + y]
     }
 }
 
-let matrix = new Matrix(3, 4);
-console.log(matrix.set(2, 2, 26))
-console.log(matrix)
+let matrix1 = new Matrix(3, 3);
 
-matrix.set(0, 1, 3)
-console.log(matrix)
-*/
+console.log(matrix1)
+matrix1.set(0, 0, 3)
+matrix1.set(1, 2, 26)
+
+console.log(matrix1.get(0, 0))
+
+// polymorphism
+Matrix.prototype.toString = function() {
+    return "hello"
+}
+
+console.log(Matrix.prototype)
+console.log(String(matrix1))
+
+function loopThrough(max) {
+    let n = 0;
+
+    return {
+        next() {
+            n++
+            if (n <= max) {
+                return {value: n * n, done: false}
+            }
+
+            return {value: undefined, done: true}
+        }
+    }
+}
+
+let loops = loopThrough(5);
+console.log(loops.next())
+console.log(loops.next())
+console.log(loops.next())
+console.log(loops.next())
+console.log(loops.next())
+console.log(loops.next())
+
+function squared(max) {
+    return {
+        [Symbol.iterator]() {
+            let n = 0;
+
+            return {
+                next() {
+                    n++
+                    if (n <= max) {
+                        return {value: n * n, done: false}
+                    }
+        
+                    return {value: undefined, done: true}
+                }
+            }
+        }
+    }
+   
+}
+
+for (let element of squared(5)) {
+    console.log(element)
+}
+
 
 
 // last topic
-// https://www.youtube.com/watch?v=ZNrJPzjNt-o
 // https://www.youtube.com/watch?v=2oU-DfdWM0c
-// https://www.youtube.com/watch?v=hKWBxkXWMVs
-// https://www.youtube.com/watch?v=8x1fygdWabY&list=PL4cUxeGkcC9i5yvDkJgt60vNVWffpblB7&index=7
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
 // classes => https://www.youtube.com/watch?v=2ZphE5HcQPQ
