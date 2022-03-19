@@ -1053,9 +1053,85 @@ for (let element of squared(5)) {
     console.log(element)
 }
 
+// loop through object using for/...of loop
+let samplePerson = {
+    name: "Raffy",
+    age: 45,
+    status: "married",
+    job: "Broadcaster"
+}
+
+Object.prototype[Symbol.iterator] = function() {
+    let objectKey = Object.keys(samplePerson);
+    let index = 0;
+    return {
+        next() {
+            return {value: objectKey[index], done: index++ >= objectKey.length}
+        }
+    }
+}
+
+for (let element of samplePerson) {
+    console.log(element)
+}
+
+
+// using iteration protocols
+let something = new String("hi");
+
+// changing the whole prototype of String()
+String.prototype[Symbol.iterator] = function() {
+    let n = 0
+    return {
+        next() {
+            n++
+            // if (this.first) {
+            //     this.first = false;
+            //     return {value: ["bye"], done: false}
+            // }
+
+            // return {done: true}
+
+            // use this method instead of the other up there
+            return this.first ? {done: (this.first = false), value: ["bye"]} : {done: true}
+        },
+        first: true,
+    }
+}
+
+// change just something method [Symbol.iterator]
+something[Symbol.iterator] = function() {
+    let n = 0
+    return {
+        next() {
+            n++
+            // if (this.first) {
+            //     this.first = false;
+            //     return {value: ["bye"], done: false}
+            // }
+
+            // return {done: true}
+
+            // use this method instead of the other up there
+            return this.first ? {done: (this.first = false), value: ["bye"]} : {done: true}
+        },
+        first: true,
+    }
+}
+let iterates = something[Symbol.iterator]();
+
+// console.log(iterates.next())
+// console.log(iterates.next())
+
+console.log([...something])
+console.log(something + "")
+
+
 
 
 // last topic
+// https://www.youtube.com/watch?v=HZjvoftRvGE
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
 // https://www.youtube.com/watch?v=2oU-DfdWM0c
 
 // 'this' review => https://www.youtube.com/watch?v=gvicrj31JOM
