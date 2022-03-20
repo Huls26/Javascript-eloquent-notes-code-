@@ -1123,14 +1123,73 @@ let iterates = something[Symbol.iterator]();
 // console.log(iterates.next())
 // console.log(iterates.next())
 
-console.log([...something])
-console.log(something + "")
+// console.log([...something])
+// console.log(something + "")
+
+// let adding = function() {
+//     return sampleObject.review1 + sampleObject.review2
+// }
+
+// let sampleObject = {
+//     review1: 1,
+//     review2: 2,
+//     total: adding,
+// }
+
+// console.log(sampleObject.total())
+
+class AddSomething {
+    constructor(value1, value2) {
+        this.value1 = value1;
+        this.value2 = value2;
+        this.total = 0;
+    }
+
+    [Symbol.iterator]() {
+        return {
+            next() {
+                if (this.total === 0) {
+                    this.total = this.value1 + this.value2
+
+                    return {value: this.total, done: false}
+                }
+
+                return {done: true, check: this}
+            }, 
+            total: this
+            
+        }
+    }
+   
+} 
+
+let add1 = new AddSomething(1, 2);
+
+console.log(add1.value1)
 
 
+console.log(add1[Symbol.iterator]().next())
+// console.log(add1[Symbol.iterator]().next())
 
+// for (let element of add1) {
+//     console.log(element)
+// }
+
+let doubleThis = {
+    this1: "writesomethin",
+    get: {
+        this2: "hello",
+        check: this.this1
+    },
+
+    check: this.this1
+    
+}
+
+console.log(doubleThis.get.check)
+console.log(doubleThis.check)
 
 // last topic
-// https://www.youtube.com/watch?v=HZjvoftRvGE
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
 // https://www.youtube.com/watch?v=2oU-DfdWM0c
 
