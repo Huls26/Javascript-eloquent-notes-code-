@@ -950,175 +950,181 @@
 // console.log(iterateOver.next())
 // console.log(iterateOver.next())
 
-class BoxSample {
-    constructor(height, width, element = (x, y) => {
-        for (let i = 0; i < x; i++) {
-            for (let k = 0; k < y; k++) {
-                this.container[i * width + k] = (i *width) + k;
-            }
-        }
-    }) {
-        this.height = height;
-        this.width = width;
-        this.container = [];
-        element(height, width)
+// class BoxSample {
+//     constructor(height, width, element = (x, y) => {
+//         for (let i = 0; i < x; i++) {
+//             for (let k = 0; k < y; k++) {
+//                 this.container[i * width + k] = (i *width) + k;
+//             }
+//         }
+//     }) {
+//         this.height = height;
+//         this.width = width;
+//         this.container = [];
+//         element(height, width)
         
-    }
-}
+//     }
+// }
 
-let box1 = new BoxSample(3, 4);
-console.log(box1)
-class Matrix {
-    constructor(width, height, element = (x, y) => undefined) {
-        this.width = width;
-        this.height = height;
-        this.container = [];
+// let box1 = new BoxSample(3, 4);
+// console.log(box1)
+// class Matrix {
+//     constructor(width, height, element = (x, y) => undefined) {
+//         this.width = width;
+//         this.height = height;
+//         this.container = [];
 
-        for (let i = 0; i < height; i++) {
-            for (let k = 0; k < width; k++) {
-                this.container[i * width + k] = element()
-            }
-        }
-    }
+//         for (let i = 0; i < height; i++) {
+//             for (let k = 0; k < width; k++) {
+//                 this.container[i * width + k] = element()
+//             }
+//         }
+//     }
 
-    set(x, y, value) {
-        this.container[x * this.width + y] = value;
-    }
+//     set(x, y, value) {
+//         this.container[x * this.width + y] = value;
+//     }
 
-    get(x, y) {
-        return this.container[x * this.width + y]
-    }
-}
+//     get(x, y) {
+//         return this.container[x * this.width + y]
+//     }
+// }
 
-let matrix1 = new Matrix(3, 3);
+// let matrix1 = new Matrix(3, 3);
 
-console.log(matrix1)
-matrix1.set(0, 0, 3)
-matrix1.set(1, 2, 26)
+// console.log(matrix1)
+// matrix1.set(0, 0, 3)
+// matrix1.set(1, 2, 26)
 
-console.log(matrix1.get(0, 0))
+// console.log(matrix1.get(0, 0))
 
 // polymorphism
-Matrix.prototype.toString = function() {
-    return "hello"
-}
+// Matrix.prototype.toString = function() {
+//     return "hello"
+// }
 
-console.log(Matrix.prototype)
-console.log(String(matrix1))
+// console.log(Matrix.prototype)
+// console.log(String(matrix1))
 
-function loopThrough(max) {
-    let n = 0;
+// function loopThrough(max) {
+//     let n = 0;
 
-    return {
-        next() {
-            n++
-            if (n <= max) {
-                return {value: n * n, done: false}
-            }
+//     return {
+//         next() {
+//             n++
+//             if (n <= max) {
+//                 return {value: n * n, done: false}
+//             }
 
-            return {value: undefined, done: true}
-        }
-    }
-}
+//             return {value: undefined, done: true}
+//         }
+//     }
+// }
 
-let loops = loopThrough(5);
-console.log(loops.next())
-console.log(loops.next())
-console.log(loops.next())
-console.log(loops.next())
-console.log(loops.next())
-console.log(loops.next())
+// let loops = loopThrough(5);
+// console.log(loops.next())
+// console.log(loops.next())
+// console.log(loops.next())
+// console.log(loops.next())
+// console.log(loops.next())
+// console.log(loops.next())
 
-function squared(max) {
-    return {
-        [Symbol.iterator]() {
-            let n = 0;
+// function squared(max) {
+//     return {
+//         [Symbol.iterator]() {
+//             let n = 0;
 
-            return {
-                next() {
-                    n++
-                    if (n <= max) {
-                        return {value: n * n, done: false}
-                    }
+//             return {
+//                 next() {
+//                     n++
+//                     if (n <= max) {
+//                         return {value: n * n, done: false}
+//                     }
         
-                    return {value: undefined, done: true}
-                }
-            }
-        }
-    }
+//                     return {value: undefined, done: true}
+//                 }
+//             }
+//         }
+//     }
    
-}
+// }
 
-for (let element of squared(5)) {
-    console.log(element)
-}
+// for (let element of squared(5)) {
+//     console.log(element)
+// }
 
 // loop through object using for/...of loop
-let samplePerson = {
-    name: "Raffy",
-    age: 45,
-    status: "married",
-    job: "Broadcaster"
-}
+// let samplePerson = {
+//     name: "Raffy",
+//     age: 45,
+//     status: "married",
+//     job: "Broadcaster"
+// }
 
-Object.prototype[Symbol.iterator] = function() {
-    let objectKey = Object.keys(samplePerson);
-    let index = 0;
-    return {
-        next() {
-            return {value: objectKey[index], done: index++ >= objectKey.length}
-        }
-    }
-}
+// Object.prototype[Symbol.iterator] = function() {
+//     let objectKey = Object.keys(samplePerson);
+//     let index = 0;
+//     return {
+//         next() {
+//             return {value: objectKey[index], done: index++ >= objectKey.length}
+//         }
+//     }
+// }
 
-for (let element of samplePerson) {
-    console.log(element)
-}
+// let callThis = samplePerson[Symbol.iterator]()
+// console.log(callThis.next())
+// console.log(callThis.next())
+// console.log(callThis.next())
+// console.log(callThis.next())
+// console.log(callThis.next())
 
+// for (let element of samplePerson) {
+//     console.log(element)
+// }
 
 // using iteration protocols
-let something = new String("hi");
+// let something = new String("hi");
 
 // changing the whole prototype of String()
-String.prototype[Symbol.iterator] = function() {
-    let n = 0
-    return {
-        next() {
-            n++
-            // if (this.first) {
-            //     this.first = false;
-            //     return {value: ["bye"], done: false}
-            // }
+// String.prototype[Symbol.iterator] = function() {
+//     let n = 0
+//     return {
+//         next() {
+//             n++
+//             // if (this.first) {
+//             //     this.first = false;
+//             //     return {value: ["bye"], done: false}
+//             // }
 
-            // return {done: true}
+//             // return {done: true}
 
-            // use this method instead of the other up there
-            return this.first ? {done: (this.first = false), value: ["bye"]} : {done: true}
-        },
-        first: true,
-    }
-}
+//             // use this method instead of the other up there
+//             return this.first ? {done: (this.first = false), value: ["bye"]} : {done: true}
+//         },
+//         first: true,
+//     }
+// }
 
 // change just something method [Symbol.iterator]
-something[Symbol.iterator] = function() {
-    let n = 0
-    return {
-        next() {
-            n++
-            // if (this.first) {
-            //     this.first = false;
-            //     return {value: ["bye"], done: false}
-            // }
+// something[Symbol.iterator] = function() {
+//     let n = 0
+//     return {
+//         next() {
+//             n++
+//             // if (this.first) {
+//             //     this.first = false;
+//             //     return {value: ["bye"], done: false}
+//             // }
 
-            // return {done: true}
+//             // return {done: true}
 
-            // use this method instead of the other up there
-            return this.first ? {done: (this.first = false), value: ["bye"]} : {done: true}
-        },
-        first: true,
-    }
-}
-let iterates = something[Symbol.iterator]();
+//             // use this method instead of the other up there
+//             return this.first ? {done: (this.first = false), value: ["bye"]} : {done: true}
+//         },
+//         first: true,
+//     }
+// }
+// let iterates = something[Symbol.iterator]();
 
 // console.log(iterates.next())
 // console.log(iterates.next())
@@ -1126,6 +1132,7 @@ let iterates = something[Symbol.iterator]();
 // console.log([...something])
 // console.log(something + "")
 
+// calling function using key values of object
 // let adding = function() {
 //     return sampleObject.review1 + sampleObject.review2
 // }
@@ -1138,6 +1145,26 @@ let iterates = something[Symbol.iterator]();
 
 // console.log(sampleObject.total())
 
+// testing "this"
+// let doubleThis = {
+//     this1: "writesomethin",
+//     get: {
+//         this2: "hello",
+//         check() {
+//             return this.this1, this.this2
+//         }
+//     },
+
+//    check() {
+//        return this.this1
+//    }
+    
+// }
+
+// console.log(doubleThis.get.check())
+// console.log(doubleThis.check())
+
+// using system.iterator method
 class AddSomething {
     constructor(value1, value2) {
         this.value1 = value1;
@@ -1145,49 +1172,52 @@ class AddSomething {
         this.total = 0;
     }
 
-    [Symbol.iterator]() {
-        return {
-            next() {
-                if (this.total === 0) {
-                    this.total = this.value1 + this.value2
+    static total = 0;
 
-                    return {value: this.total, done: false}
-                }
+    // [Symbol.iterator]() {
+    //     return {
+    //         next() {
+    //             if (AddSomething.total === 0) {
+    //                 let add = this.add();
+    //                 AddSomething.total = add;
 
-                return {done: true, check: this}
-            }, 
-            total: this
+    //                 return {value: add, done: false}
+    //             }
+
+    //             return {done: true}
+    //         }, 
+    //         value1: this.value1,
+    //         value2: this.value2,
+    //         add() {
+    //             return this.value1 + this.value2
+    //         }
             
-        }
-    }
+    //     }
+    // }
+
+    // [Symbol.iterator]() {
+    //     let n = 0;
+    //     return {
+    //         next() {
+    //             return {value: n, done: n++ >= 3} 
+    //         }
+    //     }
+    // }
    
 } 
 
 let add1 = new AddSomething(1, 2);
 
-console.log(add1.value1)
+let toLoop = add1[Symbol.iterator]();
 
 
-console.log(add1[Symbol.iterator]().next())
 // console.log(add1[Symbol.iterator]().next())
 
 // for (let element of add1) {
 //     console.log(element)
 // }
 
-let doubleThis = {
-    this1: "writesomethin",
-    get: {
-        this2: "hello",
-        check: this.this1
-    },
 
-    check: this.this1
-    
-}
-
-console.log(doubleThis.get.check)
-console.log(doubleThis.check)
 
 // last topic
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
