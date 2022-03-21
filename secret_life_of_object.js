@@ -1174,50 +1174,139 @@ class AddSomething {
 
     static total = 0;
 
-    // [Symbol.iterator]() {
-    //     return {
-    //         next() {
-    //             if (AddSomething.total === 0) {
-    //                 let add = this.add();
-    //                 AddSomething.total = add;
+    [Symbol.iterator]() {
+        return {
+            next() {
+                if (AddSomething.total === 0) {
+                    let add = this.add();
+                    AddSomething.total = add;
 
-    //                 return {value: add, done: false}
-    //             }
+                return {value: add, done: false}
+                }
 
-    //             return {done: true}
-    //         }, 
-    //         value1: this.value1,
-    //         value2: this.value2,
-    //         add() {
-    //             return this.value1 + this.value2
-    //         }
+                return {value: undefined, done: true}
+                
+            }, 
+            value1: this.value1,
+            value2: this.value2,
+            add() {
+                return this.value1 + this.value2
+            }
             
-    //     }
-    // }
+        }
+    }
 
     // [Symbol.iterator]() {
     //     let n = 0;
     //     return {
     //         next() {
     //             return {value: n, done: n++ >= 3} 
-    //         }
+    //         },
+    //         value1: this.value1,
+    //         value2: this.value2,
+    //         add() {
+    //             return this.value1 + this.value2
+    //         }   
     //     }
     // }
    
 } 
 
-let add1 = new AddSomething(1, 2);
+let add1 = new AddSomething(2, 2);
 
 let toLoop = add1[Symbol.iterator]();
+console.log(toLoop === add1[Symbol.iterator]())
+// to make toLoop equal you should call itself
+console.log(toLoop === toLoop)
 
+for (let element of add1) {
+    console.log(element)
+}
 
 // console.log(add1[Symbol.iterator]().next())
+// console.log(add1[Symbol.iterator]().next())
 
-// for (let element of add1) {
-//     console.log(element)
-// }
+// =========== Matrix ==============
+class Matrix {
+    constructor(width, height, element = (x, y) => undefined) {
+        this.width = width;
+        this.height = height;
+        this.container = [];
+
+        for (let i = 0; i < height; i++) {
+            for (let k = 0; k < width; k++) {
+                this.container[i * width + k] = element(k, i);
+            }
+        }
+    }
+
+    get(x, y) {
+        return this.container[x * this.width + y]
+    }
+
+    set(x, y, value) {
+        this.container[x * this.width + y] = value
+    }
+
+}
+
+// ============== Matrix Iterator =================
+class MatrixIterator {
+    constructor(matrix) {
+        this.x = 0;
+        this.y = 0;
+        this.matrix = matrix;
+    }
+
+    next() {
+        if (this.y === this.matrix.height) {return {done: true}}
+
+        let value = {
+            x: this.x,
+            y: this.y,
+            value: this.matrix.get(this.x, this.y),
+        }
+
+        this.x++
+        if (this.x === this.matrix.width) {
+            this.x = 0;
+            this.y++;
+        }
+        return {value, done: false}
+    }
+   
+}
+
+// ============= Symbol.iterator ==============
+Matrix.prototype[Symbol.iterator] = function() {
+    return new MatrixIterator(this)
+}
+
+let matrix1 = new Matrix(3, 3, (x, y) => `value ${x}, ${y}`);
+
+console.log(matrix1)
+
+for (let {x, y, value} of matrix1) {
+     console.log(x, y, value)
+}
 
 
+// console.log(loopAgain.next())
+// console.log(loopAgain.next())
+// console.log(loopAgain.next())
+// console.log(loopAgain.next())
+
+
+
+// matrix1.set(0, 0, 3)
+// console.log(matrix1.get(0, 0))
+// console.log(matrix1)
+
+// console.log(matrix1[Symbol.iterator]())
+
+// let {width, height, container} = matrix1;
+
+// console.log(container)
 
 // last topic
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
