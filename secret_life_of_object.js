@@ -1226,76 +1226,75 @@ for (let element of add1) {
 // console.log(add1[Symbol.iterator]().next())
 // console.log(add1[Symbol.iterator]().next())
 
-// =========== Matrix ==============
-class Matrix {
-    constructor(width, height, element = (x, y) => undefined) {
-        this.width = width;
-        this.height = height;
-        this.container = [];
+// // =========== Matrix ==============
+// class Matrix {
+//     constructor(width, height, element = (x, y) => undefined) {
+//         this.width = width;
+//         this.height = height;
+//         this.container = [];
 
-        for (let i = 0; i < height; i++) {
-            for (let k = 0; k < width; k++) {
-                this.container[i * width + k] = element(k, i);
-            }
-        }
-    }
+//         for (let i = 0; i < height; i++) {
+//             for (let k = 0; k < width; k++) {
+//                 this.container[i * width + k] = element(k, i);
+//             }
+//         }
+//     }
 
-    get(x, y) {
-        return this.container[x * this.width + y]
-    }
+//     get(x, y) {
+//         return this.container[x * this.width + y]
+//     }
 
-    set(x, y, value) {
-        this.container[x * this.width + y] = value
-    }
+//     set(x, y, value) {
+//         this.container[x * this.width + y] = value
+//     }
 
-}
+// }
 
-// ============== Matrix Iterator =================
-class MatrixIterator {
-    constructor(matrix) {
-        this.x = 0;
-        this.y = 0;
-        this.matrix = matrix;
-    }
+// // ============== Matrix Iterator =================
+// class MatrixIterator {
+//     constructor(matrix) {
+//         this.x = 0;
+//         this.y = 0;
+//         this.matrix = matrix;
+//     }
 
-    next() {
-        if (this.y === this.matrix.height) {return {done: true}}
+//     next() {
+//         if (this.y === this.matrix.height) {return {done: true}}
 
-        let value = {
-            x: this.x,
-            y: this.y,
-            value: this.matrix.get(this.x, this.y),
-        }
+//         let value = {
+//             x: this.x,
+//             y: this.y,
+//             value: this.matrix.get(this.x, this.y),
+//         }
 
-        this.x++
-        if (this.x === this.matrix.width) {
-            this.x = 0;
-            this.y++;
-        }
-        return {value, done: false}
-    }
+//         this.x++
+//         if (this.x === this.matrix.width) {
+//             this.x = 0;
+//             this.y++;
+//         }
+//         return {value, done: false}
+//     }
    
-}
+// }
 
-// ============= Symbol.iterator ==============
-Matrix.prototype[Symbol.iterator] = function() {
-    return new MatrixIterator(this)
-}
+// // ============= Symbol.iterator ==============
+// Matrix.prototype[Symbol.iterator] = function() {
+//     return new MatrixIterator(this)
+// }
 
-let matrix1 = new Matrix(3, 3, (x, y) => `value ${x}, ${y}`);
+// let matrix1 = new Matrix(3, 3, (x, y) => `value ${x}, ${y}`);
 
-console.log(matrix1)
+// console.log(matrix1)
 
-for (let {x, y, value} of matrix1) {
-     console.log(x, y, value)
-}
+// for (let {x, y, value} of matrix1) {
+//      console.log(x, y, value)
+// }
 
 
 // console.log(loopAgain.next())
 // console.log(loopAgain.next())
 // console.log(loopAgain.next())
 // console.log(loopAgain.next())
-
 
 
 // matrix1.set(0, 0, 3)
@@ -1307,6 +1306,71 @@ for (let {x, y, value} of matrix1) {
 // let {width, height, container} = matrix1;
 
 // console.log(container)
+
+class Matrix {
+    constructor(width, height, element = (x, y) => undefined) {
+        this.width = width;
+        this.height = height;
+        this.container = [];
+
+        for (let i = 0; i < height; i++) {
+            for (let k = 0; k < width; k++) {
+                this.container[i * width + k] = element(k, i)
+            }
+        }
+    }
+
+    get(x, y) {
+        return this.container[y * this.width + x]
+    }
+
+    set(x, y, value) {
+        this.container[y * this.width + x] = value
+    }
+}
+
+class MatrixIterator {
+    constructor(matrix) {
+        this.x = 0;
+        this.y = 0;
+        this.matrix = matrix;
+    }
+
+    next() {
+        if (this.y === this.matrix.height) {
+            return {done: true}
+        }
+
+        let value = {
+            x: this.x,
+            y: this.y,
+            value: this.matrix.get(this.x, this.y),
+        }
+
+        this.x++
+        if (this.x === this.matrix.width ) {
+            this.x = 0;
+            this.y++
+        }
+
+        return {value, done: false}
+    }
+}
+
+Matrix.prototype[Symbol.iterator] = function() {
+    return new MatrixIterator(this)
+}
+
+
+let matrix1 = new Matrix(3, 4, (x, y) => `value ${x}, ${y}`);
+
+
+matrix1.set(2, 3, 26)
+console.log(matrix1)
+
+for (let {x, y, value} of matrix1) {
+    console.log(x, y, value)
+}
 
 // last topic
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
