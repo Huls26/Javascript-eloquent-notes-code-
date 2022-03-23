@@ -1307,6 +1307,7 @@ for (let element of add1) {
 
 // console.log(container)
 
+/*
 class Matrix {
     constructor(width, height, element = (x, y) => undefined) {
         this.width = width;
@@ -1371,8 +1372,69 @@ console.log(matrix1)
 for (let {x, y, value} of matrix1) {
     console.log(x, y, value)
 }
+*/
+
+// maps 
+let map1 = new Map();
+map1.set("name", "Jnh");
+map1.set("age", 46);
+console.log(map1.size)
+console.log(map1.get("name"))
+
+// get, set, and static
+
+// get
+let somethingCool = {
+    richIn: "Rich after 2-5 years",
+    get Happen() {
+        return this.richIn
+    }
+}
+
+console.log(somethingCool.Happen)
+
+let randomNumber = {
+    get generate() {
+        return Math.ceil(Math.random() * 100)
+    }
+}
+
+console.log(randomNumber.generate)
+
+class Temperature {
+    constructor(celsius) {
+        this.celsius = celsius;
+    }
+
+    get fahrenheit() {
+        return (this.celsius * (9/5)) + 32
+    }
+
+    set fahrenheit(values) {
+       this.celsius = (values - 32) * (5/9);
+    }
+
+    // get celsius() {
+    //     return this.celsius
+    // }
+    static fromFahrenheit(values) {
+        return new Temperature((values - 32) * (5/9))
+    }
+}
+
+let temp = new Temperature(22)
+console.log(temp.fahrenheit)
+temp.fahrenheit = 86;
+
+// console.log(temp.celsius)
+// console.log(temp)
+
+// console.log(Temperature.fromFahrenheit(100))
+let temp2 = {celsius: 43};
+console.log(Temperature.hasOwnProperty("fromFahrenheit"))
 
 // last topic
+// check inheritance
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
 // https://www.youtube.com/watch?v=2oU-DfdWM0c
 
