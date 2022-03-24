@@ -1375,63 +1375,160 @@ for (let {x, y, value} of matrix1) {
 */
 
 // maps 
-let map1 = new Map();
-map1.set("name", "Jnh");
-map1.set("age", 46);
-console.log(map1.size)
-console.log(map1.get("name"))
+// let map1 = new Map();
+// map1.set("name", "Jnh");
+// map1.set("age", 46);
+// console.log(map1.size)
+// console.log(map1.get("name"))
 
-// get, set, and static
+// // get, set, and static
 
-// get
-let somethingCool = {
-    richIn: "Rich after 2-5 years",
-    get Happen() {
-        return this.richIn
+// // get
+// let somethingCool = {
+//     richIn: "Rich after 2-5 years",
+//     get Happen() {
+//         return this.richIn
+//     }
+// }
+
+// console.log(somethingCool.Happen)
+
+// let randomNumber = {
+//     get generate() {
+//         return Math.ceil(Math.random() * 100)
+//     }
+// }
+
+// console.log(randomNumber.generate)
+
+// class Temperature {
+//     constructor(celsius) {
+//         this.celsius = celsius;
+//     }
+
+//     get fahrenheit() {
+//         return (this.celsius * (9/5)) + 32
+//     }
+
+//     set fahrenheit(values) {
+//        this.celsius = (values - 32) * (5/9);
+//     }
+
+//     // get celsius() {
+//     //     return this.celsius
+//     // }
+//     static fromFahrenheit(values) {
+//         return new Temperature((values - 32) * (5/9))
+//     }
+// }
+
+// let temp = new Temperature(22)
+// console.log(temp.fahrenheit)
+// temp.fahrenheit = 86;
+
+// // console.log(temp.celsius)
+// // console.log(temp)
+
+// // console.log(Temperature.fromFahrenheit(100))
+// let temp2 = {celsius: 43};
+// console.log(Temperature.hasOwnProperty("fromFahrenheit"))
+
+// =========== Inheritance ===========
+// class Rabbit {
+//     constructor(name) {
+//         this.name = name
+//     }
+
+//     speak() {
+//         return `Hi i'm ${this.name}`
+//     }
+// }
+
+// class BlackRabbit extends Rabbit {
+//     constructor(name) {
+//         super(name);
+//     }
+
+//     hide() {
+//         return console.log(`hide`)
+//     }
+
+//     speak() {
+
+//         super.speak();
+//         this.hide();
+//     }
+// }
+
+// let blackRabbit = new BlackRabbit("thor");
+
+// console.log(blackRabbit.speak())
+
+class Matrix {
+    constructor(width, height, element = (x, y) => undefined) {
+        this.width = width;
+        this.height = height;
+        this.container = [];
+
+        for (let i = 0; i < height; i++) {
+            for (let k = 0; k < width; k++) {
+                this.container[i * width + k] = element(k, i)
+            }
+        }
+    }
+
+    get(x, y) {
+        return this.container[y * this.width + x]
+    }
+
+    set(x, y, value) {
+        this.container[y * this.width + x] = value
     }
 }
 
-console.log(somethingCool.Happen)
+class MatrixIterator {
+    constructor(matrix) {
+        this.x = 0;
+        this.y = 0;
+        this.matrix = matrix;
+    }
 
-let randomNumber = {
-    get generate() {
-        return Math.ceil(Math.random() * 100)
+    next() {
+        if (this.y === this.matrix.height) {
+            return {done: true}
+        }
+
+        let value = {
+            x: this.x,
+            y: this.y,
+            value: this.matrix.get(this.x, this.y)    
+        }
+
+       this.x++
+        if (this.x === this.matrix.width) {
+            this.x = 0;
+            this.y++
+        }
+
+        return {value, done: false}
     }
 }
 
-console.log(randomNumber.generate)
-
-class Temperature {
-    constructor(celsius) {
-        this.celsius = celsius;
-    }
-
-    get fahrenheit() {
-        return (this.celsius * (9/5)) + 32
-    }
-
-    set fahrenheit(values) {
-       this.celsius = (values - 32) * (5/9);
-    }
-
-    // get celsius() {
-    //     return this.celsius
-    // }
-    static fromFahrenheit(values) {
-        return new Temperature((values - 32) * (5/9))
-    }
+Matrix.prototype[Symbol.iterator] = function() {
+    return new MatrixIterator(this)
 }
 
-let temp = new Temperature(22)
-console.log(temp.fahrenheit)
-temp.fahrenheit = 86;
+let matrix1 = new Matrix(2, 3, (x, y) => `value ${x}, ${y}`)
 
-// console.log(temp.celsius)
-// console.log(temp)
+console.log(matrix1.set(2, 3, "hello"))
+console.log(matrix1.container)
 
-// console.log(Temperature.fromFahrenheit(100))
-let temp2 = {celsius: 43};
-console.log(Temperature.hasOwnProperty("fromFahrenheit"))
+// for (let element of matrix1) {
+//     console.log(element)
+// }
+// console.log(matrix1)
+
+
 
 // last topic
 // check inheritance
