@@ -1518,17 +1518,57 @@ Matrix.prototype[Symbol.iterator] = function() {
     return new MatrixIterator(this)
 }
 
-let matrix1 = new Matrix(2, 3, (x, y) => `value ${x}, ${y}`)
+let matrix1 = new Matrix(5, 5, (x, y) => `${x}, ${y}`)
 
-console.log(matrix1.set(2, 3, "hello"))
-console.log(matrix1.container)
+// console.log(matrix1.set(2, 3, "hello"))
+console.log(matrix1.get(2, 3))
+
 
 // for (let element of matrix1) {
 //     console.log(element)
 // }
 // console.log(matrix1)
 
+// ========= inheritance =========
+class SymmetricMatrix extends Matrix {
+    constructor(size, element = (x, y) => undefined) {
+        super(size, size, (x, y) => {
+         return (x < y) ? element(y, x) : element(x, y)
+        })
+    }
 
+    set(x, y, value) {
+        super.set(x, y, value);
+        if (x != y) {
+            super.set(y, x, value)
+        }
+    }
+}
+
+let matrix = new SymmetricMatrix(5, (x, y) => `${x}, ${y}`)
+
+console.log(matrix.get(2, 3))
+
+console.log(matrix1.container)
+console.log(matrix.container)
+
+// The instanceof Operator
+console.log(matrix instanceof SymmetricMatrix)
+console.log(SymmetricMatrix instanceof Matrix)
+console.log(SymmetricMatrix instanceof Object)
+console.log(new SymmetricMatrix(4) instanceof Matrix)
+
+// add prototype and properties
+matrix.greet = function() {
+    return "hello"
+}
+
+SymmetricMatrix.prototype["say"] = function() {
+    return "say something"
+}
+
+console.log(matrix.greet())
+console.log(Object.getPrototypeOf(matrix))
 
 // last topic
 // check inheritance
