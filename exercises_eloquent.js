@@ -448,28 +448,113 @@ class Vec {
         this.y = y
     }
 
-    plus(x, y) {
-        return `(${this.x + x}, ${this.y + y}) value`
+    plus(vector) {
+        vector.x = this.x + vector.x;
+        vector.y = this.y + vector.y;
+
+        return vector
     }
 
-    minus(x, y) {
-        return `(${this.x - x}, ${this.y - y}) difference`
+    minus(vector) {
+        vector.x = this.x - vector.x;
+        vector.y = this.y - vector.y;
+
+        return vector
     }
 
     get length() {
-        return Math.sqrt((0 - this.x)^2 + (0 - this.y)^2).toFixed(4)
+       return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
     }
 }
 
 let vec1 = new Vec(2, 3);
 
-console.log(vec1)
-
-console.log(vec1.plus(3, 2))
-console.log(vec1.minus(3, 2))
-console.log(vec1.length)
+// console.log(vec1)
+console.log(new Vec(1, 2).plus(new Vec(2, 3)));
+// → Vec{x: 3, y: 5}
+console.log(new Vec(1, 2).minus(new Vec(2, 3)));
+// → Vec{x: -1, y: -1}
+console.log(new Vec(3, 4).length);
 
 // =========== Groups ============
+class Group {
+    constructor() {
+        this.container = null;
+    }
+
+    add(value) {
+        if (!this.container.includes(value)) {
+            this.container.push(value)
+        }
+    }
+
+    delete(value) {
+        let index = this.container.indexOf(value)
+
+        // if (index)
+        this.container.splice(index, 1)
+    }   
+
+    has(value) {
+        return this.container.includes(value)
+    }
+
+    static from(iterable) {
+        let group = new Group();
+        group.container = iterable;
+
+        return group
+    }
+}
+
+let group = Group.from([10, 20]);
+console.log(group.has(10));
+// → true
+console.log(group.has(30));
+// → false
+group.add(10);
+group.delete(10);
+console.log(group.has(10));
+// → false
+
+// ============ Iterable Groups ============
+Group.prototype[Symbol.iterator] = function() {
+    let index = 0;
+    return {
+        next() {
+            // console.log(this.x.container.length)
+           return {value: this.x.container[index], done: (index++ >= this.x.container.length)}
+        },
+        x: this
+    }
+}
+
+for (let value of Group.from(["a", "b", "c"])) {
+    console.log(value);
+}
+// → a
+// → b
+// → c
+
+// Borrowing a method
+
+let maps = {one: true, two: true, hasOwnProperty: true};
+
+maps.hasOwnProperty = function(value) {
+    let condition = false;
+    
+    for (let element in this) {
+        if (element === value) {
+            condition = true
+        } 
+    }
+    
+    return condition
+}
+
+// Fix this call
+console.log(maps.hasOwnProperty("one"));
+// → true
 
 // To try 
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
