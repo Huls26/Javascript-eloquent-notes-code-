@@ -1464,64 +1464,64 @@ for (let {x, y, value} of matrix1) {
 
 // console.log(blackRabbit.speak())
 
-class Matrix {
-    constructor(width, height, element = (x, y) => undefined) {
-        this.width = width;
-        this.height = height;
-        this.container = [];
+// class Matrix {
+//     constructor(width, height, element = (x, y) => undefined) {
+//         this.width = width;
+//         this.height = height;
+//         this.container = [];
 
-        for (let i = 0; i < height; i++) {
-            for (let k = 0; k < width; k++) {
-                this.container[i * width + k] = element(k, i)
-            }
-        }
-    }
+//         for (let i = 0; i < height; i++) {
+//             for (let k = 0; k < width; k++) {
+//                 this.container[i * width + k] = element(k, i)
+//             }
+//         }
+//     }
 
-    get(x, y) {
-        return this.container[y * this.width + x]
-    }
+//     get(x, y) {
+//         return this.container[y * this.width + x]
+//     }
 
-    set(x, y, value) {
-        this.container[y * this.width + x] = value
-    }
-}
+//     set(x, y, value) {
+//         this.container[y * this.width + x] = value
+//     }
+// }
 
-class MatrixIterator {
-    constructor(matrix) {
-        this.x = 0;
-        this.y = 0;
-        this.matrix = matrix;
-    }
+// class MatrixIterator {
+//     constructor(matrix) {
+//         this.x = 0;
+//         this.y = 0;
+//         this.matrix = matrix;
+//     }
 
-    next() {
-        if (this.y === this.matrix.height) {
-            return {done: true}
-        }
+//     next() {
+//         if (this.y === this.matrix.height) {
+//             return {done: true}
+//         }
 
-        let value = {
-            x: this.x,
-            y: this.y,
-            value: this.matrix.get(this.x, this.y)    
-        }
+//         let value = {
+//             x: this.x,
+//             y: this.y,
+//             value: this.matrix.get(this.x, this.y)    
+//         }
 
-       this.x++
-        if (this.x === this.matrix.width) {
-            this.x = 0;
-            this.y++
-        }
+//        this.x++
+//         if (this.x === this.matrix.width) {
+//             this.x = 0;
+//             this.y++
+//         }
 
-        return {value, done: false}
-    }
-}
+//         return {value, done: false}
+//     }
+// }
 
-Matrix.prototype[Symbol.iterator] = function() {
-    return new MatrixIterator(this)
-}
+// Matrix.prototype[Symbol.iterator] = function() {
+//     return new MatrixIterator(this)
+// }
 
-let matrix1 = new Matrix(5, 5, (x, y) => `${x}, ${y}`)
+// let matrix1 = new Matrix(5, 5, (x, y) => `${x}, ${y}`)
 
 // console.log(matrix1.set(2, 3, "hello"))
-console.log(matrix1.get(2, 3))
+// console.log(matrix1.get(2, 3))
 
 
 // for (let element of matrix1) {
@@ -1530,45 +1530,51 @@ console.log(matrix1.get(2, 3))
 // console.log(matrix1)
 
 // ========= inheritance =========
-class SymmetricMatrix extends Matrix {
-    constructor(size, element = (x, y) => undefined) {
-        super(size, size, (x, y) => {
-         return (x < y) ? element(y, x) : element(x, y)
-        })
-    }
+// class SymmetricMatrix extends Matrix {
+//     constructor(size, element = (x, y) => undefined) {
+//         super(size, size, (x, y) => {
+//          return (x < y) ? element(y, x) : element(x, y)
+//         })
+//     }
 
-    set(x, y, value) {
-        super.set(x, y, value);
-        if (x != y) {
-            super.set(y, x, value)
-        }
-    }
-}
+//     set(x, y, value) {
+//         super.set(x, y, value);
+//         if (x != y) {
+//             super.set(y, x, value)
+//         }
+//     }
+// }
 
-let matrix = new SymmetricMatrix(5, (x, y) => `${x}, ${y}`)
+// let matrix = new SymmetricMatrix(5, (x, y) => `${x}, ${y}`)
 
-console.log(matrix.get(2, 3))
+// console.log(matrix.get(2, 3))
 
-console.log(matrix1.container)
-console.log(matrix.container)
+// console.log(matrix1.container)
+// console.log(matrix.container)
 
 // The instanceof Operator
-console.log(matrix instanceof SymmetricMatrix)
-console.log(SymmetricMatrix instanceof Matrix)
-console.log(SymmetricMatrix instanceof Object)
-console.log(new SymmetricMatrix(4) instanceof Matrix)
+// console.log(matrix instanceof SymmetricMatrix)
+// console.log(SymmetricMatrix instanceof Matrix)
+// console.log(SymmetricMatrix instanceof Object)
+// console.log(new SymmetricMatrix(4) instanceof Matrix)
 
 // add prototype and properties
-matrix.greet = function() {
-    return "hello"
-}
+// matrix.greet = function() {
+//     return "hello"
+// }
 
-SymmetricMatrix.prototype["say"] = function() {
-    return "say something"
-}
+// SymmetricMatrix.prototype["say"] = function() {
+//     return "say something"
+// }
 
-console.log(matrix.greet())
-console.log(Object.getPrototypeOf(matrix))
+// console.log(matrix.greet())
+// console.log(Object.getPrototypeOf(matrix))
+
+// function greet(name) {
+//     return "hello " + name
+// }
+// have a method without adding it to the main class
+// console.log(greet.call(matrix, "matrix"))
 
 // last topic
 // check inheritance

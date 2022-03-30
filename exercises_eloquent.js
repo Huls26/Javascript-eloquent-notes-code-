@@ -442,120 +442,253 @@ way to fix this? ====== */
 // ============= Chapter 6 The Secret life of the Object
 
 // ======== A Vector Type =========
-class Vec {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y
-    }
+// class Vec {
+//     constructor(x, y) {
+//         this.x = x;
+//         this.y = y
+//     }
 
-    plus(vector) {
-        vector.x = this.x + vector.x;
-        vector.y = this.y + vector.y;
+//     plus(vector) {
+//         vector.x = this.x + vector.x;
+//         vector.y = this.y + vector.y;
 
-        return vector
-    }
+//         return vector
+//     }
 
-    minus(vector) {
-        vector.x = this.x - vector.x;
-        vector.y = this.y - vector.y;
+//     minus(vector) {
+//         vector.x = this.x - vector.x;
+//         vector.y = this.y - vector.y;
 
-        return vector
-    }
+//         return vector
+//     }
 
-    get length() {
-       return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
-    }
-}
+//     get length() {
+//        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
+//     }
+// }
 
-let vec1 = new Vec(2, 3);
+// let vec1 = new Vec(2, 3);
 
-// console.log(vec1)
-console.log(new Vec(1, 2).plus(new Vec(2, 3)));
-// → Vec{x: 3, y: 5}
-console.log(new Vec(1, 2).minus(new Vec(2, 3)));
-// → Vec{x: -1, y: -1}
-console.log(new Vec(3, 4).length);
+// // console.log(vec1)
+// console.log(new Vec(1, 2).plus(new Vec(2, 3)));
+// // → Vec{x: 3, y: 5}
+// console.log(new Vec(1, 2).minus(new Vec(2, 3)));
+// // → Vec{x: -1, y: -1}
+// console.log(new Vec(3, 4).length);
+
+// ========= answer =============
+// class Vec {
+//     constructor(x, y) {
+//       this.x = x;
+//       this.y = y;
+//     }
+  
+//     plus(other) {
+//       return new Vec(this.x + other.x, this.y + other.y);
+//     }
+  
+//     minus(other) {
+//       return new Vec(this.x - other.x, this.y - other.y);
+//     }
+  
+//     get length() {
+//       return Math.sqrt(this.x * this.x + this.y * this.y);
+//     }
+//  }
+  
+//   console.log(new Vec(1, 2).plus(new Vec(2, 3)));
+//   // → Vec{x: 3, y: 5}
+//   console.log(new Vec(1, 2).minus(new Vec(2, 3)));
+//   // → Vec{x: -1, y: -1}
+//   console.log(new Vec(3, 4).length);
+//   // → 5
 
 // =========== Groups ============
-class Group {
-    constructor() {
-        this.container = null;
-    }
+// class Group {
+//     constructor() {
+//         this.container = null;
+//     }
 
-    add(value) {
-        if (!this.container.includes(value)) {
-            this.container.push(value)
-        }
-    }
+//     add(value) {
+//         if (!this.container.includes(value)) {
+//             this.container.push(value)
+//         }
+//     }
 
-    delete(value) {
-        let index = this.container.indexOf(value)
+//     delete(value) {
+//         let index = this.container.indexOf(value)
+//         this.container.splice(index, 1)
+//     }   
 
-        // if (index)
-        this.container.splice(index, 1)
-    }   
+//     has(value) {
+//         return this.container.includes(value)
+//     }
 
-    has(value) {
-        return this.container.includes(value)
-    }
+//     static from(iterable) {
+//         let group = new Group();
+//         group.container = iterable;
 
-    static from(iterable) {
-        let group = new Group();
-        group.container = iterable;
+//         return group
+//     }
+// }
 
-        return group
-    }
-}
+// let group = Group.from([10, 20]);
+// console.log(group.has(10));
+// // → true
+// console.log(group.has(30));
+// // → false
+// group.add(10);
+// group.delete(10);
+// console.log(group.has(10));
+// // → false
 
-let group = Group.from([10, 20]);
-console.log(group.has(10));
-// → true
-console.log(group.has(30));
-// → false
-group.add(10);
-group.delete(10);
-console.log(group.has(10));
-// → false
+// ============= answer =============
+// class Group {
+//     constructor() {
+//       this.members = [];
+//     }
+  
+//     add(value) {
+//       if (!this.has(value)) {
+//         this.members.push(value);
+//       }
+//     }
+  
+//     delete(value) {
+//       this.members = this.members.filter(v => v !== value);
+//     }
+  
+//     has(value) {
+//       return this.members.includes(value);
+//     }
+  
+//     static from(collection) {
+//       let group = new Group;
+//       for (let value of collection) {
+//         group.add(value);
+//       }
+//       return group;
+//     }
+// }
+  
+// let group = Group.from([10, 20]);
+// console.log(group.has(10));
+// // → true
+// console.log(group.has(30));
+// // → false
+// group.add(10);
+// group.delete(10);
+// console.log(group.has(10));
 
 // ============ Iterable Groups ============
-Group.prototype[Symbol.iterator] = function() {
-    let index = 0;
-    return {
-        next() {
-            // console.log(this.x.container.length)
-           return {value: this.x.container[index], done: (index++ >= this.x.container.length)}
-        },
-        x: this
-    }
-}
+// Group.prototype[Symbol.iterator] = function() {
+//     let index = 0;
+//     return {
+//         next() {
+//             // console.log(this.x.container.length)
+//            return {value: this.x.container[index], done: (index++ >= this.x.container.length)}
+//         },
+//         x: this
+//     }
+// }
 
-for (let value of Group.from(["a", "b", "c"])) {
-    console.log(value);
-}
+// for (let value of Group.from(["a", "b", "c"])) {
+//     console.log(value);
+// }
 // → a
 // → b
 // → c
 
-// Borrowing a method
-
-let maps = {one: true, two: true, hasOwnProperty: true};
-
-maps.hasOwnProperty = function(value) {
-    let condition = false;
-    
-    for (let element in this) {
-        if (element === value) {
-            condition = true
-        } 
-    }
-    
-    return condition
-}
+// ============== answer ==================
+// class Group {
+//     constructor() {
+//       this.members = [];
+//     }
+  
+//     add(value) {
+//       if (!this.has(value)) {
+//         this.members.push(value);
+//       }
+//     }
+  
+//     delete(value) {
+//       this.members = this.members.filter(v => v !== value);
+//     }
+  
+//     has(value) {
+//       return this.members.includes(value);
+//     }
+  
+//     static from(collection) {
+//       let group = new Group;
+//       for (let value of collection) {
+//         group.add(value);
+//       }
+//       return group;
+//     }
+  
+//     [Symbol.iterator]() {
+//       return new GroupIterator(this);
+//     }
+// }
+  
+// class GroupIterator {
+//     constructor(group) {
+//       this.group = group;
+//       this.position = 0;
+//     }
+  
+//     next() {
+//       if (this.position >= this.group.members.length) {
+//         return {done: true};
+//       } else {
+//         let result = {value: this.group.members[this.position],
+//                       done: false};
+//         this.position++;
+//         return result;
+//       }
+//     }
+// }
+ 
+// let n = Group.from(["a", "b", "c"])[Symbol.iterator]()
+// console.log(n)
+// console.log(n.next())
+// console.log(n.next())
+// console.log(n.next())
+// console.log(n.next())
+// for (let value of Group.from(["a", "b", "c"])) {
+// console.log(value);
+// }
+// → a
+// → b
+// → c
+// =============== Borrowing a method ================
+// let maps = {one: true, two: true, hasOwnProperty: true}
 
 // Fix this call
-console.log(maps.hasOwnProperty("one"));
+// console.log(maps.hasOwnProperty("one"));
 // → true
 
+// ================ answer ==================
+// console.log(Object.prototype.hasOwnProperty.call(maps, "one "))
+// console.log(maps.hasOwnProperty)
+
+// // alternative to call method
+// function calls(thisArg, ...rest) {
+//     let index = 0
+//     let condition = false
+//     for (let element in thisArg) {
+//         if (element === rest[index]) {
+//             condition = true;
+//         }
+//         index++
+//     }
+
+//     return condition
+// }
+
+// console.log(calls(maps, "one"))
+// console.log(maps.hasOwnProperty)
 // To try 
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
 
