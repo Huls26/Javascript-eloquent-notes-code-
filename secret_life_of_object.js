@@ -1212,16 +1212,16 @@ class AddSomething {
    
 } 
 
-let add1 = new AddSomething(2, 2);
+// let add1 = new AddSomething(2, 2);
 
-let toLoop = add1[Symbol.iterator]();
-console.log(toLoop === add1[Symbol.iterator]())
-// to make toLoop equal you should call itself
-console.log(toLoop === toLoop)
+// let toLoop = add1[Symbol.iterator]();
+// console.log(toLoop === add1[Symbol.iterator]())
+// // to make toLoop equal you should call itself
+// console.log(toLoop === toLoop)
 
-for (let element of add1) {
-    console.log(element)
-}
+// for (let element of add1) {
+//     console.log(element)
+// }
 
 // console.log(add1[Symbol.iterator]().next())
 // console.log(add1[Symbol.iterator]().next())
@@ -1575,6 +1575,21 @@ for (let {x, y, value} of matrix1) {
 // }
 // have a method without adding it to the main class
 // console.log(greet.call(matrix, "matrix"))
+
+// ========== callback ===========
+
+// function activate(greet = () => console.log("hello")) {
+//     greet()
+// }
+
+// activate()
+
+
+// function activate(greet) {
+//     greet()
+// }
+
+// activate(() => console.log("hello"))
 
 // last topic
 // check inheritance
