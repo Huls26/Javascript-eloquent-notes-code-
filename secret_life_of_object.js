@@ -1591,6 +1591,30 @@ for (let {x, y, value} of matrix1) {
 
 // activate(() => console.log("hello"))
 
+// ============= callback ===============
+// function activate(greet) {
+//     greet()
+// }
+
+// activate(() => console.log("hello"))
+
+// function toGetNum1(max) {
+//     return Math.ceil(Math.random() * max)
+// }
+
+// function calc(num1, num2, calcFunc) {
+//     return calcFunc(num1, num2)
+// }
+
+// const add = (x, y) => x + y;
+// const multiply = (x, y) => x * y;
+// console.log(calc(1, 2, add))
+// console.log(calc(toGetNum1(2), 2, multiply))
+
+console.log(typeof (() => {"sample data"}))
+console.log(Array.isArray({}))
+
+console.log(Array.prototype)
 // last topic
 // check inheritance
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols

@@ -763,14 +763,73 @@ let matrix1 = new SymmetricMatrix(5, (x, y) => `${x}, ${y}`);
 console.log(matrix1.get(2, 3));
 // → 3,2
 
+console.log(matrix1)
+console.log(matrix)
 
 
+// callback
 function activate(greet) {
     greet()
 }
 
 activate(() => console.log("hello"))
 
+function toGetNum1(max) {
+    return Math.ceil(Math.random() * max)
+}
+
+function calc(num1, num2, calcFunc) {
+    return calcFunc(num1, num2)
+}
+
+const add = (x, y) => x + y;
+const multiply = (x, y) => x * y;
+console.log(calc(1, 2, add))
+console.log(calc(toGetNum1(2), 2, multiply))
+
+// ============ sort array ===========
+let myArr = [{
+    num: 5,
+    str: 'apple',
+    }, {
+    num: 7,
+    str: 'cabbage',
+    }, { 
+    num: 1,
+    str: 'ban',
+    },
+]
+
+function sortArray(array) {
+    let newArray = [...array];
+    let condition = true;
+    let index = 0
+
+    while(condition) {
+        condition = false;
+
+        for (let element = 0; element < newArray.length -1 ; element++) {
+            let property1 = newArray[element]["str"];
+            let propety2 = newArray[parseInt(1) + parseInt(element)]["str"];
+            let present = newArray[element];
+            
+            if (property1 > propety2) {
+                newArray[element] = newArray[element +1]
+                newArray[element + 1] = present 
+                condition = true;
+            }
+        }
+    
+    }
+
+    return newArray
+}
+
+console.log(sortArray(myArr))
+
+
+// last topic
+// https://www.youtube.com/watch?v=pTbSfCT42_M&list=WL&index=3&t=1s
 // To try 
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
 
