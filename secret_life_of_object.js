@@ -1616,6 +1616,61 @@ for (let {x, y, value} of matrix1) {
 
 // console.log(Array.prototype)
 
+// using callbacks
+// class Matrix {
+//     constructor(width, height, element = (x, y) => undefined) {
+//         this.width = width;
+//         this.height = height;
+//         this.container = [];
+
+//         for (let i = 0; i < height; i++) {
+//             for (let k = 0; k < width; k++) {
+//                 this.container[i * width + k] = element(k, i)
+//             }
+//         }
+//     }
+// }
+
+// let matrix = new Matrix(5, 5, function(x, y) {
+//     return `value ${x}, ${y}`
+// })
+// console.log(matrix.container)
+
+// class SymmetricMatrix extends Matrix{
+//     constructor(size, element = (x, y) => undefined) {
+//         super(size, size, (x, y) => {
+//             if (x < y) {
+//                 return element(y, x)
+//             } else {
+//                 return `value ${x}, ${y}`
+//             }
+//         })
+//         // super(size, size, (x, y) => element(x, y))
+//     }
+// }
+
+// let matrix1 = new SymmetricMatrix(5, function(x, y) {
+//     return `${x}, ${y}`
+// })
+
+// console.log(matrix1.container)
+
+// callback foreach
+// function forEach(array, callback, index = 0) {
+//     if (index > array.length -1) {
+//         return
+//     }
+
+//     callback(array[index])
+
+//     return forEach(array, callback, index + 1)
+// }
+
+// forEach(array1, function(element) {
+//     console.log(element)
+// })
+
+
 // last topic
 // check inheritance
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
