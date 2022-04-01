@@ -802,17 +802,18 @@ let myArr = [{
 
 function sortArray(array) {
     let newArray = [...array];
-    let condition = true;
-    let index = 0
+    let condition = true
 
     while(condition) {
         condition = false;
 
         for (let element = 0; element < newArray.length -1 ; element++) {
             let property1 = newArray[element]["str"];
-            let propety2 = newArray[parseInt(1) + parseInt(element)]["str"];
+            let propety2 = newArray[1 + element]["str"];
             let present = newArray[element];
             
+            console.log(property1, propety2)
+            console.log(element)
             if (property1 > propety2) {
                 newArray[element] = newArray[element +1]
                 newArray[element + 1] = present 
@@ -827,10 +828,67 @@ function sortArray(array) {
 
 console.log(sortArray(myArr))
 
+// higher order function 
+// function noisy(func) {
+//     return (...array) => { 
+//         console.log("calling with", array)
+//         let called = func(...array)
+//         console.log("called with", array, "returned", called)
+
+//         return called
+//     }
+// }
+
+// noisy(Math.min)(3, 2, 1);
+
+
+// setTimeout(function greet() {
+//     return console.log("hello world")
+// }, 2000)
+
+// let greet = function hello() {
+//     console.log("hello there")
+// }
+
+// console.log(greet())
+
+// callbacks
+let students = [
+    {name: "Mary", score: 90, school: "East"},
+    {name: "James", score: 100, school: "East"},
+    {name: "Steve", score: 40, school: "East"},
+    {name: "Gabe", score: 90, school: "West"},
+    {name: "Rachel", score: 85, school: "East"},
+    {name: "Rochelle", score: 95, school: "West"},
+    {name: "Lynette", score: 75, school: "East"},
+]
+
+let empty = [];
+
+function processStudent(array, callbacks) {
+
+    array.forEach(element => {
+        if (element.school.toLowerCase() === "east") {
+            if (typeof callbacks === "function") {
+                callbacks(element)
+            }
+        }
+    });
+}
+
+console.log(processStudent(students, function(element) {
+    if (element.score > 70) {
+        empty.push(element)
+    }
+}))
+
+console.log(empty)
 
 // last topic
-// https://www.youtube.com/watch?v=pTbSfCT42_M&list=WL&index=3&t=1s
+
 // To try 
+// https://www.youtube.com/watch?v=gjLn95skIKE
+// https://www.youtube.com/watch?v=TznpOmv2BQM
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
 
 // callback

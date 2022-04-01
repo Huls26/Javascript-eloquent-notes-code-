@@ -1611,10 +1611,11 @@ for (let {x, y, value} of matrix1) {
 // console.log(calc(1, 2, add))
 // console.log(calc(toGetNum1(2), 2, multiply))
 
-console.log(typeof (() => {"sample data"}))
-console.log(Array.isArray({}))
+// console.log(typeof (() => {"sample data"}))
+// console.log(Array.isArray({}))
 
-console.log(Array.prototype)
+// console.log(Array.prototype)
+
 // last topic
 // check inheritance
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
@@ -1645,3 +1646,17 @@ console.log(Array.prototype)
 // page 124
 
 // composability
+// abstraction
+
+// higher order function 
+// function noisy(func) {
+//     return (...array) => { 
+//         console.log("calling with", array)
+//         let called = func(...array)
+//         console.log("called with", array, "returned", called)
+
+//         return called
+//     }
+// }
+
+// noisy(Math.min)(3, 2, 1);
