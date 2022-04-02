@@ -694,7 +694,6 @@ way to fix this? ====== */
 // last topic
 
 // To try 
-// https://www.youtube.com/watch?v=gjLn95skIKE
 // https://www.youtube.com/watch?v=TznpOmv2BQM
 // https://www.w3resource.com/javascript-exercises/javascript-array-exercises.php#EDITOR
 

@@ -1670,7 +1670,55 @@ for (let {x, y, value} of matrix1) {
 //     console.log(element)
 // })
 
+// ============= closure ==============
+// let APP = (function () {
+//     let a = 3;
 
+//     function print(value) {
+//         console.log(value)
+//     }
+
+//     function sumIt(value) {
+//         print(a + value)
+//     }
+
+//     function multiplyIt(value) {
+//         print(a * value)
+//     }
+//     return {
+//         sumIt: sumIt,
+//         multiplyIt: multiplyIt,
+//     }
+
+// })();
+
+// APP.sumIt(2)
+
+function repeat(n, callbacks) {
+    for(let i = 0; i < n; i++) {
+        callbacks(i)
+    }
+}
+
+let label = [];
+repeat(5, i => {
+    label.push(`Unit ${i + 1}`)
+})
+
+console.log(label)
+
+function unless(test, callback) {
+    if (test) {
+        callback()
+    }
+}
+
+repeat(3, n => {
+    unless(n % 2 == 0, () => {
+        console.log(n, "is even");
+    });
+});
+  
 // last topic
 // check inheritance
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols

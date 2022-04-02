@@ -312,3 +312,6 @@ console.log(employee)
 // other way is to make it so complicated that there are no obvious
 // deficiencies.”
 // —C.A.R. Hoare, 1980 ACM Turing Award Lecture
+
+// function declaration and function expressions
+// https://www.youtube.com/watch?v=gjLn95skIKE
