@@ -690,8 +690,104 @@ way to fix this? ====== */
 // console.log(calls(maps, "one"))
 // console.log(maps.hasOwnProperty)
 
+// ===== a vector type =====
+class Vec {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y
+    }
+
+    plus(vector) {
+        return new Vec(this.x + vector.x, this.y + vector.y)
+    }
+
+    minus(vector) {
+        return new Vec(this.x - vector.x, this.y - vector.y)
+    }
+
+    get length() {
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
+    }
+}
+
+console.log(new Vec(1, 2).plus(new Vec(2, 3)))
+console.log(new Vec(1, 2).minus(new Vec(2, 3)));
+console.log(new Vec(3, 4).length);
+
+class Group {
+    constructor() {
+        this.container = null;
+    }
+
+    add(value) {
+        if (!this.has(value)) {
+            this.container.push(value)
+        }
+    }
+
+    delete(value) {
+        let index = this.container.indexOf(value)
+        this.container.splice(index, 1)
+    }
+
+    has(value) {
+        return this.container.includes(value)
+    }
+
+    static from(array) {
+        if (Array.isArray(array)) {
+            let news = new Group();
+            news.container = array
+
+            return news
+        }
+    }
+}
+
+let group = Group.from([10, 20]);
+console.log(group.has(10));
+console.log(group.has(30));
+// → false
+group.add(30);
+group.delete(10);
+console.log(group.has(10));
+// → false
+// console.log(group)
+
+// ==== iterable groups ====
+class IteratorGroup {
+    constructor(group) {
+        this.group = group
+        this.index = 0;
+    }
+
+    next() {
+        if (this.index > this.group.container.length -1) {
+            return {done: true}
+        }
+
+        let value = this.group.container[this.index]
+        this.index++
+        return {value, done: false}
+    }
+}
+
+Group.prototype[Symbol.iterator] = function() {
+    return new IteratorGroup(this) 
+}
+
+
+for (let value of Group.from(["a", "b", "c"])) {
+    console.log(value);
+}
+
+// === borrowing method ===
+let map = {one: true, two: true, hasOwnProperty: true};
+
+console.log(Object.prototype.hasOwnProperty.call(map, "one"))
 
 // last topic
+// make a call function and use it in borrowing method exercise
 
 // To try 
 // https://www.youtube.com/watch?v=TznpOmv2BQM

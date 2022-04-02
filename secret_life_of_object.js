@@ -1694,30 +1694,31 @@ for (let {x, y, value} of matrix1) {
 
 // APP.sumIt(2)
 
-function repeat(n, callbacks) {
-    for(let i = 0; i < n; i++) {
-        callbacks(i)
-    }
-}
+// callback
+// function repeat(n, callbacks) {
+//     for(let i = 0; i < n; i++) {
+//         callbacks(i)
+//     }
+// }
 
-let label = [];
-repeat(5, i => {
-    label.push(`Unit ${i + 1}`)
-})
+// let label = [];
+// repeat(5, i => {
+//     label.push(`Unit ${i + 1}`)
+// })
 
-console.log(label)
+// console.log(label)
 
-function unless(test, callback) {
-    if (test) {
-        callback()
-    }
-}
+// function unless(test, callback) {
+//     if (test) {
+//         callback()
+//     }
+// }
 
-repeat(3, n => {
-    unless(n % 2 == 0, () => {
-        console.log(n, "is even");
-    });
-});
+// repeat(3, n => {
+//     unless(n % 2 == 0, () => {
+//         console.log(n, "is even");
+//     });
+// });
   
 // last topic
 // check inheritance
