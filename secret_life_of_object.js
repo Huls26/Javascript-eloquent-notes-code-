@@ -1719,7 +1719,31 @@ for (let {x, y, value} of matrix1) {
 //         console.log(n, "is even");
 //     });
 // });
+
+// ====== function call ======
+function call(object, value, func) {
+    let name = func(value)
+
+    object["x"] = name
+    return object["x"]
+}
+
+let map = {one: true, two: true, hasOwnProperty: true};
+
+console.log(call(map, "one", (value) => {
+    for (let element in map) {
+        if (element === value) {
+            return true
+        }
+    }
+
+    return false
+}))
   
+// console.log(Object.prototype.hasOwnProperty())
+// console.log({name: "jules"}.hasOwnProperty("name"))
+
+
 // last topic
 // check inheritance
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
