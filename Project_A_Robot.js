@@ -79,20 +79,20 @@
 // console.log(constructor.name)
 
 // Object.create check this ==========
-class Simp {
-    constructor() {
-        this.home = "web"
-    }
-}
+// class Simp {
+//     constructor() {
+//         this.home = "web"
+//     }
+// }
 
-let simp1 = new(Simp);
+// let simp1 = new(Simp);
 
-let simp2 = {
-    home: "web2"
-}
-let graph = Object.create(simp1);
+// let simp2 = {
+//     home: "web2"
+// }
+// let graph = Object.create(simp1);
 
-console.log(graph)
+// console.log(graph)
 
 // ======= MeadowField =======
 var roads = [
@@ -138,58 +138,58 @@ var roads = [
 // console.log(undefined === null)
 
 // ======== buildgraph ===========
-function buildGraph(roads) {
-    let graph = Object.create(null);
+// function buildGraph(roads) {
+//     let graph = Object.create(null);
 
-    function addEdge(from, to) {
-        if (!graph[from]) {
-            graph[from] = [to];
-        } else {
-            graph[from].push(to)
-        }
-    }
+//     function addEdge(from, to) {
+//         if (!graph[from]) {
+//             graph[from] = [to];
+//         } else {
+//             graph[from].push(to)
+//         }
+//     }
 
-    for (let [from, to] of roads.map(element => element.split("-"))) {
-        addEdge(from, to)
-        addEdge(to, from)
-    }
+//     for (let [from, to] of roads.map(element => element.split("-"))) {
+//         addEdge(from, to)
+//         addEdge(to, from)
+//     }
 
-    return graph
-}
+//     return graph
+// }
 
-const roadGraph = buildGraph(roads);
+// const roadGraph = buildGraph(roads);
 
-console.log(roadGraph)
+// console.log(roadGraph)
 
-class VillageState {
-    constructor(place, parcels) {
-        this.place = place;
-        this.parcels = parcels;
-    }
+// class VillageState {
+//     constructor(place, parcels) {
+//         this.place = place;
+//         this.parcels = parcels;
+//     }
 
-    move(destination) {
-        if (!roadGraph[this.place].includes(destination)) {
-            return this;
-        } else {
-            let parcels = this.parcels.map(p => {
-                if (p.place != this.place) return p;
-                return {place: destination, address: p.address};
-            }).filter(p => p.place != p.address);
+//     move(destination) {
+//         if (!roadGraph[this.place].includes(destination)) {
+//             return this;
+//         } else {
+//             let parcels = this.parcels.map(p => {
+//                 if (p.place != this.place) return p;
+//                 return {place: destination, address: p.address};
+//             }).filter(p => p.place != p.address);
 
-            return new VillageState(destination, parcels);
-        }
-    }
-}
+//             return new VillageState(destination, parcels);
+//         }
+//     }
+// }
 
-let first = new VillageState(
-    "Alice's House",
-    [{place: "Post Office", address: "Alice's House"}]
-);
-let next = first.move("Post Office");
-console.log(next.parcels);
-let final = next.move("Alice's House")
-console.log(final.place)
-console.log(final.parcels)
+// let first = new VillageState(
+//     "Alice's House",
+//     [{place: "Post Office", address: "Alice's House"}]
+// );
+// let next = first.move("Post Office");
+// console.log(next.parcels);
+// let final = next.move("Alice's House")
+// console.log(final.place)
+// console.log(final.parcels)
 
 // → Alice's House
 // console.log(next.parcels);
@@ -209,8 +209,74 @@ console.log(final.parcels)
 //     return element === "name"
 // }))
 
-// last topic
+// ======= BuildGraph =======
+function buildGraph(roads) {
+    let graph = Object.create(null) 
 
+    function addEdge(from, to) {
+        if (graph[from]) {
+            graph[from].push(to)
+        } else {
+            graph[from] = [to]
+        }
+    }
+
+    roads.forEach(element => {
+        let [from, to] = element.split("-")
+
+        addEdge(from, to)
+        addEdge(to, from)
+    })
+
+    return graph
+}
+
+let roadGraph = buildGraph(roads);
+
+console.log(roadGraph)
+
+// build a route finder
+// find the route for parcels delivery
+function routeFinder({place, destination, route}, path = []) {
+    let allRoute = [];
+    let findPath = true;
+    let routeIndex = 0;
+    let current = place;
+
+    while(findPath) {
+        findPath = false;
+
+        if (current === destination) {
+            allRoute.push(path)
+            path = [];
+        }
+
+        route[current].forEach(element => {
+            console.log(element)
+        })
+    }
+
+    return allRoute
+}
+
+
+
+
+// console.log(routeFinder({place: "Cabin", destination: "Cabin", route: roadGraph}))
+
+console.log(routeFinder({place: "Shop", destination: "Cabin", route: roadGraph}))
+// ["Town Hall", "Bob's House", "Alice's House", "Cabin"]
+
+// let routeFind = new Array("Alice's House");
+
+// console.log(routeFind)
+
+// routeFind.push("Town Hall")
+
+// console.log(routeFind)
+
+// last topic
+// https://www.youtube.com/watch?v=PK2rB9VGWSA
 
 // Object.create review
 // destructuring review
