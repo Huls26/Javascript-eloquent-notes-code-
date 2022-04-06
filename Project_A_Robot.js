@@ -237,30 +237,49 @@ console.log(roadGraph)
 
 // build a route finder
 // find the route for parcels delivery
-let allRoute = [];
-function routeFinder({place, destination, route}, path = [], index = 0) {
+function routeFinder({place, destination, route}, path = [], index = 0, allRoute = [], placeIndex = 0) {
     let current = place;
-    let paths = path
-    let next = route[place][index];
+    let paths = path;
+    // let next = route[place][index];
+    let pI = placeIndex;
+    let first = paths[0]; 
 
-    if (path.includes(current)) {
-        let last = paths.pop()
+    console.log(path)
+    if (current === first) {
+        pI += 1
+        // paths.push(route[place][pI])
+        
+        console.log(current)
+        console.log(paths)
 
-        console.log(last)
-   
-        return routeFinder({place: last, destination: destination, route, route}, paths, index + 1)
+        return routeFinder({place: route[place][pI], destination: destination, route: route}, paths, 0, allRoute, pI)
+    }
+
+    if (paths.includes(current)) {
+        path.pop()
+        let last = path[path.length - 1]
+
+        return routeFinder({place: last, destination: destination, route:route}, paths, index + 1, allRoute, pI)
     }
 
     paths.push(place)
 
     if (current === destination) {
-        allRoute.push(path)
-        path = [];
-        console.log("check")
-        return allRoute
+        paths.push(current)
+        allRoute.push(paths)
+        paths = [];
+        let aR = allRoute;
+
+        
+        if (pI > route[first].lenth) {
+            return allRoute
+        }
+
+
+        return routeFinder({place: first, destination: destination, route: route}, paths, index, aR, pI + 1)
     }
 
-    return routeFinder({place: next, destination: destination, route: route}, paths, 0)
+    return routeFinder({place: route[place][index], destination: destination, route: route}, paths, 0, allRoute, pI)
 
 }
 
