@@ -237,26 +237,31 @@ console.log(roadGraph)
 
 // build a route finder
 // find the route for parcels delivery
-function routeFinder({place, destination, route}, path = []) {
-    let allRoute = [];
-    let findPath = true;
-    let routeIndex = 0;
+let allRoute = [];
+function routeFinder({place, destination, route}, path = [], index = 0) {
     let current = place;
+    let paths = path
+    let next = route[place][index];
 
-    while(findPath) {
-        findPath = false;
+    if (path.includes(current)) {
+        let last = paths.pop()
 
-        if (current === destination) {
-            allRoute.push(path)
-            path = [];
-        }
-
-        route[current].forEach(element => {
-            console.log(element)
-        })
+        console.log(last)
+   
+        return routeFinder({place: last, destination: destination, route, route}, paths, index + 1)
     }
 
-    return allRoute
+    paths.push(place)
+
+    if (current === destination) {
+        allRoute.push(path)
+        path = [];
+        console.log("check")
+        return allRoute
+    }
+
+    return routeFinder({place: next, destination: destination, route: route}, paths, 0)
+
 }
 
 
@@ -265,6 +270,7 @@ function routeFinder({place, destination, route}, path = []) {
 // console.log(routeFinder({place: "Cabin", destination: "Cabin", route: roadGraph}))
 
 console.log(routeFinder({place: "Shop", destination: "Cabin", route: roadGraph}))
+// from shop to cabin
 // ["Town Hall", "Bob's House", "Alice's House", "Cabin"]
 
 // let routeFind = new Array("Alice's House");
