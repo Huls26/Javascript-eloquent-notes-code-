@@ -237,54 +237,63 @@ console.log(roadGraph)
 
 // build a route finder
 // find the route for parcels delivery
-function routeFinder({place, destination, route}, path = [], index = 0, allRoute = [], placeIndex = 0) {
-    let current = place;
-    let paths = path;
-    // let next = route[place][index];
-    let pI = placeIndex;
-    let first = paths[0]; 
+// function routeFinder({place, destination, route}, path = [], index = 0, allRoute = [], placeIndex = 0) {
+//     let current = place;
+//     let paths = path;
+//     // let next = route[place][index];
+//     let pI = placeIndex;
+//     let first = paths[0]; 
 
-    console.log(path)
-    if (current === first) {
-        pI += 1
-        // paths.push(route[place][pI])
-        
-        console.log(current)
-        console.log(paths)
+//     console.log(path)
+//     if (current === first) {
+//         pI += 1
+//         // paths.push(route[place][pI])
 
-        return routeFinder({place: route[place][pI], destination: destination, route: route}, paths, 0, allRoute, pI)
+//         return routeFinder({place: route[place][pI], destination: destination, route: route}, paths, 0, allRoute, pI)
+//     }
+
+//     if (paths.includes(current)) {
+//         // path.pop()
+//         let last = path[path.length - 2]
+//         paths.push(last)
+
+//         console.log(route[last][index + 1])
+//         return routeFinder({place: route[last][index + 1], destination: destination, route:route}, paths, index + 1, allRoute, pI)
+//     }
+
+//     paths.push(place)
+
+//     let len = [].concat(route[first])
+//     if (pI >= len.length) {
+//         return allRoute
+//     }
+
+//     if (current === destination) {
+//         paths.push(current)
+//         allRoute.push(paths)
+//         paths = [];
+//         let aR = allRoute;
+
+//         return routeFinder({place: first, destination: destination, route: route}, paths, index, aR, pI + 1)
+//     }
+
+//     return routeFinder({place: route[place][index], destination: destination, route: route}, paths, 0, allRoute, pI)
+// }
+
+
+function routeFinder({place, destination, route}, num = 0) {
+    console.log(route[place], num)
+
+    if (num === 15) {
+        return "hello"
     }
 
-    if (paths.includes(current)) {
-        path.pop()
-        let last = path[path.length - 1]
-
-        return routeFinder({place: last, destination: destination, route:route}, paths, index + 1, allRoute, pI)
+    if (route[place]) {
+        route[place].forEach(child => {
+     routeFinder({place: child, destination: destination, route: route}, num + 1)
+        })
     }
-
-    paths.push(place)
-
-    if (current === destination) {
-        paths.push(current)
-        allRoute.push(paths)
-        paths = [];
-        let aR = allRoute;
-
-        
-        if (pI > route[first].lenth) {
-            return allRoute
-        }
-
-
-        return routeFinder({place: first, destination: destination, route: route}, paths, index, aR, pI + 1)
-    }
-
-    return routeFinder({place: route[place][index], destination: destination, route: route}, paths, 0, allRoute, pI)
-
 }
-
-
-
 
 // console.log(routeFinder({place: "Cabin", destination: "Cabin", route: roadGraph}))
 
