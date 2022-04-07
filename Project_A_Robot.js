@@ -235,67 +235,51 @@ let roadGraph = buildGraph(roads);
 
 console.log(roadGraph)
 
-// build a route finder
+// =========== build a route finder ==============
 // find the route for parcels delivery
-// function routeFinder({place, destination, route}, path = [], index = 0, allRoute = [], placeIndex = 0) {
-//     let current = place;
-//     let paths = path;
-//     // let next = route[place][index];
-//     let pI = placeIndex;
-//     let first = paths[0]; 
+// Route finder
+// I can say that anything is possible
+// It may have a bug but it works
+// review this code 
+// prototype
+function routeFinder({place, destination, route}) {
+    let path = [];
+    let allRoute = [];
+    let newPlace = place;
+    let count = {};
 
-//     console.log(path)
-//     if (current === first) {
-//         pI += 1
-//         // paths.push(route[place][pI])
+    function traverse(place) {
+        if (count[place] === 0) {
+            count[place]++
+        } else {
+            count[place] = 0
+        }
 
-//         return routeFinder({place: route[place][pI], destination: destination, route: route}, paths, 0, allRoute, pI)
-//     }
-
-//     if (paths.includes(current)) {
-//         // path.pop()
-//         let last = path[path.length - 2]
-//         paths.push(last)
-
-//         console.log(route[last][index + 1])
-//         return routeFinder({place: route[last][index + 1], destination: destination, route:route}, paths, index + 1, allRoute, pI)
-//     }
-
-//     paths.push(place)
-
-//     let len = [].concat(route[first])
-//     if (pI >= len.length) {
-//         return allRoute
-//     }
-
-//     if (current === destination) {
-//         paths.push(current)
-//         allRoute.push(paths)
-//         paths = [];
-//         let aR = allRoute;
-
-//         return routeFinder({place: first, destination: destination, route: route}, paths, index, aR, pI + 1)
-//     }
-
-//     return routeFinder({place: route[place][index], destination: destination, route: route}, paths, 0, allRoute, pI)
-// }
-
-
-function routeFinder({place, destination, route}, num = 0) {
-    console.log(route[place], num)
-
-    if (num === 15) {
-        return "hello"
+        path.push(place);
+        newPlace = route[place][count[place]];
     }
 
-    if (route[place]) {
-        route[place].forEach(child => {
-     routeFinder({place: child, destination: destination, route: route}, num + 1)
+    while(route[newPlace]) {
+        let find = route[newPlace].filter(road => {
+            return road === destination
         })
-    }
-}
+        traverse(newPlace)
 
-// console.log(routeFinder({place: "Cabin", destination: "Cabin", route: roadGraph}))
+        if (find[0]) {
+            path.push(destination);
+            allRoute.push(path);
+            count[path[0]]++;
+            let first = path[0]
+            path = [first];
+            newPlace = route[first][count[first]];
+            let lastScore = count[first];
+            count = {};
+            count[first] = lastScore; 
+        }
+    }
+
+    return allRoute
+}
 
 console.log(routeFinder({place: "Shop", destination: "Cabin", route: roadGraph}))
 // from shop to cabin
