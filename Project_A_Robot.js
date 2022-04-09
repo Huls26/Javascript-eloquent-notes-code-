@@ -254,7 +254,6 @@ class VillageState {
 
             return new VillageState(destination, move)
         }
-
         return this
     }
 }
@@ -272,19 +271,70 @@ console.log(next.parcels);
 // → []
 console.log(first.place)
 
-// Persistent Data
-
+// ================= Persistent Data ==============
 // Object.freeze
 let object = Object.freeze({value: 5});
 object.value = 10;
 console.log(object.value);
 // → 5
 
+// =========== Simulate =============
+function runRobot(state, robot, memory) {
+    for (let turn = 0;; turn++) {
+        if (state.parcels.length == 0) {
+            console.log(`Done in ${turn} turns`);
+            break;
+        }
 
+        let action = robot(state, memory);
+        state = state.move(action.direction);
+        memory = action.memory;
+        console.log(`Moved to ${action.direction}`);
+    }
+}
 
+function randomPick(array) {
+    let choice = Math.floor(Math.random() * array.length);
 
+    return array[choice];
+}
 
+function randomRobot(state) {
+    return {direction: randomPick(roadGraph[state.place])};
+}
 
+VillageState.random = function(parcelCount = 5) {
+    let parcels = [];
+    for (let i = 0; i < parcelCount; i++) {
+        let address = randomPick(Object.keys(roadGraph));
+        let place;
+        do {
+        place = randomPick(Object.keys(roadGraph));
+        } while (place == address);
+        parcels.push({place, address});
+    }
+
+    return new VillageState("Post Office", parcels);
+};
+
+runRobot(VillageState.random(), randomRobot);
+// → Moved to Marketplace
+// → Moved to Town Hall
+// →…
+// → Done in 63 turns
+
+// ========= fundamentals ===========
+for (let i = 0;; i++) {
+    if (i >= 6) {
+        console.log("last")
+        break
+    }
+    console.log(i)
+}
+
+// last topic 
+// https://www.youtube.com/watch?v=PK2rB9VGWSA&t=1s
+// 
 // run this on node.js
 // =========== build a route finder ==============
 // find the route for parcels delivery
