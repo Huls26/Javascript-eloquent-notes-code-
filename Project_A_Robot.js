@@ -210,6 +210,7 @@ var roads = [
 // }))
 
 // ======= BuildGraph =======
+// My Approach
 function buildGraph(roads) {
     let graph = Object.create(null) 
 
@@ -235,6 +236,56 @@ let roadGraph = buildGraph(roads);
 
 console.log(roadGraph)
 
+// ============= The Task ==============
+class VillageState {
+    constructor(place, parcels) {
+        this.place = place;
+        this.parcels = parcels;
+    }
+
+    move(destination) {
+        if (roadGraph[this.place].includes(destination)) {
+            let move = this.parcels.map(element => {
+               if (element.place !== this.place) return element;
+                return {place: destination, address: element.address} 
+            }).filter(element => {
+                return element.place !== element.address
+            })
+
+            return new VillageState(destination, move)
+        }
+
+        return this
+    }
+}
+
+let first = new VillageState(
+    "Post Office",
+    [{place: "Post Office", address: "Alice's House"}]
+);
+
+let next = first.move("Alice's House");
+
+console.log(next.place);
+// → Alice's House
+console.log(next.parcels);
+// → []
+console.log(first.place)
+
+// Persistent Data
+
+// Object.freeze
+let object = Object.freeze({value: 5});
+object.value = 10;
+console.log(object.value);
+// → 5
+
+
+
+
+
+
+// run this on node.js
 // =========== build a route finder ==============
 // find the route for parcels delivery
 // Route finder
@@ -242,55 +293,65 @@ console.log(roadGraph)
 // It may have a bug but it works
 // review this code 
 // prototype
-function routeFinder({place, destination, route}) {
-    let path = [];
-    let allRoute = [];
-    let newPlace = place;
-    let count = {};
+// function routeFinder({place, destination, route}) {
+//     let path = [];
+//     let allRoute = [];
+//     let newPlace = place;
+//     let count = {}; 
+//     let c = 0;
 
-    function traverse(place) {
-        if (count[place] === 0) {
-            count[place]++
-        } else {
-            count[place] = 0
-        }
+//     function traverse(place) {
+//         if (count[place] === 0) {
+//             count[place]++
+//         } else {
+//             count[place] = 0
+//         }
 
-        path.push(place);
-        newPlace = route[place][count[place]];
-    }
+//         path.push(place);
+//         newPlace = route[place][count[place]];
+//     }
 
-    while(route[newPlace]) {
-        let find = route[newPlace].filter(road => {
-            return road === destination
-        })
-        traverse(newPlace)
+//     // route[newPlace]
+//     // !place === path[0]
+//     while(route[newPlace]) {
+//         let find = route[newPlace].filter(road => {
+//             return road === destination
+//         })
+//         traverse(newPlace)
+        
+//         if (find[0]) {
+//             path.push(destination);
+//             allRoute.push(path);
+//             count[path[0]]++;
+//             let first = path[0];
+//             path = [first];
+//             newPlace = route[first][count[first]];
+//             let lastScore = count[first];
+//             count = {};
+//             count[first] = lastScore; 
+//         }
 
-        if (find[0]) {
-            path.push(destination);
-            allRoute.push(path);
-            count[path[0]]++;
-            let first = path[0]
-            path = [first];
-            newPlace = route[first][count[first]];
-            let lastScore = count[first];
-            count = {};
-            count[first] = lastScore; 
-        }
-    }
+//         // if (allRoute.indexOf(allRoute[allRoute.length- 1])) {
+//         //     return allRoute
+//         // }
+//         c++
+//     }
 
-    return allRoute
-}
+//     return allRoute
+// }
 
-console.log(routeFinder({place: "Shop", destination: "Cabin", route: roadGraph}))
+// console.log(routeFinder({place: "Shop", destination: "Cabin", route: roadGraph}))
+
+// ======== run this in node.js =======
+// console.log(routeFinder({place: "Post Office", destination: "Alice's House", route: roadGraph}))
+
 // from shop to cabin
 // ["Town Hall", "Bob's House", "Alice's House", "Cabin"]
 
 // let routeFind = new Array("Alice's House");
 
 // console.log(routeFind)
-
 // routeFind.push("Town Hall")
-
 // console.log(routeFind)
 
 // last topic
@@ -300,5 +361,6 @@ console.log(routeFinder({place: "Shop", destination: "Cabin", route: roadGraph})
 // destructuring review
 // remember maps
 
+// page 125 // persisten data
 
   

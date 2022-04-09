@@ -315,3 +315,6 @@ console.log(employee)
 
 // function declaration and function expressions
 // https://www.youtube.com/watch?v=gjLn95skIKE
+
+// local host
+// http://127.0.0.1:5565/main.html
