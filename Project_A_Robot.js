@@ -464,7 +464,7 @@ let first = new VillageState(
     "Post Office",
     [{place: "Post Office", address: "Alice's House"}]);
 let next = first.move("Marketplace");
-console.log(next.move("Post Office").move("Alice's House"))
+// console.log(next.move("Post Office").move("Alice's House"))
 
 // simulation
 // runRobot(VillageState.random(), randomRobot);
@@ -474,13 +474,70 @@ console.log(next.move("Post Office").move("Alice's House"))
 // → Done in 63 turns
 // > make a function runRobot that count how many turns need to deliver all parcels
 
+function runRobot(state, robot, memory) {
+    for (let i = 0;; i++) {
+        if (state.parcel.length === 0) {
+            console.log(`Done in ${i} turns`)
+            break;
+        }
+        console.log(state)
+        let action = robot(state, memory)
+        state = state.move(action.direction);
+        memory = action.memory;
+        console.log(`Moved to ${action.direction}`)
+    }
+}
+
 // make a function that generate place randomly to the last place of the state
+function randomPlace(array) {
+    let index = Math.floor(Math.random() * array.length);
+    return array[index]
+}
+
+function randomRobot(state) {
+    return {direction: randomPlace(roadGraph[state.place])}
+}
 
 // add a method villageState random() that generate five random parcel 
+VillageState.random = function(parcelCount = 5) {
+    let empty = []
+    for (let i = 0; i < parcelCount; i++) {
+        let place = randomPlace(Object.keys(roadGraph));
+        let address;
+        do {
+            address = randomPlace(Object.keys(roadGraph));
+        } while (place === address)
+        empty.push({place, address})
+    }
+
+    console.log(empty)
+    return new VillageState("Post Office", empty)
+}
 
 
+// runRobot(VillageState.random(), randomRobot)
+
+// The Mail Truck's Route;
+const mailRoute = [
+    "Alice's House", "Cabin", "Alice's House", "Bob's House",
+    "Town Hall", "Daria's House", "Ernie's House",
+    "Grete's House", "Shop", "Grete's House", "Farm",
+    "Marketplace", "Post Office"
+];
+
+function routeRobot(state, memory) {
+    if (memory.length === 0) {
+        memory = mailRoute;
+    }
+
+    return {direction: memory[0], memory: memory.slice(1)}
+}
 
 
+runRobot(VillageState.random(), routeRobot, mailRoute)
+
+
+// page 128 // Pathfinding
 // ========== review ========== 
 // > Side effect
 // > State
@@ -566,7 +623,5 @@ console.log(next.move("Post Office").move("Alice's House"))
 // Object.create review
 // destructuring review
 // remember maps
-
-// page 125 // persisten data
 
   
