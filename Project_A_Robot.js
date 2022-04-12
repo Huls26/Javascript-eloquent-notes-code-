@@ -463,6 +463,7 @@ class VillageState {
 let first = new VillageState(
     "Post Office",
     [{place: "Post Office", address: "Alice's House"}]);
+console.log(first)
 let next = first.move("Marketplace");
 // console.log(next.move("Post Office").move("Alice's House"))
 
@@ -480,7 +481,7 @@ function runRobot(state, robot, memory) {
             console.log(`Done in ${i} turns`)
             break;
         }
-        console.log(state)
+        // console.log(state)
         let action = robot(state, memory)
         state = state.move(action.direction);
         memory = action.memory;
@@ -533,8 +534,42 @@ function routeRobot(state, memory) {
     return {direction: memory[0], memory: memory.slice(1)}
 }
 
+// runRobot(VillageState.random(), routeRobot, mailRoute)
 
-runRobot(VillageState.random(), routeRobot, mailRoute)
+function findRoute(graph, from, to) {
+    let work = [{at: from, route: []}];
+    for (let i = 0; i < work.length; i++) {
+      let {at, route} = work[i];
+    //   console.log("node",at, route)
+      for (let place of graph[at]) {
+        //   console.log(place, route)
+        if (place == to) return route.concat(place);
+        // console.log(work, place)
+        // remember and review this code
+        // backtracking
+        if (!work.some(w => w.at == place)) {
+          work.push({at: place, route: route.concat(place)});
+        }
+      }
+    }
+}
+
+console.log(findRoute(roadGraph, "Post Office", "Grete's House"))
+// fundamental simple slice
+// > this cant use a negative end
+// to do make a slice function
+// let toSlice = [1, 2, 3, 4, 5];
+// function slice(array, start = 0, end = array.length -1) {
+//     let sliced = []
+//     for (let i = start; i <= end; i++) {
+//         sliced.push(array[i])
+//     }
+
+//     return sliced
+// }
+
+// console.log(slice(toSlice, 1, 3))
+
 
 
 // page 128 // Pathfinding
@@ -543,6 +578,7 @@ runRobot(VillageState.random(), routeRobot, mailRoute)
 // > State
 // > imperative and declarative
 // > do while
+// > this chapter uses backtracking
 
 // last topic 
 // https://www.youtube.com/watch?v=PK2rB9VGWSA&t=1s
