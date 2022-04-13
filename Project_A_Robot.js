@@ -511,7 +511,6 @@ VillageState.random = function(parcelCount = 5) {
         empty.push({place, address})
     }
 
-    console.log(empty)
     return new VillageState("Post Office", empty)
 }
 
@@ -540,11 +539,8 @@ function findRoute(graph, from, to) {
     let work = [{at: from, route: []}];
     for (let i = 0; i < work.length; i++) {
       let {at, route} = work[i];
-    //   console.log("node",at, route)
       for (let place of graph[at]) {
-        //   console.log(place, route)
         if (place == to) return route.concat(place);
-        // console.log(work, place)
         // remember and review this code
         // backtracking
         if (!work.some(w => w.at == place)) {
@@ -555,6 +551,8 @@ function findRoute(graph, from, to) {
 }
 
 console.log(findRoute(roadGraph, "Post Office", "Grete's House"))
+
+console.log(VillageState.random(100))
 // fundamental simple slice
 // > this cant use a negative end
 // to do make a slice function
