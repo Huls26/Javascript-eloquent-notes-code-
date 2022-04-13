@@ -912,7 +912,6 @@ function goalOrientedRobot({place, parcels}, route) {
 
 // ========= Measuring a robot ========= 
 function compareRobots(robot1, memory1, robot2, memory2) {
-
     function runRobot(state, robot, memory) {
         for (let i = 0;; i++) {
             if (state.parcels.length === 0) {
@@ -924,17 +923,64 @@ function compareRobots(robot1, memory1, robot2, memory2) {
         }
     }
 
-    let generate = VillageState.random(100)
-    console.log(runRobot(generate, robot1, memory1))
-    console.log(runRobot(generate, robot2, memory2))
-}
+    let total1 = 0, total2 =  0;
 
+    for (let i = 1; i <= 100; i++) {
+      let generate = VillageState.random(1)
+      total1 += runRobot(generate, robot1, memory1)
+      total2 += runRobot(generate, robot2, memory2)
+    }
+
+  console.log(`Robot 1 needed ${total1 / 100} steps per task`)
+  console.log(`Robot 2 needed ${total2 / 100}`)
+}
 
 compareRobots(routeRobot, [], goalOrientedRobot, []);
 
+// =========== Robot Efficiency ===========
+// console.log(roadGraph)
+// check > exit code
+// add path
+// change at location; update new place
+function computeRoutes(graph, from, to) {
+  let path = [{at:from, route: []}];
+  let ch = []
+
+  console.log(path)
+  for (let i = 0;; i++) {
+    let {at, route} = path[i];
+    console.log(path[i])
+
+    if ((path.some(element => {
+      return element.route === route}) && from === to) || i >= 100) {
+        return ch
+    }
+
+    for (let place of graph[at]) { 
+      if (place === to) {
+        ch.push({at: `destination ${i}`, route: route.concat(place)})
+      }
+      path.push({at: place, route: route.concat(place)})
+    } 
+  }
+}
+
+console.log(computeRoutes(roadGraph, "Post Office", "Ernie's House"))
+
+console.log(roadGraph)
+// console.log(computeRoutes(roadGraph, "Post Office", "Marketplace"))
+
+const array1 = [5, 12, 8, 130, 44];
+
+const found = array1.find(element => element < 6);
+
+console.log(found);
+function yourRobot(state, memory) {
+  return "something"
+}
 
 
-
+// console.log(runRobot(VillageState.random(1), yourRobot, []))
 
 // last topic
 
