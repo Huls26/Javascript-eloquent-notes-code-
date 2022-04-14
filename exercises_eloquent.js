@@ -939,30 +939,39 @@ compareRobots(routeRobot, [], goalOrientedRobot, []);
 
 // =========== Robot Efficiency ===========
 // console.log(roadGraph)
-// check > exit code
-// add path
+// exit code
+//  check > add path
 // change at location; update new place
+
+// find method
 function computeRoutes(graph, from, to) {
   let path = [{at:from, route: []}];
   let ch = []
 
-  console.log(path)
   for (let i = 0;; i++) {
     let {at, route} = path[i];
-    console.log(path[i])
 
-    if ((path.some(element => {
-      return element.route === route}) && from === to) || i >= 100) {
-        return ch
+    if (ch.some((element, index) => {
+      if (index !== 0) {
+        return element.route.length > ch[index-1].route.length
+      }
+    }) || i >= 300) {
+        return ch.filter(element => {
+          return ch[0].route.length === element.route.length
+        }).map(element => {
+          return element.route
+        })
     }
 
     for (let place of graph[at]) { 
       if (place === to) {
-        ch.push({at: `destination ${i}`, route: route.concat(place)})
+        ch.push({at: place, route: route.concat(place)})
       }
+
       path.push({at: place, route: route.concat(place)})
     } 
   }
+
 }
 
 console.log(computeRoutes(roadGraph, "Post Office", "Ernie's House"))
@@ -970,16 +979,24 @@ console.log(computeRoutes(roadGraph, "Post Office", "Ernie's House"))
 console.log(roadGraph)
 // console.log(computeRoutes(roadGraph, "Post Office", "Marketplace"))
 
-const array1 = [5, 12, 8, 130, 44];
+function yourRobot({place, parcels}, memory) {
+  let task = [];
 
-const found = array1.find(element => element < 6);
+  if (memory.length === 0) {
+    task.push({pick: parcels[0].place, parcels})
 
-console.log(found);
-function yourRobot(state, memory) {
-  return "something"
+    console.log(task)
+  }
+
+  // let first = memory.shift();
+  // return {direction: first, route: memory}
 }
 
+// let random1 = VillageState.random(1);
+// console.log(random1)
+// console.log(yourRobot(random1, []))
 
+// console.log(compareRobots(yourRobot, [],goalOrientedRobot, []));
 // console.log(runRobot(VillageState.random(1), yourRobot, []))
 
 // last topic
