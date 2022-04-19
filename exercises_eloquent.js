@@ -788,216 +788,223 @@ way to fix this? ====== */
 
 
 // ============= Chapter 7 Project: A Robot ===========
-var roads = [
-    "Alice's House-Bob's House",   "Alice's House-Cabin",
-    "Alice's House-Post Office",   "Bob's House-Town Hall",
-    "Daria's House-Ernie's House", "Daria's House-Town Hall",
-    "Ernie's House-Grete's House", "Grete's House-Farm",
-    "Grete's House-Shop",          "Marketplace-Farm",
-    "Marketplace-Post Office",     "Marketplace-Shop",
-    "Marketplace-Town Hall",       "Shop-Town Hall"
-];
+// var roads = [
+//     "Alice's House-Bob's House",   "Alice's House-Cabin",
+//     "Alice's House-Post Office",   "Bob's House-Town Hall",
+//     "Daria's House-Ernie's House", "Daria's House-Town Hall",
+//     "Ernie's House-Grete's House", "Grete's House-Farm",
+//     "Grete's House-Shop",          "Marketplace-Farm",
+//     "Marketplace-Post Office",     "Marketplace-Shop",
+//     "Marketplace-Town Hall",       "Shop-Town Hall"
+// ];
 
-function buildGraph(roads) {
-    let graph = Object.create(null);
-    function group(from, to) {
-        if (graph[from]) {
-            graph[from].push(to);
-        } else {
-            graph[from] = [to];
-        }
-    }
+// function buildGraph(roads) {
+//     let graph = Object.create(null);
+//     function group(from, to) {
+//         if (graph[from]) {
+//             graph[from].push(to);
+//         } else {
+//             graph[from] = [to];
+//         }
+//     }
 
-    for (let element of roads) {
-        let [from, to] = element.split("-");
-        group(from, to)
-        group(to, from)
-    }
+//     for (let element of roads) {
+//         let [from, to] = element.split("-");
+//         group(from, to)
+//         group(to, from)
+//     }
 
-    return graph
-}
+//     return graph
+// }
 
-let roadGraph = buildGraph(roads);
+// let roadGraph = buildGraph(roads);
 
-class VillageState {
-    constructor(place, parcels) {
-      this.place = place;
-      this.parcels = parcels;
-    }
+// class VillageState {
+//     constructor(place, parcels) {
+//       this.place = place;
+//       this.parcels = parcels;
+//     }
   
-    move(destination) {
-      if (!roadGraph[this.place].includes(destination)) {
-        return this;
-      } else {
-        let parcels = this.parcels.map(p => {
-          if (p.place != this.place) return p;
-          return {place: destination, address: p.address};
-        }).filter(p => p.place != p.address);
-        return new VillageState(destination, parcels);
-      }
-    }
-  }
+//     move(destination) {
+//       if (!roadGraph[this.place].includes(destination)) {
+//         return this;
+//       } else {
+//         let parcels = this.parcels.map(p => {
+//           if (p.place != this.place) return p;
+//           return {place: destination, address: p.address};
+//         }).filter(p => p.place != p.address);
+//         return new VillageState(destination, parcels);
+//       }
+//     }
+//   }
 
-function runRobot(state, robot, memory) {
-    for (let i = 0;; i++) {
-        if (state.parcels.length === 0) {
-            return i
-        }
-        // console.log(state)
-        let action = robot(state, memory)
-        state = state.move(action.direction);
-        memory = action.memory;
-    }
-}
+// function runRobot(state, robot, memory) {
+//     for (let i = 0;; i++) {
+//         if (state.parcels.length === 0) {
+//           console.log(`Done in turns ${i}`)
+//           break;
+//         }
+//         let action = robot(state, memory)
+//         state = state.move(action.direction);
+//         memory = action.memory;
+//         // console.log(`Move to ${action.direction}`)
+//     }
+// }
 
-VillageState.random = function(parcelCount = 5) {
-    let parcels = [];
-    for (let i = 0; i < parcelCount; i++) {
-      let address = randomPick(Object.keys(roadGraph));
-      let place;
-      do {
-        place = randomPick(Object.keys(roadGraph));
-      } while (place == address);
-      parcels.push({place, address});
-    }
-    return new VillageState("Post Office", parcels);
-  };
+// VillageState.random = function(parcelCount = 5) {
+//     let parcels = [];
+//     for (let i = 0; i < parcelCount; i++) {
+//       let address = randomPick(Object.keys(roadGraph));
+//       let place;
+//       do {
+//         place = randomPick(Object.keys(roadGraph));
+//       } while (place == address);
+//       parcels.push({place, address});
+//     }
+//     return new VillageState("Post Office", parcels);
+//   };
 
-function randomPick(array) {
-    let index = Math.floor(Math.random() * array.length);
-    return array[index]
-}
+// function randomPick(array) {
+//     let index = Math.floor(Math.random() * array.length);
+//     return array[index]
+// }
 
-const mailRoute = [
-    "Alice's House", "Cabin", "Alice's House", "Bob's House",
-    "Town Hall", "Daria's House", "Ernie's House",
-    "Grete's House", "Shop", "Grete's House", "Farm",
-    "Marketplace", "Post Office"
-];
+// const mailRoute = [
+//     "Alice's House", "Cabin", "Alice's House", "Bob's House",
+//     "Town Hall", "Daria's House", "Ernie's House",
+//     "Grete's House", "Shop", "Grete's House", "Farm",
+//     "Marketplace", "Post Office"
+// ];
 
-function routeRobot(state, memory) {
-    if (memory.length === 0) {
-        memory = mailRoute;
-    }
+// function routeRobot(state, memory) {
+//     if (memory.length === 0) {
+//         memory = mailRoute;
+//     }
 
-    return {direction: memory[0], memory: memory.slice(1)}
-}
+//     return {direction: memory[0], memory: memory.slice(1)}
+// }
 
-function findRoute(graph, from, to) {
-    let work = [{at: from, route: []}];
-    for (let i = 0; i < work.length; i++) {
-      let {at, route} = work[i];
-      for (let place of graph[at]) {
-        if (place == to) return route.concat(place);
-        // remember and review this code
-        // backtracking
-        if (!work.some(w => w.at == place)) {
-          work.push({at: place, route: route.concat(place)});
-        }
-      }
-    }
-}
+// function findRoute(graph, from, to) {
+//     let work = [{at: from, route: []}];
+//     for (let i = 0; i < work.length; i++) {
+//       let {at, route} = work[i];
+//       for (let place of graph[at]) {
+//         if (place == to) return route.concat(place);
+//         // remember and review this code
+//         // backtracking
+//         if (!work.some(w => w.at == place)) {
+//           work.push({at: place, route: route.concat(place)});
+//         }
+//       }
+//     }
+// }
 
-function goalOrientedRobot({place, parcels}, route) {
-    if (route.length == 0) {
-      let parcel = parcels[0];
-      if (parcel.place != place) {
-        route = findRoute(roadGraph, place, parcel.place);
-      } else {
-        route = findRoute(roadGraph, place, parcel.address);
-      }
-    }
-    return {direction: route[0], memory: route.slice(1)};
-}
+// function goalOrientedRobot({place, parcels}, route) {
+//     if (route.length == 0) {
+//       let parcel = parcels[0];
+//       if (parcel.place != place) {
+//         route = findRoute(roadGraph, place, parcel.place);
+//       } else {
+//         route = findRoute(roadGraph, place, parcel.address);
+//       }
+//     }
+//     return {direction: route[0], memory: route.slice(1)};
+// }
 
 // ========= Measuring a robot ========= 
-function compareRobots(robot1, memory1, robot2, memory2) {
-    function runRobot(state, robot, memory) {
-        for (let i = 0;; i++) {
-            if (state.parcels.length === 0) {
-                return i
-            }
-            let action = robot(state, memory)
-            state = state.move(action.direction);
-            memory = action.memory;
-        }
-    }
+// function compareRobots(robot1, memory1, robot2, memory2) {
+//     function runRobot(state, robot, memory) {
+//         for (let i = 0;; i++) {
+//             if (state.parcels.length === 0) {
+//                 return i
+//             }
+//             let action = robot(state, memory)
+//             state = state.move(action.direction);
+//             memory = action.memory;
+//         }
+//     }
 
-    let total1 = 0, total2 =  0;
+//     let total1 = 0, total2 =  0;
 
-    for (let i = 1; i <= 100; i++) {
-      let generate = VillageState.random(1)
-      total1 += runRobot(generate, robot1, memory1)
-      total2 += runRobot(generate, robot2, memory2)
-    }
+//     for (let i = 1; i <= 100; i++) {
+//       let generate = VillageState.random(1)
+//       total1 += runRobot(generate, robot1, memory1)
+//       total2 += runRobot(generate, robot2, memory2)
+//     }
 
-  console.log(`Robot 1 needed ${total1 / 100} steps per task`)
-  console.log(`Robot 2 needed ${total2 / 100}`)
-}
+//   console.log(`Robot 1 needed ${total1 / 100} steps per task`)
+//   console.log(`Robot 2 needed ${total2 / 100}`)
+// }
 
-compareRobots(routeRobot, [], goalOrientedRobot, []);
+// compareRobots(routeRobot, [], goalOrientedRobot, []);
 
 // =========== Robot Efficiency ===========
-// console.log(roadGraph)
-// exit code
-//  check > add path
-// change at location; update new place
+// function lazyRobot({place, parcels}, route) {
+//   if (route.length == 0) {
+//     // Describe a route for every parcel
+//     let routes = parcels.map(parcel => {
+//       if (parcel.place != place) {
+//         return {route: findRoute(roadGraph, place, parcel.place),
+//                 pickUp: true};
+//       } else {
+//         return {route: findRoute(roadGraph, place, parcel.address),
+//                 pickUp: false};
+//       }
+//     });
 
-// find method
-function computeRoutes(graph, from, to) {
-  let path = [{at:from, route: []}];
-  let ch = []
+//     // This determines the precedence a route gets when choosing.
+//     // Route length counts negatively, routes that pick up a package
+//     // get a small bonus.
+//     function score({route, pickUp}) {
+//       return (pickUp ? 0.5 : 0) - route.length;
+//     }
+//     route = routes.reduce((a, b) => {
+//       return score(a) > score(b) ? a : b}).route;
+//   }
 
-  for (let i = 0;; i++) {
-    let {at, route} = path[i];
+//   return {direction: route[0], memory: route.slice(1)};
+// }
 
-    if (ch.some((element, index) => {
-      if (index !== 0) {
-        return element.route.length > ch[index-1].route.length
-      }
-    }) || i >= 300) {
-        return ch.filter(element => {
-          return ch[0].route.length === element.route.length
-        }).map(element => {
-          return element.route
-        })
-    }
+// runRobot(VillageState.random(1), lazyRobot, [])
 
-    for (let place of graph[at]) { 
-      if (place === to) {
-        ch.push({at: place, route: route.concat(place)})
-      }
 
-      path.push({at: place, route: route.concat(place)})
-    } 
-  }
+// ========== Persistent Group ========== 
+// class PGroup {
+//   constructor(member) {
+//     this.member = member;
+//   }
 
-}
+//   add(value) {
+//     if (this.has(value)) return this;
+//     return new PGroup(this.member.concat(value))
+//   }
 
-console.log(computeRoutes(roadGraph, "Post Office", "Ernie's House"))
+//   delete(value) {
+//     if (!this.has(value)) return this;
+//     return new PGroup(this.member.filter(element => element !== value))
+//   }
 
-console.log(roadGraph)
-// console.log(computeRoutes(roadGraph, "Post Office", "Marketplace"))
+//   has(value) {
+//     return this.member.includes(value)
+//   }
 
-function yourRobot({place, parcels}, memory) {
-  let task = [];
+//   static empty = new PGroup([])
+// }
 
-  if (memory.length === 0) {
-    task.push({pick: parcels[0].place, parcels})
 
-    console.log(task)
-  }
+// let a = PGroup.empty.add("a");
+// let ab = a.add("b");
+// let b = ab.delete("a");
 
-  // let first = memory.shift();
-  // return {direction: first, route: memory}
-}
+// console.log(b.has("b"));
+// // → true
+// console.log(a.has("b"));
+// // → false
+// console.log(b.has("a"));
+// // → false
+// console.log(a)
 
-// let random1 = VillageState.random(1);
-// console.log(random1)
-// console.log(yourRobot(random1, []))
 
-// console.log(compareRobots(yourRobot, [],goalOrientedRobot, []));
-// console.log(runRobot(VillageState.random(1), yourRobot, []))
 
 // last topic
 
