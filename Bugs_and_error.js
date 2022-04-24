@@ -139,10 +139,75 @@ function promptNumber(question) {
 // console.log(promptNumber("How many trees did you see?"))
 
 // Exceptions
+function getNumber(num1, num2) {
+    if (isNaN(num1), isNaN(num2)) {
+        throw new Error("The argument is not a number")
+    }
+
+    return num1 + num2
+}
+
+// try {
+//     getNumber(1, "a")
+// } catch(e) {
+//     console.log(e.message)
+// }
+
+const dataServer = {
+    name: "John",
+    age: null,
+    violation: "Speeding"
+}
+
+const information = JSON.stringify(dataServer)
+
+function gettingInformation(data) {
+    if (!data.age) {
+        throw new Error("Age not Define")
+    }
+
+    console.log("Adding to information to the system")
+
+    return data.violation
+}
+
+try {
+    let convertFile = JSON.parse(information);
+    gettingInformation(convertFile);
+} catch(error) {
+    let convertFile = JSON.parse(information)
+    convertFile.age = 53;
+    console.error("JSON Error: " +error.message)
+    console.log(JSON.stringify(convertFile))
+}   
 
 
+function promptDirection(message) {
+    let result = prompt(message);
+    result
+    if (!result) {
+        throw new Error("No direction");
+    }  
+    if (result.toLowerCase() === "left") return "L";
+    if (result.toLowerCase() === "right") return "R";
+     
+    throw new Error("Invalid direction " + result);
+}
 
+function look() {
+    if (promptDirection("Enter direction") === "L") return console.log("A house") 
+    else {
+        return console.log("A wonderful life")
+    }
+}
 
+try {
+    look()
+} catch(error) {
+    console.error(error)
+}
+
+// Cleaning up after exceptions
 
 
 // last topic
