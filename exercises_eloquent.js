@@ -1,3 +1,4 @@
+"use strict"
 // Minimum
 
 // The previous chapter introduced the standard function Math.min that returns
@@ -1003,6 +1004,80 @@ way to fix this? ====== */
 // console.log(b.has("a"));
 // // → false
 // console.log(a)
+
+
+// =============== chapter 8: Bugs and Errors ===============
+
+// ========= 8.1 Retry ===========
+class MultiplicatorUnitFailure extends Error {}
+
+function primitiveMultiply(a, b) {
+  if (Math.random() < 0.2) {
+    return a * b;
+  } else {
+    throw new MultiplicatorUnitFailure("Klunk");
+  }
+}
+
+function reliableMultiply(a, b) {
+  // Your code here.
+    let condition = true;
+    while (condition) {
+        condition = false;
+        try {
+            return primitiveMultiply(a, b)
+        } catch(error) {
+            condition = true
+            console.error(error)
+        }
+    } 
+  
+}
+
+// console.log(reliableMultiply(8, 8));
+
+// → 64
+
+// =============== The locked box ===============
+const box = {
+  locked: true,
+  unlock() { this.locked = false; },
+  lock() { this.locked = true;  },
+  _content: [],
+  get content() {
+    if (this.locked) throw new Error("Locked!");
+    return this._content;
+  }
+};
+
+function withBoxUnlocked(body) {
+  try {
+    box.unlock()
+    body()
+  } finally {
+    box.lock()
+  }
+}
+
+withBoxUnlocked(function() {
+  box.content.push("gold piece");
+});
+
+try {
+  withBoxUnlocked(function() {
+    throw new Error("Pirates on the horizon! Abort!");
+  });
+} catch (e) {
+  console.log("Error raised: " + e);
+}
+console.log(box.locked);
+// → true
+
+
+
+
+
+
 
 
 

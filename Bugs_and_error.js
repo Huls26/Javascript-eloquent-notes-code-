@@ -281,19 +281,19 @@ function promptDirection(message) {
     throw new Instance("Invalid direction " + result);
 }
 
-for(;;) {
-    try {
-        const dir = promptDirection("Enter Direction");
-        console.log("You choose " + dir);
-        break;
-    } catch(error) {
-        if (error instanceof Instance) {
-            console.log("No direction try again")
-        } else {
-            console.log(error)
-        }
-    }
-}
+// for(;;) {
+//     try {
+//         const dir = promptDirection("Enter Direction");
+//         console.log("You choose " + dir);
+//         break;
+//     } catch(error) {
+//         if (error instanceof Instance) {
+//             console.log("No direction try again")
+//         } else {
+//             console.log(error)
+//         }
+//     }
+// }
 
 // Assertions
 
