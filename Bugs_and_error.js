@@ -298,6 +298,35 @@ function promptDirection(message) {
 // Assertions
 
 
+// cleaning up after exceptions
+// const accounts = {
+//     a: 100,
+//     b: 0,
+//     c: 20
+//   };
+  
+//   function getAccount() {
+//     let accountName = prompt("Enter an account name");
+//     if (!accounts.hasOwnProperty(accountName)) {
+//       throw new Error(`No such account: ${accountName}`);
+//     }
+//     return accountName;
+//   }
+  
+//   function transfer(from, amount) {
+//     if (accounts[from] < amount) return;
+  
+//     try {
+//       accounts[getAccount()] += amount;
+//       accounts[from] -= amount;
+//       console.log(accounts)
+//     } catch(error) {
+//       console.log(error)
+//     }
+//   }
+  
+//   transfer("a", 50)
+
 // last topic
 // https://www.youtube.com/watch?v=QQguWy4aX2w&t=886s
 // https://www.youtube.com/watch?v=Eu35xM76kKY

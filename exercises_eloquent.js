@@ -1009,70 +1009,87 @@ way to fix this? ====== */
 // =============== chapter 8: Bugs and Errors ===============
 
 // ========= 8.1 Retry ===========
-class MultiplicatorUnitFailure extends Error {}
+// class MultiplicatorUnitFailure extends Error {}
 
-function primitiveMultiply(a, b) {
-  if (Math.random() < 0.2) {
-    return a * b;
-  } else {
-    throw new MultiplicatorUnitFailure("Klunk");
-  }
-}
+// function primitiveMultiply(a, b) {
+//   if (Math.random() < 0.2) {
+//     return a * b;
+//   } else {
+//     throw new MultiplicatorUnitFailure("Klunk");
+//   }
+// }
 
-function reliableMultiply(a, b) {
-  // Your code here.
-    let condition = true;
-    while (condition) {
-        condition = false;
-        try {
-            return primitiveMultiply(a, b)
-        } catch(error) {
-            condition = true
-            console.error(error)
-        }
-    } 
+// function reliableMultiply(a, b) {
+//   // Your code here.
+//     let condition = true;
+//     while (condition) {
+//         condition = false;
+//         try {
+//             return primitiveMultiply(a, b)
+//         } catch(error) {
+//             condition = true
+//             if (!(error instanceof MultiplicatorUnitFailure)) throw error;
+
+//         }
+//     } 
   
-}
+// }
 
 // console.log(reliableMultiply(8, 8));
 
-// → 64
+// // → 64
 
-// =============== The locked box ===============
-const box = {
-  locked: true,
-  unlock() { this.locked = false; },
-  lock() { this.locked = true;  },
-  _content: [],
-  get content() {
-    if (this.locked) throw new Error("Locked!");
-    return this._content;
-  }
-};
+// // =============== The locked box ===============
+// const box = {
+//   locked: true,
+//   unlock() { this.locked = false; },
+//   lock() { this.locked = true;  },
+//   _content: [],
+//   get content() {
+//     if (this.locked) throw new Error("Locked!");
+//     return this._content;
+//   }
+// };
 
-function withBoxUnlocked(body) {
-  try {
-    box.unlock()
-    body()
-  } finally {
-    box.lock()
-  }
-}
+// //my answer
+// // function withBoxUnlocked(body) {
+// //   try {
+// //     box.unlock()
+// //     body()
+// //   } finally {
+// //     box.lock()
+// //   }
+// // }
 
-withBoxUnlocked(function() {
-  box.content.push("gold piece");
-});
+// // flaws i see is that when the locked is false the lock is still false after is it call the body
+// function withBoxUnlocked(body) {
+//   let locked = box.locked;
+//   if (!locked) {
+//     return body();
+//   }
 
-try {
-  withBoxUnlocked(function() {
-    throw new Error("Pirates on the horizon! Abort!");
-  });
-} catch (e) {
-  console.log("Error raised: " + e);
-}
-console.log(box.locked);
+//   box.unlock();
+//   try {
+//     return body();
+//   } finally {
+//     box.lock();
+//   }
+// }
+
+// withBoxUnlocked(function() {
+//   box.content.push("gold piece");
+// });
+
+// try {
+//   withBoxUnlocked(function() {
+//     throw new Error("Pirates on the horizon! Abort!");
+//   });
+// } catch (e) {
+//   console.log("Error raised: " + e);
+// }
+
+// console.log(box.locked);
 // → true
-
 
 
 
