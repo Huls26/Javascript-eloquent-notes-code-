@@ -177,10 +177,97 @@ try {
 } catch(error) {
     let convertFile = JSON.parse(information)
     convertFile.age = 53;
-    console.error("JSON Error: " +error.message)
-    console.log(JSON.stringify(convertFile))
+    // console.error("JSON Error: " +error.message)
+    // console.log(JSON.stringify(convertFile))
 }   
 
+
+// function promptDirection(message) {
+//     let result = prompt(message);
+//     result
+//     if (!result) {
+//         throw new Error("No direction");
+//     }  
+//     if (result.toLowerCase() === "left") return "L";
+//     if (result.toLowerCase() === "right") return "R";
+     
+//     throw new Error("Invalid direction " + result);
+// }
+
+function look() {
+    if (promptDirection("Enter direction") === "L") return console.log("A house") 
+    else {
+        return console.log("A wonderful life")
+    }
+}
+
+// try {
+//     look()
+// } catch(error) {
+//     console.error(error)
+// }
+
+// try {
+//     console.log("run something")
+//     if (true) {
+//         throw new Error("Something")
+//     }
+// } catch(error) {
+//     console.error(error)
+// }
+
+// let greeting = 123;
+// greeting.forEach(element => {
+//     console.log(element)
+// });
+
+console.log("hello")
+
+// Cleaning up after exceptions
+const accounts = {
+    a: 100,
+    b: 0,
+    c: 20
+};
+  
+function getAccount() {
+    let accountName = prompt("Enter an account name");
+    if (!accounts.hasOwnProperty(accountName)) {
+    throw new Error(`No such account: ${accountName}`);
+    }
+    return accountName;
+}
+
+// finally
+function transfer(from, amount) {
+    if (accounts[from] < amount) return;
+    let process = 0;
+    try {
+        let accountN = getAccount()
+        if (accountN) {
+            accounts[accountN] += amount;
+            process = 1;
+        }
+    } finally {
+        if (process === 1) {
+            accounts[from] -= amount;
+        }
+    }
+    
+}
+
+// try {
+//     transfer("a", 50)
+// } catch(error) {
+//     console.log(error)
+// }
+
+// transfer("a", 50)
+
+// console.log(accounts)
+
+// ====== Selective catching =======
+class Instance extends Error {}
 
 function promptDirection(message) {
     let result = prompt(message);
@@ -191,23 +278,24 @@ function promptDirection(message) {
     if (result.toLowerCase() === "left") return "L";
     if (result.toLowerCase() === "right") return "R";
      
-    throw new Error("Invalid direction " + result);
+    throw new Instance("Invalid direction " + result);
 }
 
-function look() {
-    if (promptDirection("Enter direction") === "L") return console.log("A house") 
-    else {
-        return console.log("A wonderful life")
+for(;;) {
+    try {
+        const dir = promptDirection("Enter Direction");
+        console.log("You choose " + dir);
+        break;
+    } catch(error) {
+        if (error instanceof Instance) {
+            console.log("No direction try again")
+        } else {
+            console.log(error)
+        }
     }
 }
 
-try {
-    look()
-} catch(error) {
-    console.error(error)
-}
-
-// Cleaning up after exceptions
+// Assertions
 
 
 // last topic

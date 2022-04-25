@@ -6,3 +6,9 @@
 // throw new Error()
 // try
 // catch
+// Object.hasOwnProperty()
+// types of error in javascript
+
+
+// ============= front end career path ============== 
+// https://roadmap.sh/frontend
