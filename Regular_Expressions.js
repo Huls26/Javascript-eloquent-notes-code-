@@ -35,6 +35,24 @@ console.log(/[a-z]{3,5}/.test("asdasaas"))
 console.log(new Date())
 
 // boundaries
-console.log(/\bt\b/.exec("tweet the ocean"))
-/// Review Regular expressions
+console.log(/\bt\b/.exec("tweet the ocean t"))
+
+// Choice patterns
+let animalCount = /\b\d+ (pig|cow|chicken)s?\b/;
+console.log(animalCount.test("15 pigs"));
+console.log(animalCount.test("21 pig"))
+// → true
+
+// Backtracking
+
+// sample
+console.log("Jules".match(/[^js]/))
+
+// Quoting style
+let text = "'I'm the cook,' he said, 'it's my job.'";
+
+// console.log(/[a-z]/i.test("I"))
+
+
+// Review Regular expressions
 // https://www.youtube.com/watch?v=Se6Oxyl03xE
