@@ -1,3 +1,4 @@
+export {printAge}
 // export default class User {
 //     constructor(name, age) {
 //         this.name = name;
@@ -13,7 +14,7 @@ function printAge(user) {
     console.log(`User age is ${user.age}`)
 }
 
-// export {printName, printAge}
+
 
 
 // let User = {

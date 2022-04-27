@@ -30,14 +30,58 @@ console.log(plusOne(4));
 // CommonJS
 //ECMAScript modules
 
-import User from "./user.js"
+import User, {printAge} from "./user.js"
 // import {printName, printAge} from "./user.js"
 
 // let user1 = User;
 
 User({name: "J"})
+printAge({age: 13})
 // printAge(user1)
 
+// Building and bundling
+// Module design
+
+const roads = [
+  "Alice's House-Bob's House",   "Alice's House-Cabin",
+  "Alice's House-Post Office",   "Bob's House-Town Hall",
+  "Daria's House-Ernie's House", "Daria's House-Town Hall",
+  "Ernie's House-Grete's House", "Grete's House-Farm",
+  "Grete's House-Shop",          "Marketplace-Farm",
+  "Marketplace-Post Office",     "Marketplace-Shop",
+  "Marketplace-Town Hall",       "Shop-Town Hall"
+];
+
+function buildGraph(edges) {
+  let graph = Object.create(null);
+  function addEdge(from, to) {
+    if (graph[from] == null) {
+      graph[from] = [to];
+    } else {
+      graph[from].push(to);
+    }
+  }
+  for (let [from, to] of edges.map(r => r.split("-"))) {
+    addEdge(from, to);
+    addEdge(to, from);
+  }
+  return graph;
+}
+
+const roadGraph = buildGraph(roads);
+
+console.log(roadGraph)
+
+let graph = {};
+for (let node of Object.keys(roadGraph)) {
+    let edges = graph[node] = {};
+    // let edgestgraph[node] = {}
+  for (let dest of roadGraph[node]) {
+    edges[dest] = 1;
+    // graph[node][dest] = 1
+  }
+}
+console.log(graph)
 // topic
 // https://www.youtube.com/watch?v=cRHQNNcYf6s
 
