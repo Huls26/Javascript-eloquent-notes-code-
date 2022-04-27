@@ -18,5 +18,23 @@
 // > console.log(/abc/.test("abxde"));
 // → false
 
+//  ================= Modules =================
+// eval()
+// Function()
+// import
+// from
+// as
+// export default
+// export
+// require() > npm
+
+
+
+// fundamental
+let sampleGrap = {}
+let edges = sampleGrap["value"] = {};
+
+edges["name"] = "Bob"
+console.log(sampleGrap)
 // ============= front end career path ============== 
 // https://roadmap.sh/frontend

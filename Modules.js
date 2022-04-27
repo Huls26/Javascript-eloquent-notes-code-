@@ -31,6 +31,7 @@ console.log(plusOne(4));
 //ECMAScript modules
 
 import User, {printAge} from "./user.js"
+
 // import {printName, printAge} from "./user.js"
 
 // let user1 = User;
@@ -77,11 +78,24 @@ for (let node of Object.keys(roadGraph)) {
     let edges = graph[node] = {};
     // let edgestgraph[node] = {}
   for (let dest of roadGraph[node]) {
+    console.log(edges[dest])
     edges[dest] = 1;
     // graph[node][dest] = 1
   }
 }
 console.log(graph)
+
+// fundamental
+let sampleGrap = {}
+let edges = sampleGrap["value"] = {};
+
+edges["name"] = "Bob"
+console.log(sampleGrap)
+
 // topic
 // https://www.youtube.com/watch?v=cRHQNNcYf6s
+// https://www.youtube.com/watch?v=xRgWMhbVlpQ
+// https://www.youtube.com/watch?v=GQ96b_u7rGc
+
+// https://www.youtube.com/watch?v=mK54Cn4ceac
 
