@@ -8,7 +8,7 @@ let weekDay = function() {
     };
 }()
 
-console.log(weekDay.name(weekDay.number("Sunday")));
+// console.log(weekDay.name(weekDay.number("Sunday")));
 // → Sunday
 
 // Evaluating data as code
@@ -18,13 +18,13 @@ function evalAndReturnX(code) {
   return x;
 }
 
-console.log(evalAndReturnX("var x = 2"));
+// console.log(evalAndReturnX("var x = 2"));
 // → 2
 
-console.log(x);
+// console.log(x);
 // → 1
 let plusOne = Function("n", "return n + 1;");
-console.log(plusOne(4));
+// console.log(plusOne(4));
 // → 5
 
 // CommonJS
@@ -36,8 +36,8 @@ import User, {printAge} from "./user.js"
 
 // let user1 = User;
 
-User({name: "J"})
-printAge({age: 13})
+// User({name: "J"})
+// printAge({age: 13})
 // printAge(user1)
 
 // Building and bundling
@@ -71,26 +71,73 @@ function buildGraph(edges) {
 
 const roadGraph = buildGraph(roads);
 
-console.log(roadGraph)
-
 let graph = {};
 for (let node of Object.keys(roadGraph)) {
     let edges = graph[node] = {};
     // let edgestgraph[node] = {}
   for (let dest of roadGraph[node]) {
-    console.log(edges[dest])
     edges[dest] = 1;
     // graph[node][dest] = 1
   }
 }
-console.log(graph)
+// console.log(graph)
 
 // fundamental
 let sampleGrap = {}
 let edges = sampleGrap["value"] = {};
 
 edges["name"] = "Bob"
-console.log(sampleGrap)
+// console.log(sampleGrap)
+
+// challenges
+// > https://www.codewars.com/collections/lesson-5-practice-challenges-number-fullstackroadmap
+// done:
+// Multiply
+// Even or Odd
+// Sum of Positive
+// Remove First and Last Characted
+// Return Negative
+// String Repeat
+// Remove String Spaces
+// Grasshopper - Summation
+
+// ============ String repeat ============
+// function repeatStr (n, s, rep = "") {
+//   rep = rep + s;
+
+//   if (n <= 1) {
+//     return rep
+//   }
+ 
+//   return repeatStr(n-1, s, rep)
+// }
+
+// =========== Remove String Spaces ============
+// function noSpace(x){
+//   let split = x.split("");
+   
+//    let nS = split.reduce((prev, cur) => {
+//      if (cur === " ") {
+       
+//      } else {
+//        prev.push(cur)
+//      }
+//      return prev
+//    }, [])
+   
+//    return nS.join("")
+//  }
+
+
+// =========== Grasshopper - Summation ===========
+// var summation = function (num) {
+//   if (num < 1) {
+//     return 0
+//   }
+  
+//   return num + summation(num - 1)
+// }
+
 
 // topic
 // https://www.youtube.com/watch?v=cRHQNNcYf6s
@@ -99,3 +146,4 @@ console.log(sampleGrap)
 
 // https://www.youtube.com/watch?v=mK54Cn4ceac
 
+// https://www.youtube.com/watch?v=ZR2hs726h74
