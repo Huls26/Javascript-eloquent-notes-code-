@@ -100,6 +100,23 @@ edges["name"] = "Bob"
 // String Repeat
 // Remove String Spaces
 // Grasshopper - Summation
+// Find the smallest integer in the array
+// Reversed Strings 
+// Counting sheep...
+// Is n divisible by x and y?
+// Century From Year
+// Basic Mathematical Operations
+// Beginner - Lost Without a Map
+// Total amount of points
+// Jenny's secret message
+// Get the mean of an array
+// Array plus array
+// Rock Paper Scissors!
+// Is he gonna survive?
+// Convert a string to an array
+// Get Planet Name By ID
+// Cat years, Dog years
+// Vowel Count
 
 // ============ String repeat ============
 // function repeatStr (n, s, rep = "") {
@@ -138,6 +155,62 @@ edges["name"] = "Bob"
 //   return num + summation(num - 1)
 // }
 
+// ========= Find the smallest integer in the array
+// class SmallestIntegerFinder {
+//   findSmallestInt(args) {
+//     return args.reduce((low, cur) => {
+//       if (cur < low) {
+//         low = cur;
+//       } 
+      
+//       return low
+//     })
+//   }
+// }
+
+// Counting sheep...
+// function countSheeps(arrayOfSheep) {
+//   // TODO May the force be with you
+//   return arrayOfSheep.reduce((total, sheep) => {
+//     if (sheep) {
+//       total++
+//     }
+    
+//     return total
+//   }, 0)
+// }
+
+// Century
+// function century(year) {
+//   return Math.ceil(year / 100) 
+// }
+
+// Get the mean of an array
+// function getAverage(marks){
+//   //TODO : calculate the downward rounded average of the marks array
+//   return Math.floor(marks.reduce((total, mark) => {
+//     return total + mark 
+//   }) / marks.length)
+// }
+
+
+// Rock Paper Scissors!
+// const rps = (p1, p2) => {
+//   let result = {
+//     scissors: "paper",
+//     paper: "rock",
+//     rock: "scissors",
+//   }
+  
+//   console.log(result[p1])
+//   if (p1 === p2) {
+//     return "Draw!"
+//   } else if (result[p1] === p2) {
+//     return "Player 1 won!"
+//   }
+  
+//   return "Player 2 won!"
+// };
 
 // topic
 // https://www.youtube.com/watch?v=cRHQNNcYf6s
@@ -146,4 +219,5 @@ edges["name"] = "Bob"
 
 // https://www.youtube.com/watch?v=mK54Cn4ceac
 
+// CodeWars.js ep.001 - Coding Challenges with JavaScript
 // https://www.youtube.com/watch?v=ZR2hs726h74
