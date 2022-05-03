@@ -63,12 +63,21 @@ function fail() {
 
 // promise
 
-let promise1 = prom => new Promise((resolve) => {
-        return resolve()
-})
+// let promise1 = prom => {
 
+//     return new Promise((resolve) => {
+//         console.log(resolve)
+//         console.log(prom)
+// })
+// }
 
-promise1(console.log("this resolve"))
+// promise1("this resolve")
+
+// let promise1 = new Promise((resolve, reject) => {
+//     return resolve
+// })
+
+// promise1
 
 // function failureCallback() {
 //     console.log("something went wrong")
@@ -76,10 +85,77 @@ promise1(console.log("this resolve"))
 // const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // wait(10*1000).then(() => saySomething("10 seconds")).catch(failureCallback);
+
+// =========== My own Promises =================
+class MyPromise {
+    constructor(callback) {
+        this.fullfilled = null;
+        this.reject = null;
+        callback((message) => {
+            this.fullfilled = message
+        }, (message) => {this.reject = message} )
+
+    }
+
+    then(callback) {
+        callback(this.fullfilled)
+    }
+
+    catch(callback) {
+        callback(this.reject)
+    }
+}
+
+let p1 = new MyPromise((resolve, reject) => {
+    let a = 1 + 1;
+
+    if (a === 2) {
+        resolve("success")
+    } else {
+        reject("fail")
+    }
+
+})
+
+let p2 = new MyPromise((resolve, reject) => {
+    let a = 1 + 12;
+
+    if (a === 2) {
+        resolve("success")
+    } else {
+        reject("fail")
+    }
+})
+
+if (p1.fullfilled === "success") {
+    console.log("passed for resolve")
+}
+
+p1.then(message => {
+    if (message === "success") {
+        console.log("Passed 1")
+    }
+})
+
+
+p2.catch(error => {
+    if (error === "fail") {
+        console.log("passed 2")
+    }
+})
+
+
+
+
+
+
+
 // last topic 
+// https://www.youtube.com/watch?v=C3kUMPtt4hY
+// https://www.youtube.com/watch?v=DHvZLI7Db8E
 // https://www.youtube.com/watch?v=ZYb_ZU8LNxs
 // https://www.youtube.com/watch?v=QO4NXhWo_NM&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=11
 
 // read this 
-// 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
