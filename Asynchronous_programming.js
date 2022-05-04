@@ -191,7 +191,7 @@ class MyPromise {
 
     static resolve(value) {
         let create = new MyPromise(value);
-        create.store(value);
+        create.add(value);
         return create
     }
 
@@ -199,33 +199,57 @@ class MyPromise {
         callback(this.fullfilled)
     }
 
-    store(value) {
+    add(value) {
         this.fullfilled = value;
     }
 }
 
-let fifteen = MyPromise.resolve(15);
+let fifteen = MyPromise.resolve([15, 12]);
 
-if (fifteen.fullfilled === 15) {
-    console.log("Passed")
-} else {
-    console.log("store to fullfilled")
+// if (fifteen.fullfilled === 15) {
+//     console.log("Passed")
+// } else {
+//     console.log("store to fullfilled")
+// }
+
+// fifteen.then(value => {
+//     if (value === 15) {
+//         console.log("Passed")
+//     } else {
+//         console.log("the value does not restore to fullfilled")
+//     }
+// })
+fifteen.then(value => {
+    let array = [].concat(value)
+    console.log("Got",array)
+} )
+
+
+const $storage = Symbol("storage"), $network = Symbol("network")
+
+class Node {
+    constructor(name, neighbors, network, storage) {
+      this.name = name
+      this.neighbors = neighbors
+      this[$network] = network
+      this.state = Object.create(null)
+      this[$storage] = storage
+    }
 }
 
-fifteen.then(value => {
-    if (value === 15) {
-        console.log("Passed")
-    } else {
-        console.log("the value does not restore to fullfilled")
-    }
-})
-// fifteen.then(value => console.log("I got " + value))
+let node1 = new Node("Jules", "landm", "smart", [123])
 
+console.log(node1)
+console.log($storage)
 
+import {bigOak} from "./crow-tech.js"
 
-
-
-
+bigOak.readStorage("food caches", caches => {
+  let firstCache = caches[0];
+  bigOak.readStorage(firstCache, info => {
+    console.log(info);
+  });
+});
 
 
 // last topic 

@@ -28,13 +28,48 @@
 // export
 // require() > npm
 
+//  ================= Asynchronous Programming =================
+// callbacks
+// promise
+// then()
+// catch()
+// finally()
+// asyn/await
 
 
 // fundamental
+// ================= the output is {}
 let sampleGrap = {}
 let edges = sampleGrap["value"] = {};
 
 edges["name"] = "Bob"
 console.log(sampleGrap)
+
+// ================= variable using $
+const $storage = Symbol("storage"), $network = Symbol("network")
+
+class Node {
+    constructor(name, neighbors, network, storage) {
+      this.name = name
+      this.neighbors = neighbors
+      this[$network] = network
+      this.state = Object.create(null)
+      this[$storage] = storage
+    }
+}
+
+let node1 = new Node("Jules", "landm", "smart", [123])
+
+console.log(node1)
+console.log($storage)
+
+// ================= []
+let reachable = Object.create(null);
+reachable["Laguna"] = [];
+
+console.log(reachable["Laguna"] = [])
+
+console.log(Array(12, 312))
+
 // ============= front end career path ============== 
 // https://roadmap.sh/frontend
