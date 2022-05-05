@@ -227,30 +227,69 @@ fifteen.then(value => {
 
 const $storage = Symbol("storage"), $network = Symbol("network")
 
-class Node {
-    constructor(name, neighbors, network, storage) {
-      this.name = name
-      this.neighbors = neighbors
-      this[$network] = network
-      this.state = Object.create(null)
-      this[$storage] = storage
-    }
-}
+// class Node {
+//     constructor(name, neighbors, network, storage) {
+//       this.name = name
+//       this.neighbors = neighbors
+//       this[$network] = network
+//       this.state = Object.create(null)
+//       this[$storage] = storage
+//     }
+// }
 
-let node1 = new Node("Jules", "landm", "smart", [123])
+// let node1 = new Node("Jules", "landm", "smart", [123])
 
-console.log(node1)
-console.log($storage)
+// console.log(node1)
+// console.log($storage)
 
 import {bigOak} from "./crow-tech.js"
 
-bigOak.readStorage("food caches", caches => {
-  let firstCache = caches[0];
-  bigOak.readStorage(firstCache, info => {
-    console.log(info);
-  });
-});
+// bigOak.readStorage("food caches", caches => {
+//   let firstCache = caches[0];
+//   bigOak.readStorage(firstCache, info => {
+//     console.log(info);
+//   });
+// });
 
+bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM", () => console.log("Note delivered."));
+
+
+
+// let storage = Object.create(null)
+
+function sync(callback) {
+    setTimeout(() => callback(deferred()), 5000)
+}
+
+function deferred() {
+    return "deferred"
+}
+
+// sync(function(result) {
+//     console.log(result)
+// })
+// deferred
+
+// class Node {
+//     constructor(storage) {
+//         this.storage = storage;
+//     }
+
+//    readStorage(name, callback) {
+//        let value = this.storage[name];
+//        return callback(value && JSON.parse(value))
+//    }
+// }
+
+// let storage = Object.create(null);
+// storage["food caches"] = JSON.stringify(["cache in the oak", "cache in the meadow", "cache under the hedge"])
+
+// let bigOak = new Node(storage);
+
+// bigOak.readStorage("food caches", caches => {
+//   let firstCache = caches[0];
+//   console.log(firstCache)
+// })
 
 // last topic 
 // https://www.youtube.com/watch?v=C3kUMPtt4hY
@@ -258,6 +297,25 @@ bigOak.readStorage("food caches", caches => {
 // https://www.youtube.com/watch?v=ZYb_ZU8LNxs
 // https://www.youtube.com/watch?v=QO4NXhWo_NM&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=11
 
+
 // read this 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+// to review 
+// bind()
+
+const module = {
+    x: 42,
+    getX: function() {
+      return this.x;
+    }
+};
+  
+const unboundGetX = module.getX;
+// console.log(unboundGetX());
+// undefined
+
+const boundGetX = unboundGetX.bind(module)
+console.log(boundGetX())
+// 42

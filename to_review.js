@@ -71,5 +71,15 @@ console.log(reachable["Laguna"] = [])
 
 console.log(Array(12, 312))
 
+// >> =====
+console.log(2**3)
+console.log(3 << 3)
+// 3 * (2 ** 3)
+// 24
+
+// XOR
+// console.log(true ^ true)
+// 0
+
 // ============= front end career path ============== 
 // https://roadmap.sh/frontend

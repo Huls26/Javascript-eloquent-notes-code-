@@ -75,6 +75,7 @@
         if (!toNode || !this.neighbors.includes(to))
           return callback(new Error(`${to} is not reachable from ${this.name}`))
         let handler = this[$network].types[type]
+        console.log(toNode)
         if (!handler)
           return callback(new Error("Unknown request type " + type))
         if (Math.random() > 0.03) setTimeout(() => {
