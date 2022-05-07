@@ -219,30 +219,14 @@ let fifteen = MyPromise.resolve([15, 12]);
 //         console.log("the value does not restore to fullfilled")
 //     }
 // })
-fifteen.then(value => {
-    let array = [].concat(value)
-    console.log("Got",array)
-} )
+// fifteen.then(value => {
+//     let array = [].concat(value)
+//     console.log("Got",array)
+// } )
 
+// crow tech
 
-const $storage = Symbol("storage"), $network = Symbol("network")
-
-// class Node {
-//     constructor(name, neighbors, network, storage) {
-//       this.name = name
-//       this.neighbors = neighbors
-//       this[$network] = network
-//       this.state = Object.create(null)
-//       this[$storage] = storage
-//     }
-// }
-
-// let node1 = new Node("Jules", "landm", "smart", [123])
-
-// console.log(node1)
-// console.log($storage)
-
-import {bigOak} from "./crow-tech.js"
+import {bigOak, defineRequestType, network} from "./crow-tech.js"
 
 // bigOak.readStorage("food caches", caches => {
 //   let firstCache = caches[0];
@@ -251,19 +235,61 @@ import {bigOak} from "./crow-tech.js"
 //   });
 // });
 
-bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM", () => console.log("Note delivered."));
+// bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM", () => console.log("Note delivered."));
 
-
-
-// let storage = Object.create(null)
-
-function sync(callback) {
-    setTimeout(() => callback(deferred()), 5000)
+// the place is within its own neighbors
+function findNeighbors() {
+    for (let key of Object.keys(network.nodes)) {
+        for (let value of Object.values(network.nodes)) {
+            // console.log(value, key)
+            if (value.neighbors.includes(key)) {
+                console.log({key: key, value: value.neighbors})
+            }
+        }
+    }
 }
 
-function deferred() {
-    return "deferred"
+// findNeighbors()
+
+console.log(network)
+function requestType(name, handler, network) {
+    network.types[name] = handler;
 }
+
+function sendMessage(to, message, nodes, callback) {
+    if (!Object.keys(network.nodes).includes(to)) {
+       return console.log("Error no network found")
+    }
+
+    console.log(nodes)
+    if (!nodes.neighbors.includes(to)) {
+        console.log("Not neighbors")
+    }
+
+    let handler = nodes.network.types.note;
+    if (!handler) {
+        console.log("no type")
+    } else {
+        setTimeout(() => {
+        setTimeout(() => handler(to, message, nodes.name), 10)
+        callback(message)
+        }, 20)
+    }
+}
+
+requestType("note", (name, message, source) => {console.log(`${name} received note: ${message}`)}, network)
+
+sendMessage("Cow Pasture", "Let's caw loudly at 7PM", network.nodes["Big Oak"], () => console.log("message sent"))
+
+// Try to build
+// send to "Cow Pasture"
+// message "Let's caw loudly at 7PM"
+// This name should be "Big Oak"
+// The output should be like this:
+// Cow Pasture received note: Let's caw loudly at 7PM
+// Note delivered.
+
+// A hollow above the third big branch from the bottom. Several pieces of bread and a pile of acorns.
 
 // sync(function(result) {
 //     console.log(result)
@@ -291,6 +317,23 @@ function deferred() {
 //   console.log(firstCache)
 // })
 
+//  ================ Promise ============
+let sixteen = Promise.resolve(16);
+
+// sixteen.then(message => console.log(message))
+
+function storage(nest, name) {
+    return new Promise(resolve => {
+      nest.readStorage(name, result => resolve(result));
+    });
+}
+  
+storage(bigOak, "enemies")
+    .then(value => console.log("Got", value));
+
+
+
+
 // last topic 
 // https://www.youtube.com/watch?v=C3kUMPtt4hY
 // https://www.youtube.com/watch?v=DHvZLI7Db8E
@@ -302,20 +345,23 @@ function deferred() {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
+// Asynchronous programming mdn documentary
+// https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Introducing
+
 // to review 
 // bind()
 
-const module = {
-    x: 42,
-    getX: function() {
-      return this.x;
-    }
-};
+// const module = {
+//     x: 42,
+//     getX: function() {
+//       return this.x;
+//     }
+// };
   
-const unboundGetX = module.getX;
+// const unboundGetX = module.getX;
 // console.log(unboundGetX());
 // undefined
 
-const boundGetX = unboundGetX.bind(module)
-console.log(boundGetX())
+// const boundGetX = unboundGetX.bind(module)
+// console.log(boundGetX())
 // 42

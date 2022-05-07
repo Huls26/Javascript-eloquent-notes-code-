@@ -43,6 +43,8 @@
         this.nodes = Object.create(null)
         for (let name of Object.keys(reachable))
           this.nodes[name] = new Node(name, reachable[name], this, storageFor(name))
+
+        console.log(this.nodes)
         this.types = Object.create(null)
       }
   
@@ -65,7 +67,8 @@
       constructor(name, neighbors, network, storage) {
         this.name = name
         this.neighbors = neighbors
-        this[$network] = network
+        // this[$network] = network;
+        this.network = network;
         this.state = Object.create(null)
         this[$storage] = storage
       }
@@ -106,6 +109,7 @@
     export let bigOak = network.nodes["Big Oak"]
     export let everywhere = network.everywhere.bind(network)
     export let defineRequestType = network.defineRequestType.bind(network)
+    export {network};
   
     if (typeof __sandbox != "undefined") {
       __sandbox.handleDeps = false
