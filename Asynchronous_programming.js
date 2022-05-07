@@ -328,8 +328,18 @@ function storage(nest, name) {
     });
 }
   
-storage(bigOak, "enemies")
+storage(bigOak, "enemie")
     .then(value => console.log("Got", value));
+
+
+
+// Try to build using promises
+// send to "Cow Pasture"
+// message "Let's caw loudly at 7PM"
+// This name should be "Big Oak"
+// The output should be like this:
+// Cow Pasture received note: Let's caw loudly at 7PM
+// Note delivered.
 
 
 
