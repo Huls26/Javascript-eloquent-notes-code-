@@ -252,34 +252,34 @@ function findNeighbors() {
 // findNeighbors()
 
 console.log(network)
-function requestType(name, handler, network) {
-    network.types[name] = handler;
-}
+// function requestType(name, handler, network) {
+//     network.types[name] = handler;
+// }
 
-function sendMessage(to, message, nodes, callback) {
-    if (!Object.keys(network.nodes).includes(to)) {
-       return console.log("Error no network found")
-    }
+// function sendMessage(to, message, nodes, callback) {
+//     if (!Object.keys(network.nodes).includes(to)) {
+//        return console.log("Error no network found")
+//     }
 
-    console.log(nodes)
-    if (!nodes.neighbors.includes(to)) {
-        console.log("Not neighbors")
-    }
+//     console.log(nodes)
+//     if (!nodes.neighbors.includes(to)) {
+//         console.log("Not neighbors")
+//     }
 
-    let handler = nodes.network.types.note;
-    if (!handler) {
-        console.log("no type")
-    } else {
-        setTimeout(() => {
-        setTimeout(() => handler(to, message, nodes.name), 10)
-        callback(message)
-        }, 20)
-    }
-}
+//     let handler = nodes.network.types.note;
+//     if (!handler) {
+//         console.log("no type")
+//     } else {
+//         setTimeout(() => {
+//         setTimeout(() => handler(to, message, nodes.name), 10)
+//         callback(message)
+//         }, 20)
+//     }
+// }
 
-requestType("note", (name, message, source) => {console.log(`${name} received note: ${message}`)}, network)
+// requestType("note", (name, message, source) => {console.log(`${name} received note: ${message}`)}, network)
 
-sendMessage("Cow Pasture", "Let's caw loudly at 7PM", network.nodes["Big Oak"], () => console.log("message sent"))
+// sendMessage("Cow Pasture", "Let's caw loudly at 7PM", network.nodes["Big Oak"], () => console.log("message sent"))
 
 // Try to build
 // send to "Cow Pasture"
@@ -323,14 +323,20 @@ let sixteen = Promise.resolve(16);
 // sixteen.then(message => console.log(message))
 
 function storage(nest, name) {
-    return new Promise(resolve => {
-      nest.readStorage(name, result => resolve(result));
+    return new Promise((resolve, reject) => {
+      nest.readStorage(name, result =>{
+       if (result) {
+           resolve(result)
+       } else {
+        reject(`something went wrong to the value`)
+       }  
+      });
     });
 }
   
-storage(bigOak, "enemie")
-    .then(value => console.log("Got", value));
-
+// storage(bigOak, "enemie")
+//     .then(value => console.log("Got", value))
+//     .catch(error => console.log(error))
 
 
 // Try to build using promises
@@ -340,6 +346,38 @@ storage(bigOak, "enemie")
 // The output should be like this:
 // Cow Pasture received note: Let's caw loudly at 7PM
 // Note delivered.
+
+function sendMessage(to, type, message) {
+    return new Promise((resovle, reject) => {
+        // name type
+        network.defineRequestType(type, (nest, content, source, done) => {
+            console.log(`${nest.name} received note: ${content}`);
+            done();
+        })
+        
+        // send a message
+        bigOak.send(to, type, message,
+        () => resovle("Note delivered."))
+    })
+}
+
+// sendMessage("Cow Pasture", "note", "Let's caw loudly at 7PM").then(message => console.log(message))
+
+// Failure
+new Promise((_, reject) => reject(new Error("Fail")))
+  .then(value => console.log("Handler 1"))
+  .catch(reason => {
+    console.log("Caught failure " + reason);
+    return "nothing";
+  })
+  .then(value => console.log("Handler 2", value));
+// → Caught failure Error: Fail
+// → Handler 2 nothing
+
+// Networks are hard
+
+
+
 
 
 

@@ -67,8 +67,8 @@
       constructor(name, neighbors, network, storage) {
         this.name = name
         this.neighbors = neighbors
-        // this[$network] = network;
-        this.network = network;
+        this[$network] = network;
+        // this.network = network;
         this.state = Object.create(null)
         this[$storage] = storage
       }
