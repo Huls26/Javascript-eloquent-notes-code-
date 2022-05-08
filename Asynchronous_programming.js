@@ -364,29 +364,60 @@ function sendMessage(to, type, message) {
 // sendMessage("Cow Pasture", "note", "Let's caw loudly at 7PM").then(message => console.log(message))
 
 // Failure
-new Promise((_, reject) => reject(new Error("Fail")))
-  .then(value => console.log("Handler 1"))
-  .catch(reason => {
-    console.log("Caught failure " + reason);
-    return "nothing";
-  })
-  .then(value => console.log("Handler 2", value));
+// new Promise((_, reject) => reject(new Error("Fail")))
+//   .then(value => console.log("Handler 1"))
+//   .catch(reason => {
+//     console.log("Caught failure " + reason);
+//     return "nothing";
+//   })
+//   .then(value => console.log("Handler 2", value));
 // → Caught failure Error: Fail
 // → Handler 2 nothing
 
 // Networks are hard
 
+// Collections of promises
 
+// ========= callbacks asynchronous =========
+let posts = [
+    {title: "Post one", body: "This is post one"},
+    {title: "Post two", body: "This is post two"},
+]
 
+// synchronous method
+// function displayAllPosts(posts) {
+//     posts.forEach(element => {
+//         console.log(element.title)
+//     })
+// }
 
+// function createPost(post) {
+//     posts.push(post);
+// }
+// createPost({title: "Post three", body: "This is post three"})
+// displayAllPosts(posts);
+
+// asynchronous method
+function createPost(post, callback) {
+    callback(posts);
+    posts.push(post);
+    console.log(post.title)
+}
+
+createPost({title: "Post three", body: "This is post three"}, (posts) => {
+    posts.forEach(element => {
+        console.log(element.title)
+    })
+});
 
 
 
 // last topic 
-// https://www.youtube.com/watch?v=C3kUMPtt4hY
+// https://www.youtube.com/watch?v=Syp_QRmsKkI
 // https://www.youtube.com/watch?v=DHvZLI7Db8E
 // https://www.youtube.com/watch?v=ZYb_ZU8LNxs
 // https://www.youtube.com/watch?v=QO4NXhWo_NM&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=11
+// https://www.youtube.com/watch?v=C3kUMPtt4hY
 
 
 // read this 
@@ -399,6 +430,7 @@ new Promise((_, reject) => reject(new Error("Fail")))
 // to review 
 // bind()
 
+// >
 // const module = {
 //     x: 42,
 //     getX: function() {
