@@ -398,6 +398,7 @@ let posts = [
 // displayAllPosts(posts);
 
 // asynchronous method
+// callback
 function createPost(post, callback) {
     callback(posts);
     posts.push(post);
@@ -410,14 +411,171 @@ createPost({title: "Post three", body: "This is post three"}, (posts) => {
     })
 });
 
+function method(handler) {
+    return posts[posts.length] = handler;
+}
+
+method((title, body, message) => {
+    message()
+    posts.splice(posts.length - 1, 0, {title: title, body: body})
+})
+
+function definePost(title, body, callback) {
+    let handler = posts[posts.length -1];
+
+    handler(title, body, () => console.log("created new post"))
+}
+
+
+definePost("Post four", "This is a post four")
+console.log(posts)
+
+// promises
+function addAPost(title, body) {
+    return new Promise((resolve, reject) => {
+        posts.splice(posts.length - 1, 0, {title: title, body: body})
+
+        if (posts[posts.length -2]) { return resolve(posts) } 
+        else {
+            reject("error in post")
+        }
+    })
+}
+
+// addAPost("Last", "this is the last post").then(posts => {console.log(posts)})
+
+// ================ Networks are hard
+class Timeout extends Error {}
+
+function request(nest, target, type, content) {
+  return new Promise((resolve, reject) => {
+    let done = false;
+    function attempt(n) {
+      nest.send(target, type, content, (failed, value) => {
+        done = true;
+        if (failed) reject(failed);
+        else resolve(value);
+      });
+      setTimeout(() => {
+        if (done) return;
+        else if (n < 3) attempt(n + 1);
+        else reject(new Timeout("Timed out"));
+      }, 250);
+    }
+    attempt(1);
+  });
+}
+
+function requestType(name, handler) {
+    defineRequestType(name, (nest, content, source,
+                             callback) => {
+      try {
+        Promise.resolve(handler(nest, content, source))
+          .then(response => callback(null, response),
+                failure => callback(failure));
+      } catch (exception) {
+        callback(exception);
+      }
+    });
+}
+
+// Collections of promises
+requestType("ping", () => "pong");
+
+function availableNeighbors(nest) {
+  let requests = nest.neighbors.map(neighbor => {
+    return request(nest, neighbor, "ping")
+      .then(() => true, () => false);
+    });
+
+    return Promise.all(requests).then(result => {
+        return nest.neighbors.filter((_, i) => result[i]);
+      });
+}
+
+// console.log(availableNeighbors(bigOak))
+
+// async/await
+async function outputP() {
+    return "p"
+}
+
+console.log(outputP())
+
+function outputK() {
+    return Promise.resolve("p")
+}
+
+console.log(outputK())
+console.log(outputK() === outputP())
+
+
+
+
+function runThis() {
+    return new Promise(resolve => {
+
+        Promise.resolve().then(() => {
+            for (let i = 0; i <= 1000000000; i++) {
+                if (i >= 1000000000) {
+                    resolve("done running")
+                }
+            }
+        })
+    })
+}
+
+function runThis2() {
+    return new Promise(resolve => {
+        Promise.resolve().then(() => {
+            for (let i = 0; i <= 1000000000; i++) {
+                if (i >= 1000000000) {
+                    resolve("done running")
+                }
+            }
+        })
+    })
+}
+
+// async/await
+async function asyncFunction() {
+    let output = await runThis();
+    console.log(output);
+    console.log("step 1");
+    let output2 = await runThis2();
+    console.log(output2);
+    console.log("step 1.5") 
+}
+
+// promise.all
+async function asyncRunAtTheSameThime() {
+    let [step1, step2] = await Promise.all([runThis(), runThis2()])
+    console.log(step1, step2)
+}
+
+
+
+// asyncFunction()
+asyncRunAtTheSameThime()
+console.log("step 2")
+console.log("step 3")
+
+
+
+// console.log(Object.getOwnPropertyNames(Promise))
+
+
+
 
 
 // last topic 
+
+// https://www.youtube.com/watch?v=V_Kr9OSfDeU
+// https://www.youtube.com/watch?v=vn3tm0quoqE&t=4s
 // https://www.youtube.com/watch?v=Syp_QRmsKkI
 // https://www.youtube.com/watch?v=DHvZLI7Db8E
 // https://www.youtube.com/watch?v=ZYb_ZU8LNxs
-// https://www.youtube.com/watch?v=QO4NXhWo_NM&list=PLRqwX-V7Uu6YgpA3Oht-7B4NBQwFVe3pr&index=11
-// https://www.youtube.com/watch?v=C3kUMPtt4hY
+
 
 
 // read this 
@@ -429,6 +587,9 @@ createPost({title: "Post three", body: "This is post three"}, (posts) => {
 
 // to review 
 // bind()
+// fetch()
+// event loop
+// > // https://www.youtube.com/watch?v=8aGhZQkoFbQ
 
 // >
 // const module = {
