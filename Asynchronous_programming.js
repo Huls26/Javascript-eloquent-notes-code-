@@ -322,17 +322,17 @@ let sixteen = Promise.resolve(16);
 
 // sixteen.then(message => console.log(message))
 
-function storage(nest, name) {
-    return new Promise((resolve, reject) => {
-      nest.readStorage(name, result =>{
-       if (result) {
-           resolve(result)
-       } else {
-        reject(`something went wrong to the value`)
-       }  
-      });
-    });
-}
+// function storage(nest, name) {
+//     return new Promise((resolve, reject) => {
+//       nest.readStorage(name, result =>{
+//        if (result) {
+//            resolve(result)
+//        } else {
+//         reject(`something went wrong to the value`)
+//        }  
+//       });
+//     });
+// }
   
 // storage(bigOak, "enemie")
 //     .then(value => console.log("Got", value))
@@ -553,16 +553,155 @@ async function asyncRunAtTheSameThime() {
     console.log(step1, step2)
 }
 
-
+// callbacks
+function callbackFunc(message, callback) {
+    console.log("step 2")
+    console.log("step 3")
+    callback(message)
+}
+callbackFunc("done running", (message) => console.log(message))
 
 // asyncFunction()
-asyncRunAtTheSameThime()
+// asyncRunAtTheSameThime()
 console.log("step 2")
 console.log("step 3")
 
-
-
 // console.log(Object.getOwnPropertyNames(Promise))
+
+function storageCall(){
+    return new Promise(resolve => {
+        resolve("something")
+    }) 
+} 
+
+async function callStorage() {
+    await storageCall()
+}
+
+callStorage()
+
+// The event loop
+
+console.log(Date.now() - Date.now() + 50)
+
+// try {
+//     setTimeout(() => {
+//       throw new Error("Woosh");
+//     }, 20);
+//     // throw new Error("Woosh");
+// } catch (_) {
+//     // This will not run
+//     console.log("Caught!");
+// }
+
+// exercises
+// Chapter 11. Asynchronous Programming
+
+// 11.1 Tracking the scalpel
+
+function storage(nest, name) {
+    return new Promise(resolve => {
+      nest.readStorage(name, result => resolve(result));
+    });
+}
+
+// storage(bigOak, "enemies")
+// .then(value => console.log("Got", value));
+
+function findRoute(from, to, connections) {
+    let work = [{at: from, via: null}];
+    for (let i = 0; i < work.length; i++) {
+      let {at, via} = work[i];
+      for (let next of connections.get(at) || []) {
+        if (next == to) return via;
+        if (!work.some(w => w.at == next)) {
+          work.push({at: next, via: via || next});
+        }
+      }
+    }
+    return null;
+}
+
+function routeRequest(nest, target, type, content) {
+if (nest.neighbors.includes(target)) {
+    return request(nest, target, type, content);
+} else {
+    let via = findRoute(nest.name, target,
+                        nest.state.connections);
+    if (!via) throw new Error(`No route to ${target}`);
+    return request(nest, via, "route",
+                    {target, type, content});
+}
+}
+
+// requestType("route", (nest, {target, type, content}) => {
+// return routeRequest(nest, target, type, content);
+// });
+
+// console.log(bigOak.state)
+
+// 11.2 Building Promise.all
+function Promise_all(promises) {
+    return new Promise((resolve, reject) => {
+        // Your code here.
+        let sto = [];
+        function getItem(value) {
+            sto.push(value)
+            return sto
+        }
+
+        // iterate over promises
+       async function iterate(array, index = 0) {
+           for (let i = 0; i < array.length; i++) {
+               // for error checking
+               try {
+                    let promise = await array[i];
+                    if (i >= array.length - 1) {
+                        resolve(getItem(promise))
+                    } else {
+                        getItem(promise)
+                    }
+                } catch (error) {
+                    reject("X")
+                }
+           } 
+        }
+
+        if (promises.length === 0) {
+            resolve(promises)
+        } else {
+            iterate(promises)
+        }
+       
+    });
+}
+
+// Test code.
+Promise_all([]).then(array => {
+    console.log("This should be []:", array);
+    });
+function soon(val) {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(val), Math.random() * 500);
+});
+}
+Promise_all([soon(1), soon(2), soon(3)])
+    .then(array=> {
+    console.log("This should be [1, 2, 3]:", array);
+}); 
+
+Promise_all([soon(1), Promise.reject("X"), soon(3)])
+    .then(array => {
+    console.log("We should not get here");
+    })
+    .catch(error => {
+    if (error != "X") {
+        console.log("Unexpected failure:", error);
+    }
+});
+
+
+
 
 
 
@@ -573,7 +712,6 @@ console.log("step 3")
 // https://www.youtube.com/watch?v=V_Kr9OSfDeU
 // https://www.youtube.com/watch?v=vn3tm0quoqE&t=4s
 // https://www.youtube.com/watch?v=Syp_QRmsKkI
-// https://www.youtube.com/watch?v=DHvZLI7Db8E
 // https://www.youtube.com/watch?v=ZYb_ZU8LNxs
 
 
@@ -589,6 +727,7 @@ console.log("step 3")
 // bind()
 // fetch()
 // event loop
+// Array.from()
 // > // https://www.youtube.com/watch?v=8aGhZQkoFbQ
 
 // >
