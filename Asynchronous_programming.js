@@ -184,27 +184,27 @@ function production() {
 //         console.log("Passed")
 //     }
 // })
-class MyPromise {
-    constructor(callback) {
-        this.fullfilled = null;
-    }
+// class MyPromise {
+//     constructor(callback) {
+//         this.fullfilled = null;
+//     }
 
-    static resolve(value) {
-        let create = new MyPromise(value);
-        create.add(value);
-        return create
-    }
+//     static resolve(value) {
+//         let create = new MyPromise(value);
+//         create.add(value);
+//         return create
+//     }
 
-    then(callback) {
-        callback(this.fullfilled)
-    }
+//     then(callback) {
+//         callback(this.fullfilled)
+//     }
 
-    add(value) {
-        this.fullfilled = value;
-    }
-}
+//     add(value) {
+//         this.fullfilled = value;
+//     }
+// }
 
-let fifteen = MyPromise.resolve([15, 12]);
+// let fifteen = MyPromise.resolve([15, 12]);
 
 // if (fifteen.fullfilled === 15) {
 //     console.log("Passed")
@@ -226,7 +226,7 @@ let fifteen = MyPromise.resolve([15, 12]);
 
 // crow tech
 
-import {bigOak, defineRequestType, network} from "./crow-tech.js"
+import {bigOak, defineRequestType} from "./crow-tech.js"
 
 // bigOak.readStorage("food caches", caches => {
 //   let firstCache = caches[0];
@@ -238,16 +238,16 @@ import {bigOak, defineRequestType, network} from "./crow-tech.js"
 // bigOak.send("Cow Pasture", "note", "Let's caw loudly at 7PM", () => console.log("Note delivered."));
 
 // the place is within its own neighbors
-function findNeighbors() {
-    for (let key of Object.keys(network.nodes)) {
-        for (let value of Object.values(network.nodes)) {
-            // console.log(value, key)
-            if (value.neighbors.includes(key)) {
-                console.log({key: key, value: value.neighbors})
-            }
-        }
-    }
-}
+// function findNeighbors() {
+//     for (let key of Object.keys(network.nodes)) {
+//         for (let value of Object.values(network.nodes)) {
+//             // console.log(value, key)
+//             if (value.neighbors.includes(key)) {
+//                 console.log({key: key, value: value.neighbors})
+//             }
+//         }
+//     }
+// }
 
 // findNeighbors()
 
@@ -347,19 +347,19 @@ let sixteen = Promise.resolve(16);
 // Cow Pasture received note: Let's caw loudly at 7PM
 // Note delivered.
 
-function sendMessage(to, type, message) {
-    return new Promise((resovle, reject) => {
-        // name type
-        network.defineRequestType(type, (nest, content, source, done) => {
-            console.log(`${nest.name} received note: ${content}`);
-            done();
-        })
+// function sendMessage(to, type, message) {
+//     return new Promise((resovle, reject) => {
+//         // name type
+//         network.defineRequestType(type, (nest, content, source, done) => {
+//             console.log(`${nest.name} received note: ${content}`);
+//             done();
+//         })
         
-        // send a message
-        bigOak.send(to, type, message,
-        () => resovle("Note delivered."))
-    })
-}
+//         // send a message
+//         bigOak.send(to, type, message,
+//         () => resovle("Note delivered."))
+//     })
+// }
 
 // sendMessage("Cow Pasture", "note", "Let's caw loudly at 7PM").then(message => console.log(message))
 
@@ -445,53 +445,53 @@ function addAPost(title, body) {
 // addAPost("Last", "this is the last post").then(posts => {console.log(posts)})
 
 // ================ Networks are hard
-class Timeout extends Error {}
+// class Timeout extends Error {}
 
-function request(nest, target, type, content) {
-  return new Promise((resolve, reject) => {
-    let done = false;
-    function attempt(n) {
-      nest.send(target, type, content, (failed, value) => {
-        done = true;
-        if (failed) reject(failed);
-        else resolve(value);
-      });
-      setTimeout(() => {
-        if (done) return;
-        else if (n < 3) attempt(n + 1);
-        else reject(new Timeout("Timed out"));
-      }, 250);
-    }
-    attempt(1);
-  });
-}
+// function request(nest, target, type, content) {
+//   return new Promise((resolve, reject) => {
+//     let done = false;
+//     function attempt(n) {
+//       nest.send(target, type, content, (failed, value) => {
+//         done = true;
+//         if (failed) reject(failed);
+//         else resolve(value);
+//       });
+//       setTimeout(() => {
+//         if (done) return;
+//         else if (n < 3) attempt(n + 1);
+//         else reject(new Timeout("Timed out"));
+//       }, 250);
+//     }
+//     attempt(1);
+//   });
+// }
 
-function requestType(name, handler) {
-    defineRequestType(name, (nest, content, source,
-                             callback) => {
-      try {
-        Promise.resolve(handler(nest, content, source))
-          .then(response => callback(null, response),
-                failure => callback(failure));
-      } catch (exception) {
-        callback(exception);
-      }
-    });
-}
+// function requestType(name, handler) {
+//     defineRequestType(name, (nest, content, source,
+//                              callback) => {
+//       try {
+//         Promise.resolve(handler(nest, content, source))
+//           .then(response => callback(null, response),
+//                 failure => callback(failure));
+//       } catch (exception) {
+//         callback(exception);
+//       }
+//     });
+// }
 
 // Collections of promises
-requestType("ping", () => "pong");
+// requestType("ping", () => "pong");
 
-function availableNeighbors(nest) {
-  let requests = nest.neighbors.map(neighbor => {
-    return request(nest, neighbor, "ping")
-      .then(() => true, () => false);
-    });
+// function availableNeighbors(nest) {
+//   let requests = nest.neighbors.map(neighbor => {
+//     return request(nest, neighbor, "ping")
+//       .then(() => true, () => false);
+//     });
 
-    return Promise.all(requests).then(result => {
-        return nest.neighbors.filter((_, i) => result[i]);
-      });
-}
+//     return Promise.all(requests).then(result => {
+//         return nest.neighbors.filter((_, i) => result[i]);
+//       });
+// }
 
 // console.log(availableNeighbors(bigOak))
 
@@ -599,15 +599,109 @@ console.log(Date.now() - Date.now() + 50)
 
 // 11.1 Tracking the scalpel
 
+defineRequestType("note", (nest, content, source, done) => {
+    console.log(`${nest.name} received note: ${content}`);
+    done();
+});
+  
 function storage(nest, name) {
     return new Promise(resolve => {
       nest.readStorage(name, result => resolve(result));
     });
 }
-
-// storage(bigOak, "enemies")
-// .then(value => console.log("Got", value));
-
+  
+var Timeout = class Timeout extends Error {}
+  
+function request(nest, target, type, content) {
+    return new Promise((resolve, reject) => {
+      let done = false;
+      function attempt(n) {
+        nest.send(target, type, content, (failed, value) => {
+          done = true;
+          if (failed) reject(failed);
+          else resolve(value);
+        });
+        setTimeout(() => {
+          if (done) return;
+          else if (n < 3) attempt(n + 1);
+          else reject(new Timeout("Timed out"));
+        }, 250);
+      }
+      attempt(1);
+    });
+}
+  
+function requestType(name, handler) {
+    defineRequestType(name, (nest, content, source,
+                             callback) => {
+      try {
+        Promise.resolve(handler(nest, content, source))
+          .then(response => callback(null, response),
+                failure => callback(failure));
+      } catch (exception) {
+        callback(exception);
+      }
+    });
+}
+  
+requestType("ping", () => "pong");
+  
+function availableNeighbors(nest) {
+    let requests = nest.neighbors.map(neighbor => {
+      return request(nest, neighbor, "ping")
+        .then(() => true, () => false);
+    });
+    return Promise.all(requests).then(result => {
+      return nest.neighbors.filter((_, i) => result[i]);
+    });
+}
+  
+// var everywhere = require("./crow-tech").everywhere;
+  import {everywhere} from "./crow-tech.js"
+everywhere(nest => {
+    nest.state.gossip = [];
+});
+  
+function sendGossip(nest, message, exceptFor = null) {
+    nest.state.gossip.push(message);
+    for (let neighbor of nest.neighbors) {
+      if (neighbor == exceptFor) continue;
+      request(nest, neighbor, "gossip", message);
+    }
+}
+  
+requestType("gossip", (nest, message, source) => {
+    if (nest.state.gossip.includes(message)) return;
+    console.log(`${nest.name} received gossip '${
+                 message}' from ${source}`);
+    sendGossip(nest, message, source);
+});
+  
+requestType("connections", (nest, {name, neighbors},
+                              source) => {
+    let connections = nest.state.connections;
+    if (JSON.stringify(connections.get(name)) ==
+        JSON.stringify(neighbors)) return;
+    connections.set(name, neighbors);
+    broadcastConnections(nest, name, source);
+});
+  
+function broadcastConnections(nest, name, exceptFor = null) {
+    for (let neighbor of nest.neighbors) {
+      if (neighbor == exceptFor) continue;
+      request(nest, neighbor, "connections", {
+        name,
+        neighbors: nest.state.connections.get(name)
+      });
+    }
+}
+  
+everywhere(nest => {
+    nest.state.connections = new Map();
+    nest.state.connections.set(nest.name, nest.neighbors);
+    broadcastConnections(nest, nest.name);
+});
+  
 function findRoute(from, to, connections) {
     let work = [{at: from, via: null}];
     for (let i = 0; i < work.length; i++) {
@@ -621,25 +715,132 @@ function findRoute(from, to, connections) {
     }
     return null;
 }
-
+  
 function routeRequest(nest, target, type, content) {
-if (nest.neighbors.includes(target)) {
-    return request(nest, target, type, content);
-} else {
-    let via = findRoute(nest.name, target,
-                        nest.state.connections);
-    if (!via) throw new Error(`No route to ${target}`);
-    return request(nest, via, "route",
-                    {target, type, content});
+    if (nest.neighbors.includes(target)) {
+      return request(nest, target, type, content);
+    } else {
+      let via = findRoute(nest.name, target,
+                          nest.state.connections);
+      if (!via) throw new Error(`No route to ${target}`);
+      return request(nest, via, "route",
+                     {target, type, content});
+    }
 }
+  
+requestType("route", (nest, {target, type, content}) => {
+    return routeRequest(nest, target, type, content);
+  });
+  
+requestType("storage", (nest, name) => storage(nest, name));
+  
+function findInStorage(nest, name) {
+    return storage(nest, name).then(found => {
+      if (found != null) return found;
+      else return findInRemoteStorage(nest, name);
+    });
+}
+  
+function network(nest) {
+    return Array.from(nest.state.connections.keys());
+}
+  
+function findInRemoteStorage(nest, name) {
+    let sources = network(nest).filter(n => n != nest.name);
+    function next() {
+      if (sources.length == 0) {
+        return Promise.reject(new Error("Not found"));
+      } else {
+        let source = sources[Math.floor(Math.random() *
+                                        sources.length)];
+        sources = sources.filter(n => n != source);
+        return routeRequest(nest, source, "storage", name)
+          .then(value => value != null ? value : next(),
+                next);
+      }
+    }
+    return next();
+}
+  
+var Group = class Group {
+    constructor() { this.members = []; }
+    add(m) { this.members.add(m); }
+}
+  
+function anyStorage(nest, source, name) {
+    if (source == nest.name) return storage(nest, name);
+    else return routeRequest(nest, source, "storage", name);
+}
+  
+// async function chicks(nest, year) {
+//     let list = "";
+//     await Promise.all(network(nest).map(async name => {
+//       list += `${name}: ${
+//         await anyStorage(nest, name, `chicks in ${year}`)
+//       }\n`;
+//     }));
+//     return list;
+// }
+
+// async function chicks(nest, year) {
+//     let lines = network(nest).map(async name => {
+//       return name + ": " +
+//         await anyStorage(nest, name, `chicks in ${year}`);
+//     });
+//     anyStorage(nest, "Big Oak", `chicks in ${year}`).then(item => console.log(item))
+//     return (await Promise.all(lines)).join("\n");
+// }
+
+// routeRequest(bigOak, "Church Tower", "note",
+//              "Incoming jackdaws!");
+
+// chicks(bigOak, 2017).then(console.log);
+
+async function locateScalpel(nest) {
+    let current = nest.name;
+
+    do {
+        let name = await anyStorage(nest, current, "scalpel")
+        if (name === current) {
+            return name
+         } else {
+            current = name
+         }
+    } while (true)
 }
 
-// requestType("route", (nest, {target, type, content}) => {
-// return routeRequest(nest, target, type, content);
-// });
+function locateScalpel2(nest) {
+    function loop(name) {
+        return anyStorage(nest, name, "scalpel").then(value => {
+            if (value === name) {
+                return value
+            } else {
+                return loop(value)
+            }
+        })
+    }
+    
+    return loop(nest.name)
+}
 
-// console.log(bigOak.state)
+function tryThings(name) {
+    function info(num = 3) {
+        if (num <= 0) {
+            console.log(`The name is ${name}`)
+            return
+        }
+      return info(num - 1)
+    }
 
+    return info()
+}
+
+
+// locateScalpel(bigOak).then(console.log);
+locateScalpel2(bigOak).then(console.log);
+// tryThings("jules")
+
+// → Butcher Shop
 // 11.2 Building Promise.all
 function Promise_all(promises) {
     return new Promise((resolve, reject) => {
@@ -651,7 +852,7 @@ function Promise_all(promises) {
         }
 
         // iterate over promises
-       async function iterate(array, index = 0) {
+       async function iterate(array) {
            for (let i = 0; i < array.length; i++) {
                // for error checking
                try {
@@ -677,28 +878,28 @@ function Promise_all(promises) {
 }
 
 // Test code.
-Promise_all([]).then(array => {
-    console.log("This should be []:", array);
-    });
-function soon(val) {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(val), Math.random() * 500);
-});
-}
-Promise_all([soon(1), soon(2), soon(3)])
-    .then(array=> {
-    console.log("This should be [1, 2, 3]:", array);
-}); 
+// Promise_all([]).then(array => {
+//     console.log("This should be []:", array);
+//     });
+// function soon(val) {
+//     return new Promise(resolve => {
+//         setTimeout(() => resolve(val), Math.random() * 500);
+// });
+// }
+// Promise_all([soon(1), soon(2), soon(3)])
+//     .then(array=> {
+//     console.log("This should be [1, 2, 3]:", array);
+// }); 
 
-Promise_all([soon(1), Promise.reject("X"), soon(3)])
-    .then(array => {
-    console.log("We should not get here");
-    })
-    .catch(error => {
-    if (error != "X") {
-        console.log("Unexpected failure:", error);
-    }
-});
+// Promise_all([soon(1), Promise.reject("X"), soon(3)])
+//     .then(array => {
+//     console.log("We should not get here");
+//     })
+//     .catch(error => {
+//     if (error != "X") {
+//         console.log("Unexpected failure:", error);
+//     }
+// });
 
 
 

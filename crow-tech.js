@@ -109,7 +109,7 @@
     export let bigOak = network.nodes["Big Oak"]
     export let everywhere = network.everywhere.bind(network)
     export let defineRequestType = network.defineRequestType.bind(network)
-    export {network};
+    // export {network};
   
     if (typeof __sandbox != "undefined") {
       __sandbox.handleDeps = false
@@ -130,12 +130,12 @@
       }
     }
   
-    if (typeof window != "undefined") {
-      window.require = name => {
-        if (name != "./crow-tech") throw new Error("Crow nests can only require \"./crow-tech\"")
-        return exports
-      }
-    } else if (typeof module != "undefined" && module.exports) {
-      module.exports = exports
-    }
+    // if (typeof window != "undefined") {
+    //   window.require = name => {
+    //     if (name != "./crow-tech") throw new Error("Crow nests can only require \"./crow-tech\"")
+    //     return exports
+    //   }
+    // } else if (typeof module != "undefined" && module.exports) {
+    //   module.exports = exports
+    // }
  
