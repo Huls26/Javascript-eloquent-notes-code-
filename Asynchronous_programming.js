@@ -837,69 +837,109 @@ function tryThings(name) {
 
 
 // locateScalpel(bigOak).then(console.log);
-locateScalpel2(bigOak).then(console.log);
+// locateScalpel2(bigOak).then(console.log);
 // tryThings("jules")
 
 // → Butcher Shop
+
 // 11.2 Building Promise.all
+
 function Promise_all(promises) {
     return new Promise((resolve, reject) => {
-        // Your code here.
-        let sto = [];
-        function getItem(value) {
-            sto.push(value)
-            return sto
-        }
-
-        // iterate over promises
-       async function iterate(array) {
-           for (let i = 0; i < array.length; i++) {
-               // for error checking
-               try {
-                    let promise = await array[i];
-                    if (i >= array.length - 1) {
-                        resolve(getItem(promise))
-                    } else {
-                        getItem(promise)
-                    }
-                } catch (error) {
-                    reject("X")
-                }
-           } 
-        }
-
+        let array = [];
+        let length = promises.length
         if (promises.length === 0) {
-            resolve(promises)
-        } else {
-            iterate(promises)
+            resolve(promises);
         }
-       
-    });
+          
+        // for (let i = 0; i < promises.length; i++) {
+        //     promises[i].then(value => {
+        //         array[i] = value;
+        //         length--;
+        //         if (i >= promises.length -1) {
+        //             resolve(array)
+        //         }
+        //     })
+        //     // console.log(array)
+        // }
+        function loop(array, length, index = 0) {
+            if (index >= length) {
+                resolve(array);
+                return;
+            }
+
+            promises[index].then(value => {
+                // array[index] = value;
+                array.push(value)
+                // index++
+                return loop(array, length, index + 1)
+            }).catch(error => reject("X"))
+                
+
+        }
+      
+        return loop(array, length)
+    })
 }
+  
+// function Promise_all(promises) {
+//     return new Promise((resolve, reject) => {
+//         // Your code here.
+//         let sto = [];
+//         function getItem(value) {
+//             sto.push(value)
+//             return sto
+//         }
+
+//         // iterate over promises
+//        async function iterate(array) {
+//            for (let i = 0; i < array.length; i++) {
+//                // for error checking
+//                try {
+//                     let promise = await array[i];
+//                     if (i >= array.length - 1) {
+//                         resolve(getItem(promise))
+//                     } else {
+//                         getItem(promise)
+//                     }
+//                 } catch (error) {
+//                     reject("X")
+//                 }
+//            } 
+//         }
+
+//         if (promises.length === 0) {
+//             resolve(promises)
+//         } else {
+//             iterate(promises)
+//         }
+       
+//     });
+// }
 
 // Test code.
-// Promise_all([]).then(array => {
-//     console.log("This should be []:", array);
-//     });
-// function soon(val) {
-//     return new Promise(resolve => {
-//         setTimeout(() => resolve(val), Math.random() * 500);
-// });
-// }
-// Promise_all([soon(1), soon(2), soon(3)])
-//     .then(array=> {
-//     console.log("This should be [1, 2, 3]:", array);
-// }); 
+Promise_all([]).then(array => {
+    console.log("This should be []:", array);
+    });
+function soon(val) {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(val), Math.random() * 500);
+});
+}
+Promise_all([soon(1), soon(2), soon(3)])
+    .then(array=> {
+    console.log("This should be [1, 2, 3]:", array);
+}); 
 
-// Promise_all([soon(1), Promise.reject("X"), soon(3)])
-//     .then(array => {
-//     console.log("We should not get here");
-//     })
-//     .catch(error => {
-//     if (error != "X") {
-//         console.log("Unexpected failure:", error);
-//     }
-// });
+Promise_all([soon(1), Promise.reject("X"), soon(3)])
+    .then(array => {
+    console.log("We should not get here");
+    })
+    .catch(error => {
+    if (error != "X") {
+        console.log("Unexpected failure:", error);
+    }
+});
 
 
 
