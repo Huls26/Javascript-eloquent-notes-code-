@@ -3,20 +3,20 @@
 // ======== Moving through the tree ==========
 // recursion code
 // to review
-function talksAbout(node, string) {
-  // console.log(node)
-    if (node.nodeType == Node.ELEMENT_NODE) {
-      for (let child of node.childNodes) {
-        if (talksAbout(child, string)) {
-          return true;
-        }
-      }
-      return false;
-    } else if (node.nodeType == Node.TEXT_NODE) {
-      return node.nodeValue.indexOf(string) > -1;
-    }
+// function talksAbout(node, string) {
+//   // console.log(node)
+//     if (node.nodeType == Node.ELEMENT_NODE) {
+//       for (let child of node.childNodes) {
+//         if (talksAbout(child, string)) {
+//           return true;
+//         }
+//       }
+//       return false;
+//     } else if (node.nodeType == Node.TEXT_NODE) {
+//       return node.nodeValue.indexOf(string) > -1;
+//     }
   
-}
+// }
   
 // console.log(talksAbout(document.body, "book"));
   // → true
@@ -52,25 +52,25 @@ function talksAbout(node, string) {
 // // console.log(children)
 
 // ======= Finding elements =======
-console.log(document.body.childNodes)
-let links = document.body.getElementsByTagName("img");
-console.log(links)
+// console.log(document.body.childNodes)
+// let links = document.body.getElementsByTagName("img");
+// console.log(links)
 
-let ostrich = document.getElementById("gertrude");
-console.log(ostrich.src);
+// let ostrich = document.getElementById("gertrude");
+// console.log(ostrich.src);
 
-let getHref = document.body.getElementsByTagName("a");
-console.log(getHref[0].href)
+// let getHref = document.body.getElementsByTagName("a");
+// console.log(getHref[0].href)
 
 // ========= Changing the document =========
 // let paragraphs = document.body.getElementsByTagName("p");
 // console.log(paragraphs)
 
-let child = document.getElementById("paragraphs");
-let paragraphs = child.getElementsByTagName("p");
-child.insertBefore(paragraphs[2], paragraphs[0]);
+// let child = document.getElementById("paragraphs");
+// let paragraphs = child.getElementsByTagName("p");
+// child.insertBefore(paragraphs[2], paragraphs[0]);
 
-console.log(paragraphs)
+// console.log(paragraphs)
 
 // console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(paragraphs)))
 
@@ -78,3 +78,16 @@ console.log(paragraphs)
 // let paragraphs = document.body.getElementsByTagName("p");
 // document.body.insertBefore(paragraphs[2], paragraphs[0]);
 // console.log(paragraphs)
+
+// ========== Creating nodes ==========
+function replaceImages() {
+  let images = document.body.getElementsByTagName("img");
+
+  // insert a new paragraph
+  for (let i = images.length - 1; i >= 0; i--) {
+    let image = images[i];
+    let text = document.createTextNode(image.alt);
+    image.parentNode.replaceChild(text, image)
+  }
+
+}
