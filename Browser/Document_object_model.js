@@ -80,14 +80,84 @@
 // console.log(paragraphs)
 
 // ========== Creating nodes ==========
-function replaceImages() {
-  let images = document.body.getElementsByTagName("img");
+// function replaceImages() {
+//   let images = document.body.getElementsByTagName("img");
 
-  // insert a new paragraph
+//   // insert a new paragraph
+//   for (let i = images.length - 1; i >= 0; i--) {
+//     let image = images[i];
+//     let text = document.createTextNode(image.alt);
+//     image.parentNode.replaceChild(text, image)
+//   }
+
+// }
+
+function replaceImages() {
+  let images = document.getElementsByTagName("img");
+
   for (let i = images.length - 1; i >= 0; i--) {
     let image = images[i];
-    let text = document.createTextNode(image.alt);
-    image.parentNode.replaceChild(text, image)
+    if (image.alt) {
+      let text = document.createTextNode(image.alt);
+      image.parentNode.replaceChild(text, image)
+    }
   }
 
+  let textP = document.getElementsByTagName("p");
+  let childs = textP[0].childNodes;
+
+  // add text before cat
+  for (let child in childs) {
+    if (childs[child].nodeValue === "cat") {
+      let typeOfCat = document.createTextNode("Black");
+      textP[0].insertBefore(typeOfCat, childs[child]);
+      ;
+      break; 
+    }
+  }
 }
+
+function elt(type, ...children) {
+  let node = document.createElement(type);
+  for (let child of children) {
+    if (typeof child != "string") node.appendChild(child);
+    else node.appendChild(document.createTextNode(child));
+  }
+
+  return node;
+}
+
+let newItem = document.createElement("p");
+newItem.appendChild(document.createTextNode("Hello"))
+
+document.getElementById("quote").appendChild(
+  elt("footer", "—",
+  elt("strong", "Karl Popper"),
+  ", preface to the second edition of ",
+  elt("em", "The Open Society and Its Enemies"),
+  ", 1950")).appendChild(newItem)
+
+
+// function spreadOperator(...spread) {
+//   console.log(spread)
+// }
+
+// spreadOperator("hello", 123)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

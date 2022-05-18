@@ -40,6 +40,21 @@
 // event loop
 // > // https://www.youtube.com/watch?v=8aGhZQkoFbQ
 
+//  ================= Asynchronous Programming =================
+// nodeType
+// nodeValue
+// nodeName
+// Node.ELEMENT_NODE
+// Node.TEXT_NODE
+// document.body
+// document.body.childNodes
+// document.body.getElementsByTagName()
+// document.getElementById();
+// document.body.insertBefore();
+// document.body.replaceChilde();
+// document.body.appendChild();
+// document.createTextNode();
+// document.createElement()
 
 // fundamental
 // ================= the output is {}
