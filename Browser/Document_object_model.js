@@ -117,25 +117,29 @@ function replaceImages() {
   }
 }
 
-function elt(type, ...children) {
+function elt(type, ...spreadOperator) {
   let node = document.createElement(type);
-  for (let child of children) {
-    if (typeof child != "string") node.appendChild(child);
-    else node.appendChild(document.createTextNode(child));
+  for (let child of spreadOperator) {
+    // console.log(child)
+    if (typeof child === "string") {
+      node.appendChild(document.createTextNode(child))
+    } else {
+      node.appendChild(child)
+    }
   }
-
-  return node;
+  return node
 }
 
 let newItem = document.createElement("p");
 newItem.appendChild(document.createTextNode("Hello"))
 
-document.getElementById("quote").appendChild(
-  elt("footer", "—",
-  elt("strong", "Karl Popper"),
-  ", preface to the second edition of ",
-  elt("em", "The Open Society and Its Enemies"),
-  ", 1950")).appendChild(newItem)
+// document.getElementById("quote").appendChild(
+//   elt("footer", "—",
+//   elt("strong", "Karl Popper"),
+//   ", preface to the second edition of ",
+//   elt("em", "The Open Society and Its Enemies"),
+//   ", 1950")).appendChild(newItem)
+
 
 
 // function spreadOperator(...spread) {
@@ -144,7 +148,56 @@ document.getElementById("quote").appendChild(
 
 // spreadOperator("hello", 123)
 
+// Attributes
+// let paras = document.body.getElementsByTagName("p");
 
+// // Array.from(paras)
+// for (let para of paras) {
+//   if (para.getAttribute("data-classified") === "secret") {
+
+//     para.remove()
+//   }
+// }
+
+// Layout
+// let para = document.body.getElementsByTagName("p")[0];
+// console.log(para)
+// console.log("clientHeight:", para.clientHeight);
+// console.log("offsetHeight:", para.offsetHeight);
+
+// function time(name, action) {
+//   let start = Date.now(); // Current time in milliseconds
+//   action();
+//   console.log(name, "took", Date.now() - start, "ms");
+// }
+
+// time("naive", () => {
+//   let target = document.getElementById("one");
+//   while (target.offsetWidth < 2000) {
+//     target.appendChild(document.createTextNode("X"));
+//   }
+//   console.log(target.offsetWidth)
+// });
+
+// time("clever", function() {
+//   let target = document.getElementById("two");
+//   target.appendChild(document.createTextNode("XXXXX"));
+//   let total = Math.ceil(2000 / (target.offsetWidth / 5));
+//   target.firstChild.nodeValue = "X".repeat(total);
+// });
+
+// Styling
+let para = document.getElementById("para"); 
+console.log(para.style.fontFamily)
+para.style.color = "magenta"
+para.style.color = "red"
+// para.style.fontFamily = "sans-serif"
+// style["font-family"]
+
+
+
+
+// review this chapter
 
 
 

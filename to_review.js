@@ -51,10 +51,15 @@
 // document.body.getElementsByTagName()
 // document.getElementById();
 // document.body.insertBefore();
-// document.body.replaceChilde();
+// document.body.replaceChild();
 // document.body.appendChild();
 // document.createTextNode();
 // document.createElement()
+// element.getAttribute()
+// element.setAttribute()
+// node/child.remove()
+// element.clientHeight()
+// element.offsettHeight()
 
 // fundamental
 // ================= the output is {}
