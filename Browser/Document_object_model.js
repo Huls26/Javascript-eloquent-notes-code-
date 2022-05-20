@@ -187,14 +187,45 @@ newItem.appendChild(document.createTextNode("Hello"))
 // });
 
 // Styling
-let para = document.getElementById("para"); 
-console.log(para.style.fontFamily)
-para.style.color = "magenta"
-para.style.color = "red"
+// let para = document.getElementById("para"); 
+// console.log(para.style.fontFamily)
+// para.style.color = "magenta"
+// para.style.color = "red"
 // para.style.fontFamily = "sans-serif"
 // style["font-family"]
 
 
+// Cascading styles
+  // p#main.a.b {
+  //   margin-bottom: 20px;
+  // }
+// Query selectors
+// let pTag = document.querySelectorAll("p");
+// console.log(Array.from(pTag))
+// let animal = document.querySelectorAll(".animal");
+// console.log(Array.from(animal))
+// let insidePTag = document.querySelectorAll("p .animal");
+// console.log(Array.from(insidePTag))
+// let childPtag = document.querySelectorAll("p > .animal");
+// console.log(Array.from(childPtag)[0].textContent = "cat")
+// childPtag[0].innerText = "asd";
+// childPtag[0].innerHTML = "rabbit";
+
+// Positioning and animating
+let cat = document.querySelector("img");
+let angle = Math.PI / 2;
+let number = 0;
+function animate(time, lastTime) {
+  if (lastTime != null) {
+    angle += (time - lastTime) * 0.001;
+  }  
+  cat.style.top = (Math.sin(angle) * 20) + "px";
+  cat.style.left = (Math.cos(angle) * 200) + "px";
+  debugger
+  requestAnimationFrame(newTime => animate(newTime, time));
+}
+
+requestAnimationFrame(animate);
 
 
 // review this chapter

@@ -1,0 +1,14 @@
+/* p {
+    color: rebeccapurple;
+} */
+
+strong {
+    /* font-weight: 400; */
+    font-style: italic;
+    color: grey;
+}
+
+p#main.a.b {
+    margin-bottom: 20px;
+    color: blue;
+  }
