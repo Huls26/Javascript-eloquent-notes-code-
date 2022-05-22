@@ -214,18 +214,59 @@ newItem.appendChild(document.createTextNode("Hello"))
 // Positioning and animating
 let cat = document.querySelector("img");
 let angle = Math.PI / 2;
-let number = 0;
+
 function animate(time, lastTime) {
   if (lastTime != null) {
     angle += (time - lastTime) * 0.001;
   }  
   cat.style.top = (Math.sin(angle) * 20) + "px";
   cat.style.left = (Math.cos(angle) * 200) + "px";
-  debugger
   requestAnimationFrame(newTime => animate(newTime, time));
 }
 
 requestAnimationFrame(animate);
+
+// add button
+let button = document.createElement("button");
+let innerText = document.createTextNode("click me!!!");
+button.appendChild(innerText)
+
+// set id
+button.id = "button-1"
+
+// add parentNodes to button
+let parentBtn = document.createElement("p");
+parentBtn.className = "parent-btn";
+
+//set parentBtn as the parent button of button-1
+document.body.appendChild(parentBtn);
+parentBtn.appendChild(button)
+parentBtn.style.textAlign = "center";
+parentBtn.style.marginTop = "2.5em"
+
+// set counter for button-1
+// first app web dom
+function counter() {
+  let count = 0;
+
+  return () => {
+    count++
+    console.log(count)
+  }
+}
+
+let count = counter();
+
+button.setAttribute("onclick", "count()");
+
+
+// button.style.textAlign = "center"
+// console.log(innerText)
+// console.log(button)
+
+// for (let i = 0; i < 100000; i++) {
+//   console.log("hello world")
+// }
 
 
 // review this chapter

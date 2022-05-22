@@ -60,6 +60,7 @@
 // node/child.remove()
 // element.clientHeight()
 // element.offsettHeight()
+// requestAnimationFrame()
 
 // fundamental
 // ================= the output is {}
