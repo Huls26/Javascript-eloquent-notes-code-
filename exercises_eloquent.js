@@ -1150,7 +1150,6 @@ const MOUNTAINS = [
 function byTagName(node, tagName, container = []) {
     if (node.nodeType === Node.ELEMENT_NODE) {
         for (let child of node.childNodes) {
-            console.log(child)
             if (child.nodeName === tagName.toUpperCase()) {
                 container.push(child)
             } else {
@@ -1162,15 +1161,44 @@ function byTagName(node, tagName, container = []) {
     return container
 }
 
-console.log(byTagName(document.body, "h1").length);
-// → 1
-console.log(byTagName(document.body, "span").length);
-// → 3
-let para = document.querySelector("p");
-console.log(byTagName(para, "span").length);
+// console.log(byTagName(document.body, "h1").length);
+// // → 1
+// console.log(byTagName(document.body, "span").length);
+// // → 3
+// let para = document.querySelector("p");
+// console.log(byTagName(para, "span").length);
 // → 2
 
+// ============ 14.2 Elements by tag name ============
 
+// this is what 7 months of coding looks like
+let cat = document.querySelector("#cat");
+let hat = document.querySelector("#hat");
+
+let angle = 0;
+let lastTime = null;
+
+// create a parent div
+let parentDiv = document.createElement("div");
+parentDiv.appendChild(cat);
+parentDiv.appendChild(hat);
+
+document.body.appendChild(parentDiv)
+parentDiv.style.position = "absolute"
+
+// parentDiv set up
+function animate(time) {
+  if (lastTime != null) angle += (time - lastTime) * 0.001;
+  lastTime = time;
+  parentDiv.style.top = (Math.sin(angle) * 40 + 40) + "px";
+  parentDiv.style.left = (Math.cos(angle) * 200 + 230) + "px";
+
+  hat.style.top = (Math.sin(Math.PI * angle) * 100) + "px";
+  hat.style.left = (Math.cos(Math.PI * angle) * 120) + "px";
+
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
 
 // last topic
 
