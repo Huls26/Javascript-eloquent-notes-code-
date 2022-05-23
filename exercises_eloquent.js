@@ -1186,6 +1186,11 @@ parentDiv.appendChild(hat);
 document.body.appendChild(parentDiv)
 parentDiv.style.position = "absolute"
 
+// new cat and hat
+cat.src = "img/cat copy.jpeg"
+hat.src = "img/hat-2.jpg"
+
+
 // parentDiv set up
 function animate(time) {
   if (lastTime != null) angle += (time - lastTime) * 0.001;
