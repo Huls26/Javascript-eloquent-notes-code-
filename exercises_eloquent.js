@@ -1105,48 +1105,70 @@ const MOUNTAINS = [
 ];
 
 // table cells
-let container = document.querySelector("#mountains");
-let ta = document.createElement("table");
-container.appendChild(ta);
-ta.className = "table";
-ta.id = "table";
-let table = document.getElementById("table");
+// let container = document.querySelector("#mountains");
+// let ta = document.createElement("table");
+// container.appendChild(ta);
+// ta.className = "table";
+// ta.id = "table";
+// let table = document.getElementById("table");
 
 
-// heading cells
-function header() {
-    let tagRows = document.createElement("tr");
+// // heading cells
+// function header() {
+//     let tagRows = document.createElement("tr");
 
-    for (let header of Object.keys(MOUNTAINS[0])) {
-        let th = document.createElement("th");
-        let text = document.createTextNode(header);
-        th.appendChild(text);
-        tagRows.appendChild(th);
-    }
+//     for (let header of Object.keys(MOUNTAINS[0])) {
+//         let th = document.createElement("th");
+//         let text = document.createTextNode(header);
+//         th.appendChild(text);
+//         tagRows.appendChild(th);
+//     }
 
-    table.appendChild(tagRows);
-}
+//     table.appendChild(tagRows);
+// }
 
 // regular cells 
-function regularCells() {
-    for (let cell of MOUNTAINS) {
-        let tagRows = document.createElement("tr");
-        for (let description of Object.values(cell)) {
-            let td = document.createElement("td");
-            td.innerHTML = description;
-            tagRows.appendChild(td);   
+// function regularCells() {
+//     for (let cell of MOUNTAINS) {
+//         let tagRows = document.createElement("tr");
+//         for (let description of Object.values(cell)) {
+//             let td = document.createElement("td");
+//             td.innerHTML = description;
+//             tagRows.appendChild(td);   
+//         }
+//         table.appendChild(tagRows)
+//     }
+// }
+// header();
+// regularCells();
+// let th = document.querySelector("th");
+// let td = document.querySelector("td");
+// th.style.textAlign = "right"
+// td.style.textAlign = "right"
+
+// ============ 14.2 Elements by tag name ============
+function byTagName(node, tagName, container = []) {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+        for (let child of node.childNodes) {
+            console.log(child)
+            if (child.nodeName === tagName.toUpperCase()) {
+                container.push(child)
+            } else {
+                byTagName(child, tagName, container)
+            }
         }
-        table.appendChild(tagRows)
-    }
+    } 
+    
+    return container
 }
-header();
-regularCells();
-let th = document.querySelector("th");
-let td = document.querySelector("td");
-th.style.textAlign = "right"
-td.style.textAlign = "right"
 
-
+console.log(byTagName(document.body, "h1").length);
+// → 1
+console.log(byTagName(document.body, "span").length);
+// → 3
+let para = document.querySelector("p");
+console.log(byTagName(para, "span").length);
+// → 2
 
 
 
