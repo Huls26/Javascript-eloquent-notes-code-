@@ -1205,6 +1205,8 @@ function animate(time) {
 }
 requestAnimationFrame(animate);
 
+console.log(typeof "1996")
+
 // last topic
 
 // To try 

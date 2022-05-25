@@ -40,7 +40,7 @@
 // event loop
 // > // https://www.youtube.com/watch?v=8aGhZQkoFbQ
 
-//  ================= Asynchronous Programming =================
+//  ================= The Document Object Model =================
 // nodeType
 // nodeValue
 // nodeName
@@ -61,6 +61,9 @@
 // element.clientHeight()
 // element.offsettHeight()
 // requestAnimationFrame()
+// event handlers
+// element.addEventListener("click", () => {})
+// element.removeEventListener()
 
 // fundamental
 // ================= the output is {}
