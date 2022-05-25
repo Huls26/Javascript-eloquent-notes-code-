@@ -61,9 +61,14 @@
 // element.clientHeight()
 // element.offsettHeight()
 // requestAnimationFrame()
-// event handlers
+// event handlers ===
 // element.addEventListener("click", () => {})
 // element.removeEventListener()
+// propagation
+// target
+// event.target.nodeName
+// "mousedown"
+// event.preventDefault()
 
 // fundamental
 // ================= the output is {}
