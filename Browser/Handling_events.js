@@ -51,8 +51,44 @@ document.body.addEventListener("click", event => {
 })
 
 // Default actions
-let link = document.querySelector("a");
-link.addEventListener("click", event => {
-  console.log("Nope.");
-  event.preventDefault();
+// click
+// mousedown
+// let link = document.querySelector("a");
+// link.addEventListener("click", event => {
+//   console.log("Nope.");
+//   event.preventDefault();
+// });
+
+// Key events
+
+// keydown
+window.addEventListener("keydown", event => {
+    if (event.key === "v") {
+        document.body.style.backgroundColor = "violet"
+    }
+})
+
+// keyup
+window.addEventListener("keyup", event => {
+    if (event.key === "v") {
+        document.body.style.backgroundColor = ""
+    }
+})
+
+// ctrlKey + space
+window.addEventListener("keydown", event => {
+    // event.shiftKey
+    if (event.key == " " && event.ctrlKey) {
+        console.log("Continuing!")
+    }
+})
+
+// Mouse clicks
+window.addEventListener("click", event => {
+    let dot = document.createElement("div");
+    dot.className = "dot";
+    console.log(event.clientX)
+    dot.style.left = (event.clientX - 4) + "px";
+    dot.style.top = (event.clientY - 4) + "px";
+    document.body.appendChild(dot);
 });
