@@ -69,6 +69,19 @@
 // event.target.nodeName
 // "mousedown"
 // event.preventDefault()
+// event.key
+// event.type
+// event.button
+// keydown
+// keyup
+// event.ctrlKey
+// event.shiftKey
+// event.clientX
+// event.clientY
+// event.pageX
+// event.pageY
+// mousemove
+// window.removeEventListener("mousedown", moved)
 
 // fundamental
 // ================= the output is {}
