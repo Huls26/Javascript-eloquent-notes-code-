@@ -120,6 +120,7 @@ let lastX; // Tracks the last observed mouse X position
       window.removeEventListener("mousemove", moved);
     } else {
       let dist = event.clientX - lastX;
+      // with borders i use clientWidth
       let newWidth = Math.max(10, bar.offsetWidth + dist);
       bar.style.width = newWidth + "px";
       lastX = event.clientX;
@@ -130,5 +131,31 @@ let lastX; // Tracks the last observed mouse X position
 // document.querySelector("p").addEventListener("mousedown", (event) => {
 //     event.preventDefault()
 // })
+
+// display mouse client
+let buttonAdd = document.querySelector("#add");
+let buttonStop = document.querySelector("#stop");
+let displayInfo = document.createElement("p");
+document.body.appendChild(displayInfo);
+
+// event listener
+buttonAdd.addEventListener("click", () => {
+  displayInfo.innerText = "clientx:\nclientY:";
+  window.addEventListener("mousemove", display)
+});
+
+// remove mouseMove
+buttonStop.addEventListener("click", () => {
+  window.removeEventListener("mousemove", display)
+});
+
+// display
+function display(event) {
+  displayInfo.innerText = `clientx: ${event.clientX}\nclientY: ${event.clientY}`
+}
+
+
+// To watch
+// https://www.youtube.com/watch?v=XF1_MlZ5l6M
 
 
