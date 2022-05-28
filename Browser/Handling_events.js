@@ -105,27 +105,27 @@
 // })
 
 // Mouse motion
-let lastX; // Tracks the last observed mouse X position
-  let bar = document.querySelector("div");
-  bar.addEventListener("mousedown", event => {
-    if (event.button == 0) {
-      lastX = event.clientX;
-      window.addEventListener("mousemove", moved);
-      event.preventDefault(); // Prevent selection
-    }
-  });
+// let lastX; // Tracks the last observed mouse X position
+//   let bar = document.querySelector("div");
+//   bar.addEventListener("mousedown", event => {
+//     if (event.button == 0) {
+//       lastX = event.clientX;
+//       window.addEventListener("mousemove", moved);
+//       event.preventDefault(); // Prevent selection
+//     }
+//   });
 
-  function moved(event) {
-    if (event.buttons == 0) {
-      window.removeEventListener("mousemove", moved);
-    } else {
-      let dist = event.clientX - lastX;
-      // with borders i use clientWidth
-      let newWidth = Math.max(10, bar.offsetWidth + dist);
-      bar.style.width = newWidth + "px";
-      lastX = event.clientX;
-    }
-}
+//   function moved(event) {
+//     if (event.buttons == 0) {
+//       window.removeEventListener("mousemove", moved);
+//     } else {
+//       let dist = event.clientX - lastX;
+//       // with borders i use clientWidth
+//       let newWidth = Math.max(10, bar.offsetWidth + dist);
+//       bar.style.width = newWidth + "px";
+//       lastX = event.clientX;
+//     }
+// }
 
 // prevent for selection
 // document.querySelector("p").addEventListener("mousedown", (event) => {
@@ -133,29 +133,56 @@ let lastX; // Tracks the last observed mouse X position
 // })
 
 // display mouse client
-let buttonAdd = document.querySelector("#add");
-let buttonStop = document.querySelector("#stop");
-let displayInfo = document.createElement("p");
-document.body.appendChild(displayInfo);
+// let buttonAdd = document.querySelector("#add");
+// let buttonStop = document.querySelector("#stop");
+// let displayInfo = document.createElement("p");
+// document.body.appendChild(displayInfo);
 
 // event listener
-buttonAdd.addEventListener("click", () => {
-  displayInfo.innerText = "clientx:\nclientY:";
-  window.addEventListener("mousemove", display)
-});
+// buttonAdd.addEventListener("click", () => {
+//   displayInfo.innerText = "clientx:\nclientY:";
+//   window.addEventListener("mousemove", display)
+// });
 
 // remove mouseMove
-buttonStop.addEventListener("click", () => {
-  window.removeEventListener("mousemove", display)
-});
+// buttonStop.addEventListener("click", () => {
+//   window.removeEventListener("mousemove", display)
+// });
 
 // display
-function display(event) {
-  displayInfo.innerText = `clientx: ${event.clientX}\nclientY: ${event.clientY}`
+// function display(event) {
+//   if (event.buttons === 1) {
+//     window.removeEventListener("mousemove", display)
+//   }
+//   displayInfo.innerText = `clientx: ${event.clientX}\nclientY: ${event.clientY}`
+// }
+
+// Touch events
+// my approuch in touch 
+function circle(event) {
+    let touch = event.touches[0];
+    let dot;
+
+    console.log(touch)
+    if (dot = document.querySelector("dot")) {
+        dot.remove();
+    }
+    
+    if (touch) {
+        let circle = document.createElement("dot");
+        circle.style.top = `${touch.clientY - 50}px`;
+        circle.style.left = `${touch.clientX - 50}px`
+        document.body.appendChild(circle)  
+    }
 }
+
+window.addEventListener("touchstart", circle);
+window.addEventListener("touchmove", circle)
+window.addEventListener("touchend", circle);
 
 
 // To watch
 // https://www.youtube.com/watch?v=XF1_MlZ5l6M
+// https://www.youtube.com/watch?v=TaPdgj8mucI
 
 
