@@ -182,41 +182,45 @@
 
 // Scroll events
 
- // Create some content
-  // document.body.appendChild(document.createTextNode(
-  //   "supercalifragilisticexpialidocious ".repeat(1000)));
+// Create some content
+// document.body.appendChild(document.createTextNode(
+//   "supercalifragilisticexpialidocious ".repeat(1000)));
 
-  // let bar = document.querySelector("#progress");
-  // window.addEventListener("scroll", () => {
-  //     console.log(pageYOffset)
-  //     console.log(document.body.scrollHeight, innerHeight)
-  //   let max = document.body.scrollHeight - innerHeight;
-  //   bar.style.width = `${(pageYOffset / max) * 100}%`;
-  // });
+// let bar = document.querySelector("#progress");
+// window.addEventListener("scroll", () => {
+//   let max = document.body.offsetHeight - innerHeight;
+//   console.log(pageYOffset / max)
+//   bar.style.width = `${(pageYOffset /max) *100}%`
+// })
+// console.log(document.body.offsetHeight)
+// console.log(document.body.clientHeight)
+// console.log(innerHeight)
+
 
 // make bar the volume bar
 // my approach in volume bar
-let volume = document.querySelector(".volume");
+// let volume = document.querySelector(".volume");
 
-function switchKnob(event) {
-  let cC = event.clientX;
-  function moved(events) {
-    if (!events.buttons) {
-      window.removeEventListener("mousemove", moved)
-    }
-   
-    if (events.clientX > cC) {
-      volume.style.width = `${events.clientX +1}px`
-    } 
-    else if (events.clientX < cC) {
-      volume.style.width = `${events.clientX -1}px`
-    }
-  }
-  window.addEventListener("mousemove", moved)
-}
+// function switchKnob(event) {
+//   let cC = event.clientX;
+//   function moved(events) {
+//     if (!events.buttons) {
+//       window.removeEventListener("mousemove", moved)
+//     }
+    
+//     if (events.clientX > cC) {
+//       volume.style.width = `${events.clientX +1}px`
+//     } 
+//     else if (events.clientX < cC) {
+//       volume.style.width = `${events.clientX -1}px`
+//     }
+//   }
+//   window.addEventListener("mousemove", moved)
+// }
 
-volume.addEventListener("mousedown", switchKnob);
+// volume.addEventListener("mousedown", switchKnob);
 
+// Focus events
 
 
 

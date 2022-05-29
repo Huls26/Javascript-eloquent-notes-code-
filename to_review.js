@@ -82,6 +82,11 @@
 // event.pageY
 // mousemove
 // window.removeEventListener("mousedown", moved)
+// document.body.clientHeight
+// document.body.offsetHeight
+// innerHeight
+// document.body.scrollHeight
+// pageYOffset
 
 // fundamental
 // ================= the output is {}
