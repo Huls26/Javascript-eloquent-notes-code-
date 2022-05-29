@@ -159,30 +159,70 @@
 
 // Touch events
 // my approuch in touch 
-function circle(event) {
-    let touch = event.touches[0];
-    let dot;
+// function circle(event) {
+//     let touch = event.touches[0];
+//     let dot;
 
-    console.log(touch)
-    if (dot = document.querySelector("dot")) {
-        dot.remove();
-    }
+//     console.log(event)
+//     if (dot = document.querySelector("dot")) {
+//         dot.remove();
+//     }
     
-    if (touch) {
-        let circle = document.createElement("dot");
-        circle.style.top = `${touch.clientY - 50}px`;
-        circle.style.left = `${touch.clientX - 50}px`
-        document.body.appendChild(circle)  
+//     if (touch) {
+//         let circle = document.createElement("dot");
+//         circle.style.top = `${touch.clientY - 50}px`;
+//         circle.style.left = `${touch.clientX - 50}px`
+//         document.body.appendChild(circle)  
+//     }
+// }
+
+// window.addEventListener("touchstart", circle);
+// window.addEventListener("touchmove", circle)
+// window.addEventListener("touchend", circle);
+
+// Scroll events
+
+ // Create some content
+  // document.body.appendChild(document.createTextNode(
+  //   "supercalifragilisticexpialidocious ".repeat(1000)));
+
+  // let bar = document.querySelector("#progress");
+  // window.addEventListener("scroll", () => {
+  //     console.log(pageYOffset)
+  //     console.log(document.body.scrollHeight, innerHeight)
+  //   let max = document.body.scrollHeight - innerHeight;
+  //   bar.style.width = `${(pageYOffset / max) * 100}%`;
+  // });
+
+// make bar the volume bar
+// my approach in volume bar
+let volume = document.querySelector(".volume");
+
+function switchKnob(event) {
+  let cC = event.clientX;
+  function moved(events) {
+    if (!events.buttons) {
+      window.removeEventListener("mousemove", moved)
     }
+   
+    if (events.clientX > cC) {
+      volume.style.width = `${events.clientX +1}px`
+    } 
+    else if (events.clientX < cC) {
+      volume.style.width = `${events.clientX -1}px`
+    }
+  }
+  window.addEventListener("mousemove", moved)
 }
 
-window.addEventListener("touchstart", circle);
-window.addEventListener("touchmove", circle)
-window.addEventListener("touchend", circle);
+volume.addEventListener("mousedown", switchKnob);
 
 
+
+
+// console.log(Boolean(document.querySelector("im")))
 // To watch
-// https://www.youtube.com/watch?v=XF1_MlZ5l6M
+// eventListener -> https://www.youtube.com/watch?v=XF1_MlZ5l6M
 // https://www.youtube.com/watch?v=TaPdgj8mucI
 
 
