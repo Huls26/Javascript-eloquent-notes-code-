@@ -221,8 +221,43 @@
 // volume.addEventListener("mousedown", switchKnob);
 
 // Focus events
+let help = document.querySelector("#help");
+let fields = document.querySelectorAll("input");
+// console.log(fields[0])
+for (let field of fields) {
+  field.addEventListener("focus", event => {
+    console.log(event.target)
+    let text = event.target.getAttribute("data-help");
+    help.textContent = text;
+  });
+  field.addEventListener("blur", event => {
+    help.textContent = "";
+    // document.body.style.background = "red";
+  });
+}
+
+// console.log(document.querySelector("div + h1"))
+
+// Events and the event loop
+// web workers
+// https://www.youtube.com/watch?v=X57mh8tKkgE -> 35:07
+// https://www.youtube.com/watch?v=pMK-jcOAYI8
+// https://www.youtube.com/watch?v=Gcp7triXFjg
+
+// Worker
+let worker = new Worker("./Browser/squareWorker.js");
+worker.addEventListener("message", data => {
+  console.log(`notify: ${data.data}`)
+})
+
+worker.postMessage("hello")
 
 
+
+// to read
+// https://www.geeksforgeeks.org/why-data-structures-and-algorithms-are-important-to-learn/
+
+// Events and the event loop
 
 // console.log(Boolean(document.querySelector("im")))
 // To watch
