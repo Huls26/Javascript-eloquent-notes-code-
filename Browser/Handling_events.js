@@ -245,14 +245,45 @@ for (let field of fields) {
 // https://www.youtube.com/watch?v=Gcp7triXFjg
 
 // Worker
-let worker = new Worker("./Browser/squareWorker.js");
-worker.addEventListener("message", data => {
-  console.log(`notify: ${data.data}`)
-})
+// let worker = new Worker("./Browser/squareWorker.js");
+// worker.addEventListener("message", data => {
+//   console.log(`notify: ${data.data}`)
+// })
 
-worker.postMessage("hello")
+// worker.postMessage("hello")
 
+// Timers
+// let ticks = 1;
+// let minute = 0;
+// let clock = setInterval(() => {
+//   console.log("tick", ticks++);
+//   if (ticks > 60) {
+//     clock;
+//     ticks = 1;
+//     minute++
+//     console.log(minute + " minute");
+//   }
+// }, 1000);
 
+// Debouncing
+let textarea = document.querySelector("textarea");
+let timeout;
+textarea.addEventListener("input", () => {
+  // clearTimeout(timeout);
+  timeout = setTimeout(() => console.log("Typed!"), 500);
+});
+
+let scheduled = null;
+window.addEventListener("mousemove", event => {
+  if (!scheduled) {
+    setTimeout(() => {
+      document.body.textContent =
+        `Mouse at ${scheduled.pageX}, ${scheduled.pageY}`;
+      scheduled = null;
+    }, 250);
+  }
+  scheduled = event;
+});
 
 // to read
 // https://www.geeksforgeeks.org/why-data-structures-and-algorithms-are-important-to-learn/
