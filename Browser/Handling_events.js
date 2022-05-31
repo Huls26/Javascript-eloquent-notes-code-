@@ -221,20 +221,20 @@
 // volume.addEventListener("mousedown", switchKnob);
 
 // Focus events
-let help = document.querySelector("#help");
-let fields = document.querySelectorAll("input");
-// console.log(fields[0])
-for (let field of fields) {
-  field.addEventListener("focus", event => {
-    console.log(event.target)
-    let text = event.target.getAttribute("data-help");
-    help.textContent = text;
-  });
-  field.addEventListener("blur", event => {
-    help.textContent = "";
-    // document.body.style.background = "red";
-  });
-}
+// let help = document.querySelector("#help");
+// let fields = document.querySelectorAll("input");
+// // console.log(fields[0])
+// for (let field of fields) {
+//   field.addEventListener("focus", event => {
+//     console.log(event.target)
+//     let text = event.target.getAttribute("data-help");
+//     help.textContent = text;
+//   });
+//   field.addEventListener("blur", event => {
+//     help.textContent = "";
+//     // document.body.style.background = "red";
+//   });
+// }
 
 // console.log(document.querySelector("div + h1"))
 
@@ -266,33 +266,53 @@ for (let field of fields) {
 // }, 1000);
 
 // Debouncing
-let textarea = document.querySelector("textarea");
-let timeout;
-textarea.addEventListener("input", () => {
-  // clearTimeout(timeout);
-  timeout = setTimeout(() => console.log("Typed!"), 500);
-});
+// let textarea = document.querySelector("textarea");
+// let timeout;
+// textarea.addEventListener("input", () => {
+//   // clearTimeout(timeout);
+//   timeout = setTimeout(() => console.log("Typed!"), 500);
+// });
 
-let scheduled = null;
-window.addEventListener("mousemove", event => {
-  if (!scheduled) {
-    setTimeout(() => {
-      document.body.textContent =
-        `Mouse at ${scheduled.pageX}, ${scheduled.pageY}`;
-      scheduled = null;
-    }, 250);
-  }
-  scheduled = event;
-});
+// let scheduled = null;
+// window.addEventListener("mousemove", event => {
+//   console.log(event)
+//   if (!scheduled) {
+//     setTimeout(() => {
+//       document.body.textContent =
+//         `Mouse at ${scheduled.pageX}, ${scheduled.pageY}`;
+//       scheduled = null;
+//     }, 1);
+//   }
+//   scheduled = event;
+// });
+
+// <!-- default, debounce -->
+let input = document.getElementById("input");
+let df = document.querySelector("#default");
+let debounce = document.querySelector("#debounce");
+
+// make this cleaner
+let timeout
+input.addEventListener("input", event => {
+  df.innerText = event.target.value;
+  clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    debounce.innerHTML = event.target.value;
+  }, 1000)
+  
+})
+// debouncing
+// https://www.youtube.com/watch?v=cjIswDCKgu0&t=1s -> 626
+// https://www.youtube.com/watch?v=cjIswDCKgu0
 
 // to read
 // https://www.geeksforgeeks.org/why-data-structures-and-algorithms-are-important-to-learn/
 
 // Events and the event loop
-
 // console.log(Boolean(document.querySelector("im")))
 // To watch
 // eventListener -> https://www.youtube.com/watch?v=XF1_MlZ5l6M
 // https://www.youtube.com/watch?v=TaPdgj8mucI
 
-
+// debouncing
+// https://www.youtube.com/watch?v=cjIswDCKgu0&t=1s

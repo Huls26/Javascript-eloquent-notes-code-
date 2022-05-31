@@ -159,18 +159,38 @@
   </div> -->
 
   <!-- Focus events -->
-  <p>Name: <input type="text" data-help="Your full name"></p>
+  <!-- <p>Name: <input type="text" data-help="Your full name"></p>
   <p>Age: <input type="text" data-help="Your age in years"></p>
-  <p id="help"></p>
+  <p id="help"></p> -->
 
-  <div>
+  <!-- <div>
     <p>hello</p>
   </div>
 
   <h1>Hi</h1> 
   <p>Hello</p>
 
-  <textarea>Type something here...</textarea>
+  <textarea>Type something here...</textarea> -->
+
+  <!-- default, debounce -->
+  <style>
+    div > * {
+      display: inline-block;
+      margin: 0;
+    }
+  </style>
+
+  <input type="text" placeholder="Write something..." name="input something" id="input">
+
+  <div>
+    <h2>Default: </h2>
+    <p id="default"></p>
+  </div>
+
+  <div>
+    <h2>Debounce: </h2>
+    <p id="debounce"></p>
+  </div>
 
   <!-- <script src="Browser/Document_object_model.js"></script> -->
   <script src="./Browser/Handling_events.js"></script>
