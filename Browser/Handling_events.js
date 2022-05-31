@@ -292,15 +292,23 @@ let df = document.querySelector("#default");
 let debounce = document.querySelector("#debounce");
 
 // make this cleaner
-let timeout
+// debouncing
 input.addEventListener("input", event => {
   df.innerText = event.target.value;
-  clearTimeout(timeout)
-  timeout = setTimeout(() => {
-    debounce.innerHTML = event.target.value;
-  }, 1000)
-  
+  value(event);
 })
+
+let value = addValue()
+function addValue() {
+  let timeout
+  return (event) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+    debounce.innerHTML = event.target.value;
+  }, 500)
+  }
+}
+
 // debouncing
 // https://www.youtube.com/watch?v=cjIswDCKgu0&t=1s -> 626
 // https://www.youtube.com/watch?v=cjIswDCKgu0

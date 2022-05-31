@@ -88,9 +88,14 @@
 // document.body.scrollHeight
 // pageYOffset
 // event.target
+// events and events loop
 // worket.postMessage();
 // new Worker();
 // message Events
+// propagate
+// debouncing
+// throttle
+
 
 // fundamental
 // ================= the output is {}
