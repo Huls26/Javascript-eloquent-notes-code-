@@ -309,6 +309,9 @@ function addValue() {
   }
 }
 
+// to do
+// https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/record-collection
+
 // debouncing
 // https://www.youtube.com/watch?v=cjIswDCKgu0&t=1s -> 626
 // https://www.youtube.com/watch?v=cjIswDCKgu0

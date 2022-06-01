@@ -1147,19 +1147,19 @@ const MOUNTAINS = [
 // td.style.textAlign = "right"
 
 // ============ 14.2 Elements by tag name ============
-function byTagName(node, tagName, container = []) {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-        for (let child of node.childNodes) {
-            if (child.nodeName === tagName.toUpperCase()) {
-                container.push(child)
-            } else {
-                byTagName(child, tagName, container)
-            }
-        }
-    } 
+// function byTagName(node, tagName, container = []) {
+//     if (node.nodeType === Node.ELEMENT_NODE) {
+//         for (let child of node.childNodes) {
+//             if (child.nodeName === tagName.toUpperCase()) {
+//                 container.push(child)
+//             } else {
+//                 byTagName(child, tagName, container)
+//             }
+//         }
+//     } 
     
-    return container
-}
+//     return container
+// }
 
 // console.log(byTagName(document.body, "h1").length);
 // // → 1
@@ -1172,40 +1172,70 @@ function byTagName(node, tagName, container = []) {
 // ============ 14.2 Elements by tag name ============
 
 // this is what 7 months of coding looks like
-let cat = document.querySelector("#cat");
-let hat = document.querySelector("#hat");
+// let cat = document.querySelector("#cat");
+// let hat = document.querySelector("#hat");
 
-let angle = 0;
-let lastTime = null;
+// let angle = 0;
+// let lastTime = null;
 
-// create a parent div
-let parentDiv = document.createElement("div");
-parentDiv.appendChild(cat);
-parentDiv.appendChild(hat);
+// // create a parent div
+// let parentDiv = document.createElement("div");
+// parentDiv.appendChild(cat);
+// parentDiv.appendChild(hat);
 
-document.body.appendChild(parentDiv)
-parentDiv.style.position = "absolute"
+// document.body.appendChild(parentDiv)
+// parentDiv.style.position = "absolute"
 
 // new cat and hat
-cat.src = "img/cat copy.jpeg"
-hat.src = "img/hat-2.jpg"
+// cat.src = "img/cat copy.jpeg"
+// hat.src = "img/hat-2.jpg"
 
 
 // parentDiv set up
-function animate(time) {
-  if (lastTime != null) angle += (time - lastTime) * 0.001;
-  lastTime = time;
-  parentDiv.style.top = (Math.sin(angle) * 40 + 40) + "px";
-  parentDiv.style.left = (Math.cos(angle) * 200 + 230) + "px";
+// function animate(time) {
+//   if (lastTime != null) angle += (time - lastTime) * 0.001;
+//   lastTime = time;
+//   parentDiv.style.top = (Math.sin(angle) * 40 + 40) + "px";
+//   parentDiv.style.left = (Math.cos(angle) * 200 + 230) + "px";
 
-  hat.style.top = (Math.sin(Math.PI * angle) * 100) + "px";
-  hat.style.left = (Math.cos(Math.PI * angle) * 120) + "px";
+//   hat.style.top = (Math.sin(Math.PI * angle) * 100) + "px";
+//   hat.style.left = (Math.cos(Math.PI * angle) * 120) + "px";
 
-  requestAnimationFrame(animate);
+//   requestAnimationFrame(animate);
+// }
+// requestAnimationFrame(animate);
+
+// console.log(typeof "1996")
+
+// =============== chapter 15: Handling Events ===============
+
+
+// ============ 15.1 Ballon ============
+// make this cleaner composability
+let ballon = document.getElementsByTagName("p")[0];
+let size = 16
+
+window.addEventListener("keydown", event => {
+    console.log(event)
+    if (event.key === "ArrowUp") {
+        increment();
+    } else if (event.key === "ArrowDown") {
+        decrement();
+    }
+})
+
+function increment() {
+    let percentage = size * .10;
+    size = size + percentage;
+    ballon.style.fontSize = `${size}px`
 }
-requestAnimationFrame(animate);
 
-console.log(typeof "1996")
+function decrement() {
+    let percentage = size * .10;
+    size = size - percentage;
+    ballon.style.fontSize = `${size}px`
+}
+
 
 // last topic
 
