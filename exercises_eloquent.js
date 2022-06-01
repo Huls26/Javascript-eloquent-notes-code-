@@ -1212,28 +1212,57 @@ const MOUNTAINS = [
 
 // ============ 15.1 Ballon ============
 // make this cleaner composability
+// before
+// let ballon = document.getElementsByTagName("p")[0];
+// let size = 16
+
+// window.addEventListener("keydown", event => {
+//     console.log(event)
+//     if (event.key === "ArrowUp") {
+//         increment();
+//     } else if (event.key === "ArrowDown") {
+//         decrement();
+//     }
+// })
+
+// function increment() {
+//     let percentage = size * .10;
+//     size = size + percentage;
+//     ballon.style.fontSize = `${size}px`
+// }
+
+// function decrement() {
+//     let percentage = size * .10;
+//     size = size - percentage;
+//     ballon.style.fontSize = `${size}px`
+// }
+
+// after 
 let ballon = document.getElementsByTagName("p")[0];
-let size = 16
+let machine = ballonMachine();
 
 window.addEventListener("keydown", event => {
-    console.log(event)
-    if (event.key === "ArrowUp") {
-        increment();
-    } else if (event.key === "ArrowDown") {
-        decrement();
-    }
+    machine(event.key);
 })
 
-function increment() {
-    let percentage = size * .10;
-    size = size + percentage;
-    ballon.style.fontSize = `${size}px`
-}
+function ballonMachine() {
+    let size = ballon.style.fontSize;
+    if (!ballon.style.fontSize) {
+        size = 16
+    };
+    
+    return key => {
+        let per;
+        if (key === "ArrowUp") {
+            per = .10;
+        } else if (key === "ArrowDown") {
+            per = -.10;
+        }
 
-function decrement() {
-    let percentage = size * .10;
-    size = size - percentage;
-    ballon.style.fontSize = `${size}px`
+        let percentage = size * per;
+        size = size + percentage;
+        ballon.style.fontSize = `${size}px`
+    }
 }
 
 
