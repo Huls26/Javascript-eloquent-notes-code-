@@ -1094,15 +1094,15 @@ way to fix this? ====== */
 // =============== chapter 14: The Document Object Model ===============
 
 // ============ 14.1 Build a table ============
-const MOUNTAINS = [
-    {name: "Kilimanjaro", height: 5895, place: "Tanzania"},
-    {name: "Everest", height: 8848, place: "Nepal"},
-    {name: "Mount Fuji", height: 3776, place: "Japan"},
-    {name: "Vaalserberg", height: 323, place: "Netherlands"},
-    {name: "Denali", height: 6168, place: "United States"},
-    {name: "Popocatepetl", height: 5465, place: "Mexico"},
-    {name: "Mont Blanc", height: 4808, place: "Italy/France"}
-];
+// const MOUNTAINS = [
+//     {name: "Kilimanjaro", height: 5895, place: "Tanzania"},
+//     {name: "Everest", height: 8848, place: "Nepal"},
+//     {name: "Mount Fuji", height: 3776, place: "Japan"},
+//     {name: "Vaalserberg", height: 323, place: "Netherlands"},
+//     {name: "Denali", height: 6168, place: "United States"},
+//     {name: "Popocatepetl", height: 5465, place: "Mexico"},
+//     {name: "Mont Blanc", height: 4808, place: "Italy/France"}
+// ];
 
 // table cells
 // let container = document.querySelector("#mountains");
@@ -1238,30 +1238,102 @@ const MOUNTAINS = [
 // }
 
 // after 
-let ballon = document.getElementsByTagName("p")[0];
-let machine = ballonMachine();
+// let ballon = document.getElementsByTagName("p")[0];
+// let machine = ballonMachine();
 
-window.addEventListener("keydown", event => {
-    machine(event.key);
-})
+// window.addEventListener("keydown", event => {
+//     machine(event.key);
+// })
 
-function ballonMachine() {
-    let size = ballon.style.fontSize;
-    if (!ballon.style.fontSize) {
-        size = 16
-    };
+// function ballonMachine() {
+//     let size = ballon.style.fontSize;
+//     if (!ballon.style.fontSize) {
+//         size = 16
+//     };
     
-    return key => {
-        let per;
-        if (key === "ArrowUp") {
-            per = .10;
-        } else if (key === "ArrowDown") {
-            per = -.10;
+//     return key => {
+//         let per;
+//         if (key === "ArrowUp") {
+//             per = .10;
+//         } else if (key === "ArrowDown") {
+//             per = -.10;
+//         }
+
+//         let percentage = size * per;
+//         size = size + percentage;
+//         ballon.style.fontSize = `${size}px`
+//     }
+// }
+
+// ============ 15.2 Mouse trail ============
+
+
+window.addEventListener("mousemove", event => {
+    let {X, Y} = {X: event.clientX, Y: event.clientY};
+
+    queue(X, Y, (previous, current) => {  
+        // basically increment or decrement the element      
+        let trailMarks = []
+        function recursion(previous, current, length) {
+            let [previousX, previousY] = previous;
+            let [currentX, currentY] = current;
+        
+            trailMarks.push([previousX, previousY])
+        
+            if (previousX === currentX && previousY === currentY) {
+                return trailMarks
+            }
+            
+            if (previousX < currentX) {
+                previousX++
+            } else if (previousX > currentX) {
+                previousX--
+            }
+        
+            if (previousY < currentY) {
+                previousY++
+            } else if (previousY > currentY) {
+                previousY--
+            }
+        
+            return recursion([previousX, previousY], current, length)
         }
 
-        let percentage = size * per;
-        size = size + percentage;
-        ballon.style.fontSize = `${size}px`
+        recursion(previous, current)
+        return trailMarks
+    });
+
+});
+
+let queue = trails();
+
+function trails() {
+    let queue = [];
+    
+    return (clientX, clientY, callback) => {
+        let trace = [];
+        // push to queue
+        queue.push([clientX, clientY]);
+        // get the current and prev of queue
+        let previous = queue[queue.length - 2];
+        let current = queue[queue.length - 1];
+
+        // cheat for not to make error
+        if (!previous) {
+            previous = current;
+        }
+
+        // get the trailmarks
+        trace = trace.concat(callback(previous, current));
+
+        for (let element of trace) {
+            let [x, y] = element;
+            let trail = document.createElement("div");
+            trail.className = "trail";
+            trail.style.left = (x - 4) + "px";
+            trail.style.top = (y - 4) + "px";
+            document.body.appendChild(trail);
+        }
     }
 }
 
