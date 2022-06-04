@@ -1339,21 +1339,35 @@ way to fix this? ====== */
 function asTabs(node) {
   let children = node.children;
   let div = document.createElement("div");
+  let p = document.createElement("p");
 
-  div.appendChild(document.createElement("button"));
-
-  node.insertBefore(div, children[0])
+  for (let child of children) {
+    let attribute = child.getAttribute("data-tabname");
+    div.appendChild(newElement(attribute));
+    // child.style.display = "none";
+  }
 
   function newElement(text) {
       let newElement = document.createElement("button");
-
       newElement.innerText = text;
 
       return newElement
   }
 
-  children[1].style.display = "none";
-  children[2].style.display = "none";
+  function focus(event) {
+    event.target.style.color = "red";
+    p.textContent = `Tab ${event.target.textContent}`;
+  }
+
+  div.addEventListener("mousedown", focus)
+  div.addEventListener("mouseup", 
+  event => {
+    event.target.style.removeProperty("color");
+  })
+  p.textContent = "Tab one";
+  node.insertBefore(div, children[0])
+  // node.appendChild(p)
+  console.log(Array.from(node.children)[1].getAttribute("data-tabname"))
 }
 
 asTabs(document.querySelector("tab-panel"));
