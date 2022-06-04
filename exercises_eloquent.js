@@ -1266,76 +1266,97 @@ way to fix this? ====== */
 // }
 
 // ============ 15.2 Mouse trail ============
+// window.addEventListener("mousemove", event => {
+//     let {X, Y} = {X: event.clientX, Y: event.clientY};
 
-
-window.addEventListener("mousemove", event => {
-    let {X, Y} = {X: event.clientX, Y: event.clientY};
-
-    queue(X, Y, (previous, current) => {  
-        // basically increment or decrement the element      
-        let trailMarks = []
-        function recursion(previous, current, length) {
-            let [previousX, previousY] = previous;
-            let [currentX, currentY] = current;
+//     queue(X, Y, (previous, current) => {  
+//         // basically increment or decrement the element      
+//         let trailMarks = []
+//         function recursion(previous, current, length) {
+//             let [previousX, previousY] = previous;
+//             let [currentX, currentY] = current;
         
-            trailMarks.push([previousX, previousY])
+//             trailMarks.push([previousX, previousY])
         
-            if (previousX === currentX && previousY === currentY) {
-                return trailMarks
-            }
+//             if (previousX === currentX && previousY === currentY) {
+//                 return trailMarks
+//             }
             
-            if (previousX < currentX) {
-                previousX++
-            } else if (previousX > currentX) {
-                previousX--
-            }
+//             if (previousX < currentX) {
+//                 previousX++
+//             } else if (previousX > currentX) {
+//                 previousX--
+//             }
         
-            if (previousY < currentY) {
-                previousY++
-            } else if (previousY > currentY) {
-                previousY--
-            }
+//             if (previousY < currentY) {
+//                 previousY++
+//             } else if (previousY > currentY) {
+//                 previousY--
+//             }
         
-            return recursion([previousX, previousY], current, length)
-        }
+//             return recursion([previousX, previousY], current, length)
+//         }
 
-        recursion(previous, current)
-        return trailMarks
-    });
+//         recursion(previous, current)
+//         return trailMarks
+//     });
 
-});
+// });
 
-let queue = trails();
+// let queue = trails();
 
-function trails() {
-    let queue = [];
+// function trails() {
+//     let queue = [];
     
-    return (clientX, clientY, callback) => {
-        let trace = [];
-        // push to queue
-        queue.push([clientX, clientY]);
-        // get the current and prev of queue
-        let previous = queue[queue.length - 2];
-        let current = queue[queue.length - 1];
+//     return (clientX, clientY, callback) => {
+//         let trace = [];
+//         // push to queue
+//         queue.push([clientX, clientY]);
+//         // get the current and prev of queue
+//         let previous = queue[queue.length - 2];
+//         let current = queue[queue.length - 1];
 
-        // cheat for not to make error
-        if (!previous) {
-            previous = current;
-        }
+//         // cheat for not to make error
+//         if (!previous) {
+//             previous = current;
+//         }
 
-        // get the trailmarks
-        trace = trace.concat(callback(previous, current));
+//         // get the trailmarks
+//         trace = trace.concat(callback(previous, current));
 
-        for (let element of trace) {
-            let [x, y] = element;
-            let trail = document.createElement("div");
-            trail.className = "trail";
-            trail.style.left = (x - 4) + "px";
-            trail.style.top = (y - 4) + "px";
-            document.body.appendChild(trail);
-        }
-    }
+//         for (let element of trace) {
+//             let [x, y] = element;
+//             let trail = document.createElement("div");
+//             trail.className = "trail";
+//             trail.style.left = (x - 4) + "px";
+//             trail.style.top = (y - 4) + "px";
+//             document.body.appendChild(trail);
+//         }
+//     }
+// }
+
+// ============ 15.3 Tabs ============
+function asTabs(node) {
+  let children = node.children;
+  let div = document.createElement("div");
+
+  div.appendChild(document.createElement("button"));
+
+  node.insertBefore(div, children[0])
+
+  function newElement(text) {
+      let newElement = document.createElement("button");
+
+      newElement.innerText = text;
+
+      return newElement
+  }
+
+  children[1].style.display = "none";
+  children[2].style.display = "none";
 }
+
+asTabs(document.querySelector("tab-panel"));
 
 
 // last topic
