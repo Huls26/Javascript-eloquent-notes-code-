@@ -1339,14 +1339,18 @@ way to fix this? ====== */
 function asTabs(node) {
   let children = node.children;
   let div = document.createElement("div");
-  let p = document.createElement("p");
 
   for (let child of children) {
     let attribute = child.getAttribute("data-tabname");
-    div.appendChild(newElement(attribute));
-    // child.style.display = "none";
+    let button = newElement(attribute);
+    child.appendChild(button);
+
+    child.style.display = "none";
+    button.addEventListener("click", () => mouseE(button))
+    div.appendChild(button)
   }
 
+  children[0].style.display = "";
   function newElement(text) {
       let newElement = document.createElement("button");
       newElement.innerText = text;
@@ -1354,20 +1358,19 @@ function asTabs(node) {
       return newElement
   }
 
-  function focus(event) {
-    event.target.style.color = "red";
-    p.textContent = `Tab ${event.target.textContent}`;
+  function mouseE(button) {
+    let index = 1;
+
+    for (let btn of div.children) {
+      btn.style.color = btn === button ? "red" : "";
+      children[index].style.display = btn === button ? "" : "none";
+      index++
+    }
+
   }
 
-  div.addEventListener("mousedown", focus)
-  div.addEventListener("mouseup", 
-  event => {
-    event.target.style.removeProperty("color");
-  })
-  p.textContent = "Tab one";
+
   node.insertBefore(div, children[0])
-  // node.appendChild(p)
-  console.log(Array.from(node.children)[1].getAttribute("data-tabname"))
 }
 
 asTabs(document.querySelector("tab-panel"));
