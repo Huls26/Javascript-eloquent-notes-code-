@@ -287,27 +287,27 @@
 // });
 
 // <!-- default, debounce -->
-let input = document.getElementById("input");
-let df = document.querySelector("#default");
-let debounce = document.querySelector("#debounce");
+// let input = document.getElementById("input");
+// let df = document.querySelector("#default");
+// let debounce = document.querySelector("#debounce");
 
 // make this cleaner
 // debouncing
-input.addEventListener("input", event => {
-  df.innerText = event.target.value;
-  value(event);
-})
+// input.addEventListener("input", event => {
+//   df.innerText = event.target.value;
+//   value(event);
+// })
 
-let value = addValue()
-function addValue() {
-  let timeout
-  return (event) => {
-    clearTimeout(timeout)
-    timeout = setTimeout(() => {
-    debounce.innerHTML = event.target.value;
-  }, 500)
-  }
-}
+// let value = addValue()
+// function addValue() {
+//   let timeout
+//   return (event) => {
+//     clearTimeout(timeout)
+//     timeout = setTimeout(() => {
+//     debounce.innerHTML = event.target.value;
+//   }, 500)
+//   }
+// }
 
 // to do
 // https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/record-collection

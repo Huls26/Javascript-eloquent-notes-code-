@@ -149,3 +149,9 @@ console.log(3 << 3)
 
 // Data structure and Algorithms
 // https://github.com/trekhleb/javascript-algorithms
+
+// How to Study for Data-Structures and Algorithms Interviews at FAANG by Esco Obong 
+// https://medium.com/swlh/how-to-study-for-data-structures-and-algorithms-interviews-at-faang-65043e00b5
+
+// javascript challenges
+// https://edabit.com/challenges/javascript

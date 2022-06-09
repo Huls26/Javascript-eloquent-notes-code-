@@ -2,8 +2,8 @@
     color: rebeccapurple;
 } */
 
-strong {
-    /* font-weight: 400; */
+/* strong {
+    font-weight: 400;
     font-style: italic;
     color: grey;
 }
@@ -15,17 +15,64 @@ p#main.a.b {
 
 .volume {
     background-color: darkorchid;
-    /* min-width: 50px; */
+    min-width: 50px;
     height: 20px;
     width: 60px;
-    /* max-width: 200px; */
-    /* width: 50px; */
-    /* padding-left: 300px ; */
-    /* margin-left: 100px; */
-}
+    max-width: 200px;
+    width: 50px;
+    padding-left: 300px ; 
+    margin-left: 100px;
+} 
+*/
+
 /* 
 .container {
     display: flex;
     justify-content: center;
     padding: 100px;
 } */
+
+/* flexbox */
+/* body {
+    display: flex;
+    justify-content: flex-end;
+} */
+
+/* .child {
+    background-color: lightcoral;
+    width: 200px;
+    height: 100px;
+    border-radius: 15px;
+} */
+
+/* cheese board */
+
+/* center container */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    padding: 3em;
+    border: solid 3px black;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+}
+
+.black {
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    color: white;
+}
+
+.white {
+    width: 50px;
+    height: 50px;
+    background-color: whitesmoke;
+}
+
+
