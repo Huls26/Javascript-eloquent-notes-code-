@@ -6,7 +6,7 @@ let container = document.querySelector(".container");
 
 function assemblyBoard(rows, columns) {
     column(rows, columns);
-    console.log(colors)
+    // console.log(colors)
 }
 
 
@@ -38,3 +38,16 @@ function column(rows, columns) {
 }
 
 assemblyBoard(8, 8);
+
+// sentinel loops
+
+let sum = 0;
+let value = true;
+while (value){
+    console.log(Boolean(value))
+    value = parseInt(prompt("Type a number: "))
+    console.log("Type a number: " + value)
+    sum += value;
+}
+console.log(value)
+console.log("sum is " + sum)
