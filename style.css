@@ -76,7 +76,7 @@ p#main.a.b {
 } */
 
 /* box */
- body {
+ /* body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,4 +102,20 @@ p#main.a.b {
     width: 30px;
     height: 30px;
     background-color: white;
-}
+} */
+
+/* boxes column */
+/* body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+/* .container {
+    padding: 3em;
+    border: solid 3px black;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+} */

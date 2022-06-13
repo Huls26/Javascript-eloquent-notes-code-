@@ -131,6 +131,8 @@ console.log(reachable["Laguna"] = [])
 
 console.log(Array(12, 312))
 
+// lexical scope
+
 // >> =====
 console.log(2**3)
 console.log(3 << 3)
