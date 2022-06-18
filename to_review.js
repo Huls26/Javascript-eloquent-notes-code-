@@ -95,6 +95,7 @@
 // propagate
 // debouncing
 // throttle
+// canvas
 
 
 // fundamental
