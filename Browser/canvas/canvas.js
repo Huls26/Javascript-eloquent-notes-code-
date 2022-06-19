@@ -1,3 +1,4 @@
+"use strict"
 let canvas = document.getElementById("canvas");
 canvas.width = document.body.clientWidth;
 canvas.height = window.innerHeight;
@@ -26,30 +27,68 @@ let c = canvas.getContext("2d");
 //     c.stroke(); 
 // }
 
-let x = Math.random() * innerWidth;
-let y = Math.random() * innerHeight;
-let dx = 4;
-let dy = 4;
-let radius = 30
-c.arc(x, y, 50, 0, 2 * Math.PI);
-function animate() {
-    if (x + radius >= window.innerWidth || x - 30 <= 0) {
-        dx = -dx;
+// let x = Math.random() * innerWidth;
+// let y = Math.random() * innerHeight;
+// let dx = 4;
+// let dy = 4;
+// let radius = 30
+// c.arc(x, y, 50, 0, 2 * Math.PI);
+// function animate() {
+//     if (x + radius >= window.innerWidth || x - 30 <= 0) {
+//         dx = -dx;
+//     }
+
+//     if (y + radius >= window.innerHeight || y - 30 <= 0) {
+//         dy = -dy;
+//     }
+//     c.clearRect(0, 0, window.innerWidth, window.innerHeight);
+//     c.beginPath();
+//     c.arc(x, y, radius, 0, 2 * Math.PI);
+//     c.stroke();
+//     x = x + dx;
+//     y = y + dy;
+//     requestAnimationFrame(animate)
+// }
+
+// animate()
+
+// OOP drawing circle
+class Circle {
+    constructor(x, y, dx, dy) {
+        this.x = x;
+        this.y = y;
+        this.radius = 30;
+        this.dx = dx;
+        this.dy = dy;
     }
 
-    if (y + radius >= window.innerHeight || y - 30 <= 0) {
-        dy = -dy;
+    draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        c.stroke();
     }
-    c.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    c.beginPath();
-    c.arc(x, y, radius, 0, 2 * Math.PI);
-    c.stroke();
-    x = x + dx;
-    y = y + dy;
-    requestAnimationFrame(animate)
+
+    update() {
+        if (x + radius >= window.innerWidth || x - 30 <= 0) {
+                    dx = -dx;
+                }
+            
+                if (y + radius >= window.innerHeight || y - 30 <= 0) {
+                    dy = -dy;
+                }
+                c.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                c.beginPath();
+                c.arc(x, y, radius, 0, 2 * Math.PI);
+                c.stroke();
+                x = x + dx;
+                y = y + dy;
+    //    requestAnimationFrame(this.animate)
+    }
+
+    
 }
 
-animate()
-
-
+let circle = new Circle(200, 200, 4);
+// circle.draw()
+circle.animate()
 
