@@ -54,41 +54,66 @@ let c = canvas.getContext("2d");
 
 // OOP drawing circle
 class Circle {
-    constructor(x, y, dx, dy) {
+    constructor(x, y, dx, dy, color) {
         this.x = x;
         this.y = y;
         this.radius = 30;
         this.dx = dx;
         this.dy = dy;
+        this.circle = null;
+        this.color = color;
     }
 
     draw() {
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
         c.stroke();
+        c.fillStyle = this.color
+        c.fill();
     }
 
     update() {
-        if (x + radius >= window.innerWidth || x - 30 <= 0) {
-                    dx = -dx;
-                }
+        if (this.x + this.radius >= window.innerWidth || this.x - 30 <= 0) {
+            this.dx = -this.dx;
+        }
             
-                if (y + radius >= window.innerHeight || y - 30 <= 0) {
-                    dy = -dy;
-                }
-                c.clearRect(0, 0, window.innerWidth, window.innerHeight);
-                c.beginPath();
-                c.arc(x, y, radius, 0, 2 * Math.PI);
-                c.stroke();
-                x = x + dx;
-                y = y + dy;
-    //    requestAnimationFrame(this.animate)
-    }
+        if (this.y + this.radius >= window.innerHeight || this.y - 30 <= 0) {
+            this.dy = -this.dy;
+        }   
+                  
+        this.x += this.dx;
+        this.y += this.dy;
 
-    
+        this.circle = new Circle(this.x, this.y, this.dx, this.dy, this.color)
+        this.circle.draw()
+    }    
+
+    rgbColor() {
+    }
 }
 
-let circle = new Circle(200, 200, 4);
-// circle.draw()
-circle.animate()
+let circles = [];
+for (let i = 0; i < 10; i++) {
+    let radius = 30
+    let x = Math.random() * (innerWidth - radius * 2) + 30;
+    let y = Math.random() * (innerHeight- radius * 2) + 30;
+    let dx = 1;
+    let dy = 1;
+    let colors = ["red", "green", "blue", "black"]
 
+    let index = Math.floor(Math.random() * colors.length);
+    let cir = new Circle(x, y, dx, dy, colors[index]);
+    circles.push(cir);
+}
+
+function animate() {
+    c.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (let i = 0; i < circles.length -1; i++) {
+        circles[i].update();
+    }
+    requestAnimationFrame(animate)
+}
+
+animate()
+
+circles[0].rgbColor()
