@@ -67,8 +67,9 @@ class Circle {
     draw() {
         c.beginPath();
         c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        c.strokeStyle = "blue";
         c.stroke();
-        c.fillStyle = this.color
+        // c.fillStyle = this.color
         c.fill();
     }
 
@@ -93,7 +94,7 @@ class Circle {
 }
 
 let circles = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 30; i++) {
     let radius = 30
     let x = Math.random() * (innerWidth - radius * 2) + 30;
     let y = Math.random() * (innerHeight- radius * 2) + 30;
