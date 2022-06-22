@@ -5,14 +5,16 @@ body, * {
     box-sizing: border-box;
 }
 
-/* canvas {
-    border: solid 3px black;
-} */
-
-img {
+/* pet a cat */
+/* img {
     position: absolute;
     top: 0;
     left: 0;
     height: 100px;
     width: 100px;
+} */
+
+/* rainDrop */
+canvas {
+    border: solid 3px black;
 }
