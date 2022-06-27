@@ -9,15 +9,17 @@ canvas.height = 500;
 
 let c = canvas.getContext("2d");
 
-// size
+// ===== size ====
 // board
 let boardS = 67;
 let boardH = 12;
 let boardY = 460;
 let middleOfTheBoard = boardS/2
 // ball
-let speed = -1;
+let speed = -3;
 let radius = 8;
+// rectangle
+let recW = 53.666;
 
 // mouse
 let mouse = {
@@ -125,16 +127,16 @@ class Ball {
             if (distX <= (boardS/2)) { return true; } 
             if (distY <= (boardH/2)) { return true; }
         }
-
-      
+        
+        // side board colliding
         function RectSideColliding(circle, rect) {
             let distX = Math.abs(circle.x - rect.x- boardS/2);
             let distY = Math.abs(circle.y - rect.y - boardH/2);
 
-            let dx=distX-boardS/2;
-            let dy=distY-boardH/2;
+            let dx = distX - boardS/2;
+            let dy = distY - boardH/2;
 
-            return (dx*dx+dy*dy <= (radius*radius));
+            return (dx * dx + dy * dy <= (radius*radius));
         }
 
         // update ball
@@ -143,37 +145,63 @@ class Ball {
     }
 }
 
-// rect
-// class Rect {
-//     constructor(x) {
-//         this.x = x;
-//         this.y = 460;
-//         this.width = 90; 
-//         this.height = 15;
-//     }
+// rectangle
+class Rectangle {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.width = recW; 
+        this.height = boardH;
+        this.color = color
+    }
 
-//     draw() {
-//         c.beginPath();
-//         c.fillRect(mouse.x, 460, 90, 15)
-//         c.fillStyle = "black";
-//         c.closePath()
-//     }
+    draw() {
+        c.beginPath();
+        c.fillStyle = this.color;
+        c.fillRect(this.x, this.y, this.width, this.height)
+        c.closePath()
+    }
 
-//     update(x) {
-//         let board = new Board(x);
-//         board.draw()
-//     }
-// }
+    update() {
+        let rect= new Rectangle(this.x, this.y, this.color);
+        rect.draw()
+    }
+}
 
-// object
+// Object
+// rectangle
+let rectangle = [];
+let color = ["blue", "red", "orange", "yellow", "green", "cyan"];
+// let rect = new Rectangle(4, 70);
+let hGap = 0
+let space = 4;
+let heightRec = 70;
+let index = 0;
+
+for (let i = 0; i < 10; i++) {
+    let gap = 0
+
+    if (i % 2 === 0) {
+        index++
+    }
+
+    for (let k = 0; k < 7; k++) {
+        let width = recW;
+    
+        gap += space;
+        rectangle.push(new Rectangle(gap, heightRec + hGap, color[index]))
+        gap += width;
+    }
+    hGap += boardH + space;
+}
+
+console.log(rectangle)
 // board
 let board = new Board(mouse.x);
 board.draw()
 
 // ball
 let ball = new Ball(mouse.x + middleOfTheBoard, 460 - radius, radius, 0, 0);
-// ball.draw()
-// ball.update()
 
 // event
 // mouse event
@@ -201,8 +229,11 @@ canvas.addEventListener("click", event => {
 
 // animate
 function animate() {
-    c.clearRect(0, 0, canvas.width, canvas.height)
-    
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < rectangle.length -1; i++) {
+        rectangle[i].update()
+    }
     c.fillStyle = "red";
     ball.update()
     c.fillStyle = "Black";
