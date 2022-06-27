@@ -4,32 +4,39 @@ document.body.style.justifyContent = "center";
 
 let canvas = document.querySelector("canvas");
 canvas.style.marginTop = "20px";
-canvas.width = 320;
+canvas.width = 350;
 canvas.height = 500;
 
 let c = canvas.getContext("2d");
 
-
+// size
+// board
+let boardS = 67;
+let boardH = 12;
+let boardY = 460;
+let middleOfTheBoard = boardS/2
+// ball
+let speed = -1;
+let radius = 8;
 
 // mouse
 let mouse = {
-    x: canvas.width / 2 - 45,
+    x: canvas.width / 2 - middleOfTheBoard,
     y: canvas.height / 2,
 }
-
 
 // board
 class Board {
     constructor(x) {
         this.x = x;
-        this.y = 460;
-        this.width = 90; 
-        this.height = 15;
+        this.y = boardY;
+        this.width = boardS; 
+        this.height = boardH;
     }
 
     draw() {
         c.beginPath();
-        c.fillRect(mouse.x, 460, 90, 15)
+        c.fillRect(mouse.x, 460, this.width, this.height)
         c.fillStyle = "Black";
         c.closePath()
     }
@@ -47,7 +54,7 @@ class Board {
 }
 
 // right side
-let rs = canvas.width - 90;
+let rs = canvas.width - boardS;
 
 // ball
 class Ball {
@@ -63,7 +70,7 @@ class Ball {
     draw() {
         c.beginPath()
         c.arc(this.x, this.y, this.radius, 0, Math.PI *2, false)
-        c.fillStyle = "blue";
+        c.fillStyle = "red";
         c.fill()
         c.closePath()
     }
@@ -74,34 +81,61 @@ class Ball {
         let y
         this.x += this.dx;
         this.y += this.dy;
+
         if (!this.dx) {
-            x = mouse.x + 45;
-            y =  460 - 9
+            x = mouse.x + middleOfTheBoard;
+            y =  460 - radius
             
             if (mouse.x <= 0) {
-                x = 45 ;
+                x = middleOfTheBoard;
             } else if (mouse.x >= rs) {
-                x = rs + 45;
+                x = rs + middleOfTheBoard;
             }
         } else {
             x = this.x;
-            y = this.y
+            y = this.y;
         }
 
         // for bounce the wall
-        if (this.x >= canvas.width - 7 || this.x <= 7) {
+        if (this.x >= canvas.width - radius || this.x <= radius) {
             this.dx = -this.dx;
-        } else if (this.y >= canvas.height - 7 || this.y <= 7) {
+        } else if (this.y >= canvas.height - radius || this.y <= radius) {
             this.dy = -this.dy;
         }
-
+        
         // bounce to board
-        if ((this.x >= mouse.x && this.x <= mouse.x + 90) && this.y >= 460 - 6) {
+        if (RectCircleColliding(this, mouse) && RectSideColliding(this, mouse)) {
+            this.dx = -this.dx;
             this.dy = -this.dy;
-        } 
-        // else if (this.x === mouse.x && (this.y >= 460 - 6 && this.y <= 460 + 15)) {
-        //     this.dy = -this.dy;
-        // }
+        } else if (RectCircleColliding(this, mouse)) {
+            this.dy = -this.dy;
+        } else if (RectSideColliding(this, mouse)) {
+            this.dx = -this.dx; 
+        }
+
+        // colliding
+        function RectCircleColliding(circle, rect) { 
+            let distX = Math.abs(circle.x - rect.x- boardS/2);
+            let distY = Math.abs(circle.y - rect.y - boardH/2);
+
+            // console.log(distY)
+            if (distX > (boardS/2 + radius)) { return false; }
+            if (distY > (boardH/2 + radius)) { return false; }
+
+            if (distX <= (boardS/2)) { return true; } 
+            if (distY <= (boardH/2)) { return true; }
+        }
+
+      
+        function RectSideColliding(circle, rect) {
+            let distX = Math.abs(circle.x - rect.x- boardS/2);
+            let distY = Math.abs(circle.y - rect.y - boardH/2);
+
+            let dx=distX-boardS/2;
+            let dy=distY-boardH/2;
+
+            return (dx*dx+dy*dy <= (radius*radius));
+        }
 
         // update ball
         let ball = new Ball(x, y, this.radius, this.dx, this.dy)
@@ -110,26 +144,26 @@ class Ball {
 }
 
 // rect
-class Rect {
-    constructor(x) {
-        this.x = x;
-        this.y = 460;
-        this.width = 90; 
-        this.height = 15;
-    }
+// class Rect {
+//     constructor(x) {
+//         this.x = x;
+//         this.y = 460;
+//         this.width = 90; 
+//         this.height = 15;
+//     }
 
-    draw() {
-        c.beginPath();
-        c.fillRect(mouse.x, 460, 90, 15)
-        c.fillStyle = "red";
-        c.closePath()
-    }
+//     draw() {
+//         c.beginPath();
+//         c.fillRect(mouse.x, 460, 90, 15)
+//         c.fillStyle = "black";
+//         c.closePath()
+//     }
 
-    update(x) {
-        let board = new Board(x);
-        board.draw()
-    }
-}
+//     update(x) {
+//         let board = new Board(x);
+//         board.draw()
+//     }
+// }
 
 // object
 // board
@@ -137,16 +171,15 @@ let board = new Board(mouse.x);
 board.draw()
 
 // ball
-let speed = -1;
-let radius = 9;
-let ball = new Ball(mouse.x + 45, 460 - 9, radius, 0, 0);
+let ball = new Ball(mouse.x + middleOfTheBoard, 460 - radius, radius, 0, 0);
 // ball.draw()
 // ball.update()
 
 // event
 // mouse event
 canvas.addEventListener("mousemove", event => {
-    mouse.x = event.pageX - (canvas.width-45);
+    mouse.x = event.pageX - (canvas.width - (boardS + middleOfTheBoard));
+    mouse.y = boardY;
 })
 
 // start stick ball
@@ -155,11 +188,13 @@ canvas.addEventListener("click", event => {
         ball.dx = speed;
         ball.dy = speed;
 
-        ball.x = (event.pageX - (canvas.width -45)) + 45; 
-        if (event.pageX - (canvas.width-45) <= 0) {
-            ball.x = 45;
-        } else if (event.pageX - (canvas.width-45) >= rs) {
-            ball.x = canvas.width - 45;
+        ball.x = mouse.x + middleOfTheBoard;
+
+        if (event.pageX - (canvas.width-middleOfTheBoard) <= 0) {
+            ball.x = middleOfTheBoard;
+        } else if (mouse.x >= canvas.width - boardS) {
+            console.log("edge")
+            ball.x = canvas.width - middleOfTheBoard;
         }
     }
 })
@@ -167,10 +202,12 @@ canvas.addEventListener("click", event => {
 // animate
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height)
-    c.fillStyle = "blue";
+    
+    c.fillStyle = "red";
     ball.update()
     c.fillStyle = "Black";
-    board.update(mouse.x)
+    board.update(mouse.x);
+    c.fillStyle = "red";
     requestAnimationFrame(animate);
 }
 
