@@ -27,6 +27,15 @@ let mouse = {
     y: canvas.height / 2,
 }
 
+// bricks
+
+
+// ball position
+let ballPosition = {
+    x: null,
+    y: null,
+}
+
 // board
 class Board {
     constructor(x) {
@@ -98,6 +107,8 @@ class Ball {
             y = this.y;
         }
 
+        
+
         // for bounce the wall
         if (this.x >= canvas.width - radius || this.x <= radius) {
             this.dx = -this.dx;
@@ -106,34 +117,67 @@ class Ball {
         }
         
         // bounce to board
-        if (RectCircleColliding(this, mouse) && RectSideColliding(this, mouse)) {
+        if (RectCircleColliding(this, mouse, boardS) && RectSideColliding(this, mouse, boardS)) {
             this.dx = -this.dx;
             this.dy = -this.dy;
-        } else if (RectCircleColliding(this, mouse)) {
+        } else if (RectCircleColliding(this, mouse, boardS)) {
             this.dy = -this.dy;
-        } else if (RectSideColliding(this, mouse)) {
+        } else if (RectSideColliding(this, mouse, boardS)) {
             this.dx = -this.dx; 
         }
 
         // colliding
-        function RectCircleColliding(circle, rect) { 
-            let distX = Math.abs(circle.x - rect.x- boardS/2);
+        // bounce to bricks
+        function bricksCollide(circle, dx, dy) {
+            let array = bricks;
+
+            for (let i = 0; i< array.length - 1; i++) {
+                let element = array[i];
+
+                if (RectCircleColliding(circle, element, recW) && RectSideColliding(circle, element, recW)) {
+                    dx = -dx;
+                    dy = -dy;
+                    array.splice(i, 1)
+                    break;
+                } else if (RectCircleColliding(circle, element, recW)) {
+                    dy = -dy;
+                    array.splice(i, 1)
+                    break;
+                } else if (RectSideColliding(circle, element, recW)) {
+                    dx = -dx;
+                    array.splice(i, 1)
+                    break;
+                }
+            }
+
+            return {dx: dx, dy: dy}
+        }
+
+        // bricks collide
+        let {dx, dy} = bricksCollide(this, this.dx, this.dy);
+
+        this.dx = dx;
+        this.dy = dy;
+        
+        // collide with board
+        function RectCircleColliding(circle, rect, size) {
+            let distX = Math.abs(circle.x - rect.x- size/2);
             let distY = Math.abs(circle.y - rect.y - boardH/2);
 
             // console.log(distY)
-            if (distX > (boardS/2 + radius)) { return false; }
-            if (distY > (boardH/2 + radius)) { return false; }
+            if (distX >= (size/2 + radius)) { return false; }
+            if (distY >= (boardH/2 + radius)) { return false; }
 
-            if (distX <= (boardS/2)) { return true; } 
+            if (distX <= (size/2)) { return true; } 
             if (distY <= (boardH/2)) { return true; }
         }
         
         // side board colliding
-        function RectSideColliding(circle, rect) {
-            let distX = Math.abs(circle.x - rect.x- boardS/2);
+        function RectSideColliding(circle, rect, size) {
+            let distX = Math.abs(circle.x - rect.x- size/2);
             let distY = Math.abs(circle.y - rect.y - boardH/2);
 
-            let dx = distX - boardS/2;
+            let dx = distX - size/2;
             let dy = distY - boardH/2;
 
             return (dx * dx + dy * dy <= (radius*radius));
@@ -169,33 +213,37 @@ class Rectangle {
 }
 
 // Object
-// rectangle
-let rectangle = [];
-let color = ["blue", "red", "orange", "yellow", "green", "cyan"];
-// let rect = new Rectangle(4, 70);
-let hGap = 0
-let space = 4;
-let heightRec = 70;
-let index = 0;
+// bricks
+function buildRec() {
+    let rectangle = [];
+    let color = ["blue", "red", "orange", "yellow", "green", "cyan"];
+    let hGap = 0
+    let space = 4;
+    let heightRec = 70;
+    let index = -1;
 
-for (let i = 0; i < 10; i++) {
-    let gap = 0
+    for (let i = 0; i < 10; i++) {
+        let gap = 0
 
-    if (i % 2 === 0) {
-        index++
+        if (i % 2 === 0) {
+            index++
+        }
+
+        for (let k = 0; k < 7; k++) {
+            let width = recW;
+        
+            gap += space;
+            rectangle.push(new Rectangle(gap, heightRec + hGap, color[index]));
+            gap += width;
+        }
+        hGap += boardH + space;
     }
 
-    for (let k = 0; k < 7; k++) {
-        let width = recW;
-    
-        gap += space;
-        rectangle.push(new Rectangle(gap, heightRec + hGap, color[index]))
-        gap += width;
-    }
-    hGap += boardH + space;
+    return rectangle
 }
 
-console.log(rectangle)
+let bricks = buildRec();
+
 // board
 let board = new Board(mouse.x);
 board.draw()
@@ -221,7 +269,6 @@ canvas.addEventListener("click", event => {
         if (event.pageX - (canvas.width-middleOfTheBoard) <= 0) {
             ball.x = middleOfTheBoard;
         } else if (mouse.x >= canvas.width - boardS) {
-            console.log("edge")
             ball.x = canvas.width - middleOfTheBoard;
         }
     }
@@ -231,9 +278,13 @@ canvas.addEventListener("click", event => {
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
 
-    for (let i = 0; i < rectangle.length -1; i++) {
-        rectangle[i].update()
+    for (let i = 0; i < buildRec().length -1; i++) {
+        // console.log(bricks[i])
+        if (bricks[i]) {
+            bricks[i].update()
+        }
     }
+
     c.fillStyle = "red";
     ball.update()
     c.fillStyle = "Black";
