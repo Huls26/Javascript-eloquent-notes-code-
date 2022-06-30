@@ -27,13 +27,59 @@ let mouse = {
     y: canvas.height / 2,
 }
 
-// bricks
-
-
 // ball position
 let ballPosition = {
     x: null,
     y: null,
+}
+
+// for scores
+let score = scores();
+let turn = turns()
+
+// scores
+function text() {
+    c.font = "30px Comic Sans MS";
+    c.fillStyle = "red";
+    c.fillText("Score: ", 2, 30);
+}
+
+function scores() {
+    let score = 0;
+
+    return (condition) => {
+        if (condition) {
+            score++
+        }
+
+        c.font = "30px Comic Sans MS";
+        c.fillStyle = "red";
+        c.fillText(score, 100, 30);
+        return score
+    }
+}
+
+// turns
+function text2() {
+    c.font = "30px Comic Sans MS";
+    c.fillStyle = "red";
+    c.fillText("Turns: ", 140, 30);
+}
+
+function turns() {
+    let turns = 4;
+
+    return (condition) => {
+        if (condition) {
+            turns--
+        }
+
+        c.font = "30px Comic Sans MS";
+        c.fillStyle = "red";
+        c.fillText(turns, 238, 30);
+        
+        return turns
+    }
 }
 
 // board
@@ -93,6 +139,14 @@ class Ball {
         this.x += this.dx;
         this.y += this.dy;
 
+        // out of bounds
+        if (this.y >= canvas.height - radius) {
+            this.dx = 0;
+            this.dy = 0;
+            this.y = 460 - radius; 
+            turn(true)
+        }
+
         if (!this.dx) {
             x = mouse.x + middleOfTheBoard;
             y =  460 - radius
@@ -107,13 +161,17 @@ class Ball {
             y = this.y;
         }
 
-        
-
-        // for bounce the wall
+        // for bounce to wall
         if (this.x >= canvas.width - radius || this.x <= radius) {
             this.dx = -this.dx;
-        } else if (this.y >= canvas.height - radius || this.y <= radius) {
+            if (this.x >= canvas.width - radius || this.x <= radius) {
+                this.dx = this.dx;
+            }
+        } else if (this.y <= radius) {
             this.dy = -this.dy;
+            if (this.y <= radius) {
+                this.dy = this.dy;
+            }
         }
         
         // bounce to board
@@ -131,23 +189,26 @@ class Ball {
         function bricksCollide(circle, dx, dy) {
             let array = bricks;
 
-            for (let i = 0; i< array.length - 1; i++) {
+            for (let i = array.length - 1 ; i >= 0; i--) {
                 let element = array[i];
-
                 if (RectCircleColliding(circle, element, recW) && RectSideColliding(circle, element, recW)) {
                     dx = -dx;
                     dy = -dy;
                     array.splice(i, 1)
+                    score(true);
                     break;
                 } else if (RectCircleColliding(circle, element, recW)) {
                     dy = -dy;
                     array.splice(i, 1)
+                    score(true);
                     break;
                 } else if (RectSideColliding(circle, element, recW)) {
                     dx = -dx;
                     array.splice(i, 1)
+                    score(true);
                     break;
                 }
+
             }
 
             return {dx: dx, dy: dy}
@@ -164,7 +225,6 @@ class Ball {
             let distX = Math.abs(circle.x - rect.x- size/2);
             let distY = Math.abs(circle.y - rect.y - boardH/2);
 
-            // console.log(distY)
             if (distX >= (size/2 + radius)) { return false; }
             if (distY >= (boardH/2 + radius)) { return false; }
 
@@ -258,7 +318,7 @@ canvas.addEventListener("mousemove", event => {
     mouse.y = boardY;
 })
 
-// start stick ball
+// // start stick ball
 canvas.addEventListener("click", event => {
     if (event.button === 0) {
         ball.dx = speed;
@@ -271,6 +331,7 @@ canvas.addEventListener("click", event => {
         } else if (mouse.x >= canvas.width - boardS) {
             ball.x = canvas.width - middleOfTheBoard;
         }
+       
     }
 })
 
@@ -278,8 +339,15 @@ canvas.addEventListener("click", event => {
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
 
+    // score
+    text();
+    score(false);
+    // turns
+    text2();
+    turn(false)
+
+    // bricks
     for (let i = 0; i < buildRec().length -1; i++) {
-        // console.log(bricks[i])
         if (bricks[i]) {
             bricks[i].update()
         }
@@ -290,7 +358,15 @@ function animate() {
     c.fillStyle = "Black";
     board.update(mouse.x);
     c.fillStyle = "red";
-    requestAnimationFrame(animate);
+    let animatation = requestAnimationFrame(animate);
+    if (turn(false) <= 0) {
+        // alert("You lose refresh to play again")
+        let name = prompt(`your score is "${score(false)}" enter name:`)
+
+        window.alert(`Thank you for playing ${name} refresh to play again`)
+        cancelAnimationFrame(animatation)
+        window.location.reload()
+    }
 }
 
 animate()
