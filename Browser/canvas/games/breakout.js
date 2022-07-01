@@ -162,14 +162,16 @@ class Ball {
         }
 
         // for bounce to wall
-        if (this.x >= canvas.width - radius || this.x <= radius) {
+        if (this.x >= canvas.width - radius/2 || this.x <= radius/2) {
             this.dx = -this.dx;
-            if (this.x >= canvas.width - radius || this.x <= radius) {
-                this.dx = this.dx;
+            if (this.x >= canvas.width) {
+                this.x = canvas.width - radius /2;
+            } else if (this.x <= 0) {
+                this.x = 0;
             }
         } else if (this.y <= radius) {
             this.dy = -this.dy;
-            if (this.y <= radius) {
+            if (this.y < radius) {
                 this.dy = this.dy;
             }
         }
@@ -178,10 +180,21 @@ class Ball {
         if (RectCircleColliding(this, mouse, boardS) && RectSideColliding(this, mouse, boardS)) {
             this.dx = -this.dx;
             this.dy = -this.dy;
+            if ((this.y >= 460 - radius / 2 && this.y <= 460) ) {
+                this.y = 460 - radius / 2
+            }
         } else if (RectCircleColliding(this, mouse, boardS)) {
             this.dy = -this.dy;
+            if (this.y >= 460 - radius / 2 && this.y <= 460) {
+                this.y = 460 - radius / 2
+            }
         } else if (RectSideColliding(this, mouse, boardS)) {
             this.dx = -this.dx; 
+            if (this.x >= mouse.x - radius / 2 && this. x <= mouse.x) {
+                this.x = mouse.x;
+            } else if (this.x <= (mouse.x + boardS) + radius / 2 && this.x >= mouse + boardS) {
+                this.x = mouse.x + boardS;
+            }
         }
 
         // colliding
@@ -208,7 +221,6 @@ class Ball {
                     score(true);
                     break;
                 }
-
             }
 
             return {dx: dx, dy: dy}
