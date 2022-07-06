@@ -106,6 +106,13 @@ let edges = sampleGrap["value"] = {};
 edges["name"] = "Bob"
 console.log(sampleGrap)
 
+// destructuring as parameter
+function sampleItem({num1, num2}) {
+  console.log(num1, num2)
+}
+
+sampleItem({num1: 1, num2: 2})
+
 // ================= variable using $
 const $storage = Symbol("storage"), $network = Symbol("network")
 

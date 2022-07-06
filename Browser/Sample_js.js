@@ -101,50 +101,87 @@ function drawLine(beginPath, endPath) {
     c.stroke();
 }
 
-function bars(width, height, n) {
-    let space = width / n;
-    let value = 5;
-    let start = 5;
-    let base = 5
-    
+function bars(width, height, n, columnX = 5, columnY = 5, rowY = 5, rowX = 5) {
+    let k = width - ((width / n ) * (n - 1))
+    let space = (width + k) / n;
+
     // column
-    for (let i = 0; i < n; i++) {
-          // stroke point
+    for (let i = 0; i < n * 4; i++) {
+        if (i % n === 0) {
+            columnX = rowX;
+        }
+
+        // stroke point
         let beginPath = {
-            x: value,
-            y: base,
+            x: columnX,
+            y: columnY,
+           
         }
         
+        // console.log(beginPath.x, beginPath.y)
         let endPath = {
-            x: value,
+            x: columnX,
             y: height,
         }
         c.strokeStyle = "black";
         drawLine(beginPath, endPath)
-        value += space;
+        columnX += space;
     }
 
-    value -= space; 
+    columnX -= space; 
     
     // row
     for (let i = 0; i < 2; i++) {
         let beginPath = {
-            x: base,
-            y: start,
+            x: rowX,
+            y: rowY,
         }
         
         let endPath = {
-            x: value,
-            y: start,
+            x: columnX,
+            y: rowY,
         }
 
         c.strokeStyle = "blue"
         drawLine(beginPath, endPath)
-        start = height;
+        rowY = height;
     }
+
+    return {columnX}
 }
 
-bars(300, 200, 10)
+
+function drawBars(width, height, n) {
+    let {columnX} = bars(width, height, n)
+    bars(width, height * 2, n, columnX, height, height, columnX)
+}
+
+// drawBars(200, 200, 8)
+
+// draw eye
+
+// oval
+function oval(x, y, width, height) {
+    // border
+    c.strokeStyle = "blue";
+    c.strokeRect(x, y, width, height);
+
+    // oval
+    width = width / 2;
+    height = height / 2;
+    c.fillStyle = "yellow";
+    c.beginPath();
+    c.ellipse(width + x, height + y, width, height, 0, 0, Math.PI*2, false);
+    c.fill();
+}
+
+oval(5, 5, 300, 200)
+
+
+// function drawEye(left, top, width, height, n) {
+
+// }
+
 
 // exercises
 // https://web.stanford.edu/class/cs106a-8/sum-assn/homework-5-quilt.html
