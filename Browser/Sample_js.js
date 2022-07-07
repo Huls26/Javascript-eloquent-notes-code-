@@ -161,26 +161,55 @@ function drawBars(width, height, n) {
 // draw eye
 
 // oval
-function oval(x, y, width, height) {
+function oval(x, y, width, height, midX, midY) {
     // border
     c.strokeStyle = "blue";
     c.strokeRect(x, y, width, height);
 
     // oval
-    width = width / 2;
-    height = height / 2;
     c.fillStyle = "yellow";
     c.beginPath();
-    c.ellipse(width + x, height + y, width, height, 0, 0, Math.PI*2, false);
+    c.ellipse(midX+ x, midY + y, midX, midY, 0, 0, Math.PI*2, false);
     c.fill();
 }
 
-oval(5, 5, 300, 200)
+// lines from center
+function blackLines(midX, midY, x, width, height, n) {
+    let k = (width + 30) / n
+    let space = (width + k) / n;
+  
+    function line(x) {
+        c.strokeStyle = "black";
+        c.beginPath();
+        c.moveTo(midX, midY);
+        c.lineTo(x, height);
+        c.stroke()
+    }
+    
+    for (let i = 0; i < n; i++) {
+        line(x);
+        x += space
+    }
+}
 
+// combine the lines and the eye
+function drawEye(left, top, width, height, n) {
+    let midX = width / 2;
+    let midY = height / 2;
 
-// function drawEye(left, top, width, height, n) {
+    oval(left, top, width, height, midX, midY);
+    blackLines(midX + left, midY + top, left, width, height + top, n);
+}
 
-// }
+// alternate eye
+function alternateEye(left, top, width, height, n) {
+    drawEye(left, top, width, height, n);
+    drawEye(width + left, height + top, width, height, 10)
+}
+
+alternateEye(5, 5, 300, 200, 10)
+
+// draw bowtie
 
 
 // exercises
