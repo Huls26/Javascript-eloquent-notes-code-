@@ -175,7 +175,8 @@ function oval(x, y, width, height, midX, midY) {
 
 // lines from center
 function blackLines(midX, midY, x, width, height, n) {
-    let k = (width + 30) / n
+    let i = width / n;
+    let k = (width + i) / n
     let space = (width + k) / n;
   
     function line(x) {
@@ -207,10 +208,47 @@ function alternateEye(left, top, width, height, n) {
     drawEye(width + left, height + top, width, height, 10)
 }
 
-alternateEye(5, 5, 300, 200, 10)
+// alternateEye(5, 5, 300, 200, 10)
 
 // draw bowtie
 
+// lines
+function lines(mX, mY, lX, lY, color, gapX, gapY) {
+
+    // lines
+    c.strokeStyle = color;
+    c.beginPath();
+    c.moveTo(mX, mY);
+    c.lineTo(lX + gapX, lY + gapY);
+    c.stroke();
+}
+
+// draw bowtie
+function bowtie(left, top, width, height, n) {
+    // gaps
+    let gapX = left;
+    let gapY = top;
+
+    // border
+    c.strokeStyle = "blue";
+    c.strokeRect(left, top, width, height);
+
+    // space between the lines
+    let i = height / n;
+    let k = (height + i) / n;
+    let space = (height + k) / n;
+
+    // multiple lines
+    // bowtie
+    for (let i = 0; i < n; i++) {
+        lines(left, top, width, height, "red", gapX, gapY);
+        top += space;
+        height -= space;
+    }
+  
+}
+
+bowtie(5, 5, 300, 200, 10);
 
 // exercises
 // https://web.stanford.edu/class/cs106a-8/sum-assn/homework-5-quilt.html
