@@ -94,67 +94,42 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext("2d");
 
-function drawLine(beginPath, endPath) {
+function drawLine(x, y, height) {
     c.beginPath();
-    c.moveTo(beginPath.x, beginPath.y);
-    c.lineTo(endPath.x, endPath.y);
+    c.moveTo(x, y);
+    c.lineTo(x, height + y);
     c.stroke();
 }
 
-function bars(width, height, n, columnX = 5, columnY = 5, rowY = 5, rowX = 5) {
-    let k = width - ((width / n ) * (n - 1))
+function bars(left, top, width, height, n) {
+    let base = left;
+    let i =  width / n
+    let k = (width + i) / n
     let space = (width + k) / n;
+
+    // border
+    c.strokeStyle = "blue"
+    c.strokeRect(left, top, width, height);
 
     // column
     for (let i = 0; i < n * 4; i++) {
         if (i % n === 0) {
-            columnX = rowX;
+            left = base;
         }
 
         // stroke point
-        let beginPath = {
-            x: columnX,
-            y: columnY,
-           
-        }
-        
-        // console.log(beginPath.x, beginPath.y)
-        let endPath = {
-            x: columnX,
-            y: height,
-        }
         c.strokeStyle = "black";
-        drawLine(beginPath, endPath)
-        columnX += space;
+        drawLine(left, top, height)
+        left += space;
     }
-
-    columnX -= space; 
-    
-    // row
-    for (let i = 0; i < 2; i++) {
-        let beginPath = {
-            x: rowX,
-            y: rowY,
-        }
-        
-        let endPath = {
-            x: columnX,
-            y: rowY,
-        }
-
-        c.strokeStyle = "blue"
-        drawLine(beginPath, endPath)
-        rowY = height;
-    }
-
-    return {columnX}
 }
 
-
-function drawBars(width, height, n) {
-    let {columnX} = bars(width, height, n)
-    bars(width, height * 2, n, columnX, height, height, columnX)
+function drawBars(left, top, width, height, n) {
+    bars(left, top, width, height, n)
+    bars(left + width, top + height, width, height, n)
 }
+
+// drawBars(10, 5, 200, 200, 8)
 
 // drawBars(200, 200, 8)
 
@@ -245,10 +220,19 @@ function bowtie(left, top, width, height, n) {
         top += space;
         height -= space;
     }
-  
 }
 
-bowtie(5, 5, 300, 200, 10);
+// left upper and right lower quadrant
+function quadrant(left, top, width, height, n) {
+    bowtie(left, top, width, height, n);
+    bowtie(left + width, top + height, width, height, n)
+}
+
+quadrant(5, 5, 300, 200, 17);
+
+// d. Quilting Bee
+
+
 
 // exercises
 // https://web.stanford.edu/class/cs106a-8/sum-assn/homework-5-quilt.html
