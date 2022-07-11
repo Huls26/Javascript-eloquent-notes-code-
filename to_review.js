@@ -151,6 +151,13 @@ console.log(3 << 3)
 // console.log(true ^ true)
 // 0
 
+// what is decomposition?
+// Computer programmers do exactly the same thing. When they are writing a program they often break the code into small chunks.
+
+// They call this approach 'decomposition' because you are ‘decomposing’ or breaking down a large problem into smaller problems.
+
+// Decomposition saves a lot of time: the code for a complex program could run to many lines of code. If a mistake was made it would take a very long time to find.
+
 // roadmap
 // https://roadmap.sh/
 

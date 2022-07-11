@@ -1,5 +1,8 @@
 "Use strict"
 
+// cs106A
+// assigments and exams
+
 // coinflip
 function coinFlip(value, coin) {
     let random = Math.floor(Math.random() * 2);
@@ -101,12 +104,15 @@ function drawLine(x, y, height) {
     c.stroke();
 }
 
-function bars(left, top, width, height, n) {
+function drawBars(left, top, width, height, n) {
     let base = left;
-    let i =  width / n
+    let j = (width  * (n/ 2)) / n;
+    let i =  (width + j) / n;
     let k = (width + i) / n
-    let space = (width + k) / n;
+    let space = (width + k)/ n;
 
+    console.log(k)
+    // console.log(space)
     // border
     c.strokeStyle = "blue"
     c.strokeRect(left, top, width, height);
@@ -124,10 +130,10 @@ function bars(left, top, width, height, n) {
     }
 }
 
-function drawBars(left, top, width, height, n) {
-    bars(left, top, width, height, n)
-    bars(left + width, top + height, width, height, n)
-}
+// function drawBars(left, top, width, height, n) {
+//     bars(left, top, width, height, n)
+//     bars(left + width, top + height, width, height, n)
+// }
 
 // drawBars(10, 5, 200, 200, 8)
 
@@ -150,7 +156,8 @@ function oval(x, y, width, height, midX, midY) {
 
 // lines from center
 function blackLines(midX, midY, x, width, height, n) {
-    let i = width / n;
+    let j = (width  * (n/ 2)) / n;
+    let i =  (width + j) / n;
     let k = (width + i) / n
     let space = (width + k) / n;
   
@@ -199,7 +206,7 @@ function lines(mX, mY, lX, lY, color, gapX, gapY) {
 }
 
 // draw bowtie
-function bowtie(left, top, width, height, n) {
+function drawBowtie(left, top, width, height, n) {
     // gaps
     let gapX = left;
     let gapY = top;
@@ -209,8 +216,11 @@ function bowtie(left, top, width, height, n) {
     c.strokeRect(left, top, width, height);
 
     // space between the lines
-    let i = height / n;
-    let k = (height + i) / n;
+    let j = (height  * (n/ 2)) / n;
+    let i =  (height + j) / n;
+    let k = (height + i) / n
+    // let i = height / n;
+    // let k = (height + i) / n;
     let space = (height + k) / n;
 
     // multiple lines
@@ -228,11 +238,96 @@ function quadrant(left, top, width, height, n) {
     bowtie(left + width, top + height, width, height, n)
 }
 
-quadrant(5, 5, 300, 200, 17);
+// quadrant(5, 5, 300, 200, 17);
 
 // d. Quilting Bee
+// function drawQuilt(width, height, N) {
+//     // start position;
+//     let x = 0;
+//     let y = 0;
+//     // poition
+//     let positionX = x;
+//     let positionY = y;
+    
+//     // size of the quilt
+//     let newW = Math.floor((width) / N); 
+//     let newH = Math.floor(height / N);
 
+//     // border
+//     // c.strokeRect(positionX, positionY, width, height);
+    
+//     // row & column;
+//     let row = 0;
+//     let column = 0;
 
+//     // row
+//     for (let k = 0; k < N; k++) {
+//         // column
+//         for (let i = 0; i < N; i++) {
+//             drawEye(positionX , positionY, newW, newH, N)
+//             positionY += newH;
+//             column++;
+//         }
+//         ;
+//         column = 0;
+//         row++;
+//         positionY = x;
+//         positionX += newW;
+//     }
+// }
+
+// drawQuilt(500, 300, 5)
+
+// patch rotation
+function drawQuilt(width, height, N) {
+    // start position;
+    let x = 0;
+    let y = 0;
+
+    // poition
+    let positionX = x;
+    let positionY = y;
+    
+    // size of the quilt
+    let newW = Math.floor((width) / N); 
+    let newH = Math.floor(height / N);
+
+    // border
+    // c.strokeRect(positionX, positionY, width, height);
+    
+    // row & column;
+    let row = 0;
+    let column = 0;
+
+    // row
+    for (let k = 0; k < N; k++) {
+        // column
+        for (let i = 0; i < N; i++) {
+            // choice 
+            let choice = (row + column) % 3;
+
+            if (choice === 0) {
+                drawEye(positionX , positionY, newW, newH, N)
+            } else if (choice === 1) {
+                drawBars(positionX , positionY, newW, newH, N)
+            } else {
+                drawBowtie(positionX , positionY, newW, newH, N)
+            }
+        
+            positionY += newH;
+            column++;
+        }
+        ;
+        column = 0;
+        row++;
+        positionY = x;
+        positionX += newW;
+    }
+}
+
+// drawQuilt(600, 400, 6)
+// drawQuilt(400, 400, 3)
+drawQuilt(1200, 800, 10)
 
 // exercises
 // https://web.stanford.edu/class/cs106a-8/sum-assn/homework-5-quilt.html
