@@ -332,6 +332,7 @@ drawQuilt(1200, 800, 10)
 // exercises
 // https://web.stanford.edu/class/cs106a-8/sum-assn/homework-5-quilt.html
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1178/resources/midterm/PracticeMidterm.pdf
+
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/12-assignment5.html#part-2-word-guessing
 
 // http://web.stanford.edu/class/archive/cs/cs106a/cs106a.1178/resources/midterm/MidtermQuestionBooklet.pdf
