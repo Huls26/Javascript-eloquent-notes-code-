@@ -91,11 +91,12 @@ function countUnique(array) {
 // countUnique([5, 5, 5, 5])
 
 // draw bars
-let canvas = document.querySelector("canvas");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// set canvas
+// let canvas = document.querySelector("canvas");
+// canvas.width = window.innerWidth;
+// canvas.height = window.innerHeight;
 
-let c = canvas.getContext("2d");
+// let c = canvas.getContext("2d");
 
 function drawLine(x, y, height) {
     c.beginPath();

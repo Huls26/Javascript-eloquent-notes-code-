@@ -11,30 +11,30 @@ upload.addEventListener('change', () => {
 
     fr.onload = function() {
         let file = fr.result;
-        outputBx.innerHTML = file;
-        total(file);
+        outputBx.innerHTML = total(file);
     }
 });
 
+// get the total price and place of the sandcastle
 function total(file) {
     let split = file.split("\r\n");
-    let container = {};
     
-    // set date, place, and price
-    // let [date, place, price] = convert(split[1]).split(" ");
+    let total = split.reduce((prev, current) => {
+        // set date, place, and price
+        let [place, price] =  convert(current);
 
-    let [place, price] =  convert(split[1]);
+        // add and update the container
+        // add place and sum total price
+        if (!prev[place]) {
+            prev[place] = price;
+        } else {
+            prev[place] += price;
+        }
 
-    // add and update the container
-    // add place and sum total price
+        return prev
+    }, {});
 
-    if (!container[place]) {
-        container[place] = price;
-    } else {
-        container.place += price;
-    }
-
-    console.log(container)
+    return placePrice(total);
 }
 
 // get the place and price
@@ -56,4 +56,16 @@ function convert(info) {
    
     return [place, price];
 }
+
+// traverse through total
+function placePrice(items) {
+    let empty = "";
+
+    for (let [place, price] of Object.entries(items)) {
+        empty += `${place}: $${price}\n`
+    }
+
+   return empty
+}
+
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/12-assignment5.html#part-2-word-guessing
