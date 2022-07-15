@@ -11,7 +11,7 @@ let pG;
 // main 
 function main() {
     let secretWord = getWord(listFile);
-    let initialGuesses = 8;
+
 
     pG = playGame(secretWord);
     pG()
@@ -30,29 +30,49 @@ function playGame(secretWord) {
     let SW = secretWord;
     let prompt = "The word now looks like this: "
     let guesses = ""; 
+    let initialGuesses = 8;
 
     return (letter) => {
         // for paragraph
-        let para = document.createElement("p");
-        para.innerText = prompt;
+        let para1 = document.createElement("p");
+        para1.innerText = prompt;
 
-        // check guess
-        guesses = correctLetter(SW, letter, guesses);
+        // check guesses
+        [guesses, initialGuesses] = correctLetter(SW, letter, guesses, initialGuesses);
+
+        console.log(initialGuesses)
+        console.log(guesses);
 
         // create span
+        // for guesses
         let span = document.createElement("span");
         span.innerText = guesses;
 
+        // create p tag
+        // for initial guesses
+        let para2 = document.createElement("p");
+        para2.innerText = `You have ${initialGuesses} guesses left`
+
+
         // add to body
-        document.body.appendChild(para);
-        para.appendChild(span);
+        // for prompt
+        document.body.appendChild(para1);
+        para1.appendChild(span);
+        document.body.appendChild(para2)
+       
     }
 };
 
 // guess enter
 // checking
-function correctLetter(sW, letter, guesses) {
+function correctLetter(sW, letter, guesses, initialGuesses) {
     let split = sW.split("");
+
+    if (!split.includes(letter) && guesses.length > 0) {
+        initialGuesses--;
+        return [guesses, initialGuesses]
+    }
+
     let checking = split.reduce((prev, current, index) => {
         // console.log(guesses[index])
         if (current === letter) {
@@ -68,19 +88,18 @@ function correctLetter(sW, letter, guesses) {
 
     console.log(split)
     console.log(checking)
-    return checking
+    return [checking, initialGuesses]
 }
 
-// letter
+// check guess for length and change to uppercase
 function enterGuess(guess) {
     let prompt = "Guess should only be a single character."
     let para = document.createElement("p");
     para.innerText = prompt;
-    let letter;
 
     // To uppercase
     if (guess.length > 0) {
-       letter = guess.toUpperCase();
+       return guess.toUpperCase()
     }
 
     // check if it guess two letters
@@ -88,8 +107,6 @@ function enterGuess(guess) {
         document.body.appendChild(para);
         return
     }
-
-    return letter
 }
 
 // letter
@@ -115,8 +132,9 @@ function findLastP(array) {
 window.addEventListener("keydown", event => {
     if (event.key === "Enter") {
 
-        let guess = enterGuess(guesses, "HAPPY");
-        // playGame();
+        // check the length
+        let guess = enterGuess(guesses);
+        
         pG(guess)
         guessWord();
         guesses = "";
