@@ -1,5 +1,15 @@
 "use strict";
+import {files} from "./listFile.js"
+
+// get the file and call the main
+files.then(files => {
+    let uppercase = files.map(file => file.toUpperCase())
+    listFile = uppercase
+    main()
+})
+
 let listFile = ["HAPPY", "JAVASCRIPT"];
+// let listFile = lexiconFile("words.txt");
 
 // for guess
 let guesses = "";
@@ -7,12 +17,15 @@ let guesses = "";
 let prompt = "Type a single letter here, then press enter:"
 // set the playgame start
 let pG;
+let newFile
+
+// open link
+// fetch("words.txt").then(response => response.text()).then(text => text.split(" "))
 
 // main 
 function main() {
-    let secretWord = getWord(listFile);
-
-
+    let secretWord = getWord(listFile)
+    
     pG = playGame(secretWord);
     pG()
     guessWord();
@@ -53,13 +66,11 @@ function playGame(secretWord) {
         let para2 = document.createElement("p");
         para2.innerText = `You have ${initialGuesses} guesses left`
 
-
         // add to body
         // for prompt
         document.body.appendChild(para1);
         para1.appendChild(span);
         document.body.appendChild(para2)
-       
     }
 };
 
@@ -67,6 +78,9 @@ function playGame(secretWord) {
 // checking
 function correctLetter(sW, letter, guesses, initialGuesses) {
     let split = sW.split("");
+    // prompt every correct letter
+    let correctPrompt = document.createElement("p");
+    correctPrompt.innerText = "That guess is correct."
 
     if (!split.includes(letter) && guesses.length > 0) {
         initialGuesses--;
@@ -77,6 +91,7 @@ function correctLetter(sW, letter, guesses, initialGuesses) {
         // console.log(guesses[index])
         if (current === letter) {
             prev += current;
+            document.body.appendChild(correctPrompt)
         } else if (guesses[index] != "-" && guesses[index]) {
             prev += current
         } else {
@@ -164,6 +179,6 @@ window.addEventListener("keydown", event => {
 
 })
 
-main();
+// main();
 
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/12-assignment5.html#part-2-word-guessing
