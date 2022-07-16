@@ -41,15 +41,11 @@ function getWord(words) {
 // play game
 function playGame(secretWord) {
     let notSecret = secretWord;
-    let prompt = "The word now looks like this: "
+    let prompt = "The word now looks like this: ";
     let guesses = ""; 
     let initialGuesses = 8;
 
     return (letter) => {
-        // for paragraph
-        let para1 = document.createElement("p");
-        para1.innerText = prompt;
-
         // check guesses
         [guesses, initialGuesses] = correctLetter(notSecret, letter, guesses, initialGuesses);
 
@@ -60,6 +56,10 @@ function playGame(secretWord) {
         // for guesses
         let span = document.createElement("span");
         span.innerText = guesses;
+
+        // for paragraph
+        let para1 = document.createElement("p");
+        para1.innerText = prompt;
 
         // create p tag
         // for initial guesses
@@ -87,8 +87,6 @@ function playGame(secretWord) {
         para1.appendChild(span);
         document.body.appendChild(para2)
         }
-
-        // return initialGuesses
     }
 };
 
@@ -168,8 +166,6 @@ function findLastP(array) {
 }
 
 // check to play 
-
-
 // for key event
 window.addEventListener("keydown", event => {
     if (event.key === "Enter") {
@@ -203,7 +199,6 @@ window.addEventListener("keydown", event => {
     // create span tag
     let span = document.createElement("span");
     span.innerText = guesses;
-    span.style.marginLeft = "6px"
 
     // add a span to paragraph
     pTag.innerText = prompt;
@@ -215,7 +210,7 @@ window.addEventListener("keydown", event => {
 function lettersOnly(key) {
    let charCode = key.keyCode;
 
-    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8)
+    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8) 
         return true;
     else
         return false;
