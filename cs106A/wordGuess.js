@@ -40,7 +40,7 @@ function getWord(words) {
 
 // play game
 function playGame(secretWord) {
-    let SW = secretWord;
+    let notSecret = secretWord;
     let prompt = "The word now looks like this: "
     let guesses = ""; 
     let initialGuesses = 8;
@@ -51,7 +51,7 @@ function playGame(secretWord) {
         para1.innerText = prompt;
 
         // check guesses
-        [guesses, initialGuesses] = correctLetter(SW, letter, guesses, initialGuesses);
+        [guesses, initialGuesses] = correctLetter(notSecret, letter, guesses, initialGuesses);
 
         console.log(initialGuesses)
         console.log(guesses);
@@ -66,11 +66,29 @@ function playGame(secretWord) {
         let para2 = document.createElement("p");
         para2.innerText = `You have ${initialGuesses} guesses left`
 
+        // congratulate message
+        let para3 = document.createElement("p");
+        para3.innerText = `Congratulations, the word is: ${notSecret}`
+
+        // game over message
+        let para4 = document.createElement("p");
+        para4.innerText = `Sorry, you lost. The secret word was: ${notSecret}`
+
         // add to body
         // for prompt
+        if (notSecret === guesses) {
+            document.body.appendChild(para3)
+            return true
+        } else if (initialGuesses <= 0) {
+            document.body.append(para4)
+            return true
+        } else {
         document.body.appendChild(para1);
         para1.appendChild(span);
         document.body.appendChild(para2)
+        }
+
+        // return initialGuesses
     }
 };
 
@@ -78,11 +96,17 @@ function playGame(secretWord) {
 // checking
 function correctLetter(sW, letter, guesses, initialGuesses) {
     let split = sW.split("");
+
     // prompt every correct letter
     let correctPrompt = document.createElement("p");
     correctPrompt.innerText = "That guess is correct."
 
+    // prompt wrong guess
+    let wrongPrompt = document.createElement("p");
+    wrongPrompt.innerText = `There are no ${letter}'s in the word`
+
     if (!split.includes(letter) && guesses.length > 0) {
+        document.body.appendChild(wrongPrompt)
         initialGuesses--;
         return [guesses, initialGuesses]
     }
@@ -143,15 +167,20 @@ function findLastP(array) {
     return list.lastIndexOf(p[p.length - 1])
 }
 
+// check to play 
+
+
 // for key event
 window.addEventListener("keydown", event => {
     if (event.key === "Enter") {
-
         // check the length
         let guess = enterGuess(guesses);
-        
-        pG(guess)
-        guessWord();
+
+        let end = pG(guess)
+        // check for end game
+        if (!end) {
+            guessWord();
+        }
         guesses = "";
         return
     }
@@ -161,7 +190,10 @@ window.addEventListener("keydown", event => {
         guesses = guesses.slice(0, -1);
     } else {
         // store the keys
-        guesses += event.key;
+        // select letters only
+        if (lettersOnly(event)) {
+            guesses += event.key;
+        }
     }
     
     // promt the guesses
@@ -179,6 +211,14 @@ window.addEventListener("keydown", event => {
 
 })
 
-// main();
+// check for letters only
+function lettersOnly(key) {
+   let charCode = key.keyCode;
+
+    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8)
+        return true;
+    else
+        return false;
+}
 
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/12-assignment5.html#part-2-word-guessing
