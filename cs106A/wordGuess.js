@@ -217,3 +217,16 @@ function lettersOnly(key) {
 }
 
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/12-assignment5.html#part-2-word-guessing
+let num2 = 13;
+let num1 = 9;
+
+function mystery1(num1, num2) {
+    num2 += 3;
+    let str = "Hello " + num1;
+    let num3 = num2 - str.length;
+
+    return num3;
+}
+
+console.log(mystery1(num2, num1))
+console.log(mystery1(5, num2*3))
