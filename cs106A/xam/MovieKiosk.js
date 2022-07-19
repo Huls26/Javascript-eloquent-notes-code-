@@ -26,7 +26,7 @@ function prompt(text) {
     return new Promise((resolve, reject) => {
        inp.addEventListener("keydown", (event) => {
             if (event.key === "Enter") {
-                console.log(inp.value)
+                // console.log(inp.value)
                 resolve(inp.value)
             } 
         })
@@ -34,28 +34,56 @@ function prompt(text) {
 
 }
 
-async function wait(text) {
-    let output = await prompt(text);
-    console.log(output)
-    return output
+// prompt await
+async function wait(text) { 
+    let input1 = await prompt(text)
+    return input1
 }
 
-wait("what is your name?")
-
+// movie Kiosk
 function movieKiosk() {
     let prompts = ["Movie name: ", "# tickets: ", "Ticket price: "];
-    let index = 0;
     let value;
 
-    // while (!value || index <= 100000000) {
-    //     value = prompt(prompts[0])
-    //     console.log(value)
-    //     index++
-    // }  
+    call(0, prompts).then(resolve => {
+        console.log(resolve)
+    })
+  
+}
+
+// prompt the movie name, tickets and ticker price
+function call(index, prompts, array = []) {
+    let length = prompts.length;
+    let name = prompts[index]
+    let details = {}
+
+    if (index >= length) {
+        index = 0
+        name = prompts[index]
+    }
+
+    let what = wait(name);
+    what.then(resolve => {
+        if (index === 0 && resolve === "Enter") {
+            console.log("FINISH Return something")
+            return array
+        }
+        details.name = name;
+        details.detail = resolve;
+        array.push(details)
+        index++
+        return call(index, prompts, array);
+        // return resolve
+    })
+
+    // console.log(what.Promise)
+    if (what.Promise) {
+        return what
+    }
+
+    // return something
 }
 
 movieKiosk()
-
-
 
 // http://web.stanford.edu/class/archive/cs/cs106a/cs106a.1178/resources/midterm/MidtermQuestionBooklet.pdf
