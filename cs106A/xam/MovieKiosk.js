@@ -10,7 +10,6 @@ function prompt(text) {
     inp.setAttribute("type", "text");
     inp.setAttribute("id", "input");
     inp.setAttribute("name", "input");
-    // inp.setAttribute("value", input)
 
     // for label
     let label = document.createElement("label");
@@ -26,12 +25,10 @@ function prompt(text) {
     return new Promise((resolve, reject) => {
        inp.addEventListener("keydown", (event) => {
             if (event.key === "Enter") {
-                // console.log(inp.value)
                 resolve(inp.value)
             } 
         })
     })
-
 }
 
 // prompt await
@@ -41,18 +38,8 @@ async function wait(text) {
 }
 
 // movie Kiosk
-function movieKiosk() {
-    let prompts = ["Movie name: ", "# tickets: ", "Ticket price: "];
-    let value;
-
-    call(0, prompts).then(resolve => {
-        console.log(resolve)
-    })
-  
-}
-
 // prompt the movie name, tickets and ticker price
-function call(index, prompts, array = []) {
+async function movieKiosk(index, prompts, array = []) {
     let length = prompts.length;
     let name = prompts[index]
     let details = {}
@@ -62,28 +49,58 @@ function call(index, prompts, array = []) {
         name = prompts[index]
     }
 
-    let what = wait(name);
-    what.then(resolve => {
-        if (index === 0 && resolve === "Enter") {
-            console.log("FINISH Return something")
-            return array
-        }
-        details.name = name;
-        details.detail = resolve;
-        array.push(details)
-        index++
-        return call(index, prompts, array);
-        // return resolve
-    })
+    let waitValue = wait(name);
+    recursion(waitValue)
 
-    // console.log(what.Promise)
-    if (what.Promise) {
-        return what
+    // recursion
+    function recursion(async) {
+        async.then(resolve => {
+            if (index === 0 && resolve === "Enter") {
+                console.log(array)
+                return total(array)
+            }
+            details.name = name;
+            details.detail = resolve;
+            array.push(details)
+            index++
+            return movieKiosk(index, prompts, array);
+        })
     }
-
-    // return something
 }
+ 
+// nget total 
+function total(array) {
+    let container = [];
+    let total = array.reduce((prev, current, index) => {
+        let movie = current.detail;
+        
+        if ((index % 3 === 0 || index === 0) && !container.includes(movie)) {
+            container.push(movie)
+        }
 
-movieKiosk()
+        if (index % 2 === 0 && index != 0) {
+            let quantity = array[index -1]["detail"];
+            prev += parseInt(current.detail) * parseInt(quantity);
+        }
+
+        return prev
+    }, 0) 
+
+    console.log([container, total])
+
+
+}   
+
+
+let array = [
+    {name: 'Movie name: ', detail: 'car'}, {name: '# tickets: ', detail: '2'}, 
+    {name: 'Ticket price: ', detail: '3'},
+]
+
+total(array)
+
+
+
+movieKiosk(0, ["Movie name: ", "# tickets: ", "Ticket price: "])
 
 // http://web.stanford.edu/class/archive/cs/cs106a/cs106a.1178/resources/midterm/MidtermQuestionBooklet.pdf
