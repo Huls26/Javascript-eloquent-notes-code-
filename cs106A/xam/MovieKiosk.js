@@ -88,7 +88,31 @@ function movieKiosk(array) {
 
 // prompt total price and movies
 function promptMovies(name, total) {
-    
+    let names = name.reduce((prev, cur, index) => { 
+        console.log(prev);
+        if (index === name.length -1) {
+            prev += cur;
+        } else {
+            prev += cur + " and "
+        }
+
+        return prev
+    }, "")
+
+    console.log(names)
+    total = "$" + total;
+    totalPrompt([names, total])
+}
+
+// total prompt
+function totalPrompt(array) {
+    let prompts = ["Movies:", "Total: "]
+    for (let element in array) {
+        let p = document.createElement("p");
+        p.innerText = `${prompts[element]} ${array[element]}`
+
+        document.body.appendChild(p);
+    }
 }
 
 // get total price
