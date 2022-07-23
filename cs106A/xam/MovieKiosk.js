@@ -2,8 +2,14 @@
 
 // Problem 3: Movie Kiosk [25 points]
 // prompt
-function prompt(index, prompts, array = []) {
+function prompt(index, prompts, array = [], v) {
     let length = prompts.length;
+    let deduct
+
+    if (v && index === 2) {
+        deduct = v;
+    }
+
     if (index >= length) {
         index = 0
     }
@@ -19,7 +25,7 @@ function prompt(index, prompts, array = []) {
     // for label
     let label = document.createElement("label");
     label.setAttribute("for", "input")
-    label.setAttribute("id", "label")
+    // label.setAttribute("id", "label")
     label.innerText = prompts[index];
 
     // append child
@@ -27,46 +33,74 @@ function prompt(index, prompts, array = []) {
     p.appendChild(inp);
     document.body.appendChild(p);
     
-    // get all input with value
-    let allInput = document.getElementsByTagName("input")
+    // style
+    // add margin
+    let labelMovies = document.getElementsByTagName("p")
 
-    // console.log(Array.from(allInput))
-    // Array.from(allInput).forEach(element => {
-    //     console.log(element.value)
-    // });
+    let collection = Array.from(labelMovies);
 
-    // modify
+    collection.forEach((element, index) => {
+        let getLabel = element.children[0].innerText;
+
+        if (getLabel === prompts[0] && index !== 0) {
+            element.style.marginTop = "1em"
+        }
+    })
+  
+    // keys event
     inp.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
             let value = inp.value;
             // get all input
+            
+            // for 10% chance voucher
+            if (label.innerText === prompts[2]) {
+              v = voucher();
+
+                if (v) {
+                    let p = document.createElement("p");
+                    p.innerText = `You have won a $${v} voucher for
+                    your next purchase!`
+
+                    document.body.appendChild(p);
+                }
+            }
+
+            // submit Enter
             if (label.innerText === prompts[0] && inp.value === "Enter") {
                 console.log("To enter")
+                console.log(array)
                 return movieKiosk(array)
-                
             }
-            groupArray(array, value)
-            console.log(array)
+
+            // group array
+            groupArray(array, value, deduct);
             index++
-            return prompt(index, prompts, array)
+            return prompt(index, prompts, array, v)
         } 
     })
-
-    // return new Promise((resolve, reject) => {
-    //    inp.addEventListener("keydown", (event) => {
-    //         if (event.key === "Enter") {
-    //             resolve(inp.value)
-    //         } 
-    //     })
-    // })
 }
 
 // modify
+// for voucher
+function voucher() {
+    let chance = Math.ceil(Math.random() * 1);
+    let price = [5, 10, 15, 20, 25]
+    // let price = [10]
+    let ran = Math.floor(Math.random() * price.length);
+    let voucher = price[ran];
+
+    if (chance === 1) {
+        return voucher
+    }
+}
+
 // grouping the movies detail
-function groupArray(array, info) {
+function groupArray(array, info, v) {
     let length = array.length;
     let current = array[length - 1];
 
+    console.log(v)
     if (!length) {
         array.push([info])
     } else if (current.length >= 3) {
@@ -75,10 +109,13 @@ function groupArray(array, info) {
         current.push(info);
     }
 
+    if (v) {
+        current.push(v);
+        v = 0;
+    }
+
     return array
 }
-
-let array = prompt(0, ["Movie name: ", "# tickets: ", "Ticket price: "])
 
 // movie kiosk
 function movieKiosk(array) {
@@ -89,7 +126,6 @@ function movieKiosk(array) {
 // prompt total price and movies
 function promptMovies(name, total) {
     let names = name.reduce((prev, cur, index) => { 
-        console.log(prev);
         if (index === name.length -1) {
             prev += cur;
         } else {
@@ -99,17 +135,24 @@ function promptMovies(name, total) {
         return prev
     }, "")
 
-    console.log(names)
     total = "$" + total;
     totalPrompt([names, total])
 }
 
-// total prompt
+// prompt total price and movies
 function totalPrompt(array) {
-    let prompts = ["Movies:", "Total: "]
+    let prompts = ["Movies: ", "Total: "]
     for (let element in array) {
         let p = document.createElement("p");
-        p.innerText = `${prompts[element]} ${array[element]}`
+        p.innerText = `${prompts[element]}`
+
+        if (p.innerText === prompts[0]) {
+            p.style.marginTop = "1em";
+        }
+
+        let span = document.createElement("span");
+        span.innerText = `${array[element]}`
+        p.appendChild(span);
 
         document.body.appendChild(p);
     }
@@ -121,15 +164,31 @@ function getPrice(array) {
     let total = 0;
 
     let movie = array.reduce((prev, current) => {
-        let [name, quantity, price] = current;
-        let totalPrice = parseFloat(quantity) * parseFloat(price);
-
-        if (prev[name]) {
-            prev[name] += totalPrice;
+        if (current.length <= 3) {
+            let [name, quantity, price] = current;
+            let totalPrice = parseFloat(quantity) * parseFloat(price);
+    
+            if (prev[name]) {
+                prev[name] += totalPrice;
+            } else {
+                prev[name] = totalPrice
+            }
         } else {
-            prev[name] = totalPrice
-        }
+            let [name, quantity, price, voucher] = current;
+            let totalPrice = parseFloat(quantity) * parseFloat(price);
 
+            if (voucher > totalPrice) {
+                prev[name] = 0
+            } else {
+                let t = totalPrice - voucher;
+                if (prev[name]) {
+                    prev[name] += t;
+                } else {
+                    prev[name] = t
+                }
+            }  
+        }
+       
         return prev
     }, {})
 
@@ -138,91 +197,11 @@ function getPrice(array) {
         total += price;
     }
 
-    console.log(container, total)
     return [container, total]
 }
-// Cars
-// 2
-// 4.50
-// WALL-E
-// 4
-// 14.00
-// Up
-// 3
-// 10.50
 
-// // prompt await
-// async function wait(text, array) { 
-//     let input1 = await prompt(text)
-//     // await array.push(input1)
-//     console.log(input1)
-//     return array
-// }
-
-// // movie Kiosk
-// // prompt the movie name, tickets and ticker price
-// async function movieKiosk(index, prompts, array = []) {
-//     let length = prompts.length;
-//     let name = prompts[index]
-//     let details = {}
-
-//     if (index >= length) {
-//         index = 0
-//         name = prompts[index]
-//     }
-
-//     let waitValue = wait(name);
-//     recursion(waitValue)
-
-//     // recursion
-//     function recursion(async) {
-//         async.then(resolve => {
-//             if (index === 0 && resolve === "Enter") {
-//                 console.log(array)
-//                 return total(array)
-//             }
-//             details.name = name;
-//             details.detail = resolve;
-//             array.push(details)
-//             index++
-//             return movieKiosk(index, prompts, array);
-//         })
-//     }
-// }
- 
-// // nget total 
-// function total(array) {
-//     let container = [];
-//     let total = array.reduce((prev, current, index) => {
-//         let movie = current.detail;
-        
-//         if ((index % 3 === 0 || index === 0) && !container.includes(movie)) {
-//             container.push(movie)
-//         }
-
-//         if (index % 2 === 0 && index != 0) {
-//             let quantity = array[index -1]["detail"];
-//             prev += parseInt(current.detail) * parseInt(quantity);
-//         }
-
-//         return prev
-//     }, 0) 
-
-//     console.log([container, total])
+prompt(0, ["Movie name: ", "# tickets: ", "Ticket price: "])
 
 
-// }   
-
-
-// let array = [
-//     {name: 'Movie name: ', detail: 'car'}, {name: '# tickets: ', detail: '2'}, 
-//     {name: 'Ticket price: ', detail: '3'},
-// ]
-
-// total(array)
-
-
-
-// movieKiosk(0, ["Movie name: ", "# tickets: ", "Ticket price: "])
 
 // http://web.stanford.edu/class/archive/cs/cs106a/cs106a.1178/resources/midterm/MidtermQuestionBooklet.pdf
