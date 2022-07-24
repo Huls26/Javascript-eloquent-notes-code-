@@ -203,5 +203,4 @@ function getPrice(array) {
 prompt(0, ["Movie name: ", "# tickets: ", "Ticket price: "])
 
 
-
 // http://web.stanford.edu/class/archive/cs/cs106a/cs106a.1178/resources/midterm/MidtermQuestionBooklet.pdf
