@@ -129,4 +129,14 @@ function test() {
 
 test()
 
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+let person1 = new Person("Jules", 26);
+console.log(person1.name)
+
 // http://web.stanford.edu/class/archive/cs/cs106a/cs106a.1178/resources/midterm/MidtermQuestionBooklet.pdf
