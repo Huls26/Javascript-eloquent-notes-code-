@@ -54,7 +54,7 @@ function readList() {
     })
 }
 
-readList();
+// readList();
 
 function removeDuplicate(array) {
     return array.reduce((container, element) => {
@@ -64,3 +64,44 @@ function removeDuplicate(array) {
         return container
     }, [])
 }
+
+// Part 2: Images
+// 1. "Sandcastle" (warm-up) problem: Finding forest fires.
+let canvas = document.querySelector("canvas");
+let ctx = canvas.getContext("2d");
+
+canvas.width = 700;
+canvas.height = 400;
+
+const image = new Image();
+image.src = "rodeo_chediski_satellite.jpg";
+
+image.addEventListener('load', () => {
+    ctx.drawImage(image, 0, 0, 233, 190);
+  
+    const imageData = ctx.getImageData(0, 0, 233, 190);
+
+    let second = imageData.data;
+    let intensityThreshold = 1.14;
+
+    for (let i = 0; i < second.length; i += 4) {
+        let total = second[i] + second[i + 1] + second[i + 2];
+        let aveThreshold = (total / 3) * intensityThreshold
+
+        if (second[i] >= aveThreshold ) {
+            second[i] = 255;
+            second[i + 1] = 0;
+            second[i + 2] = 0;
+        } else {
+            second[i] = aveThreshold;
+            second[i + 1] = aveThreshold;
+            second[i + 2] = aveThreshold;
+        }
+    }
+
+    ctx.putImageData(imageData, 240, 0)
+});
+
+
+// Assignment #3: Lists and Images
+// => https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/08-assignment3.html
