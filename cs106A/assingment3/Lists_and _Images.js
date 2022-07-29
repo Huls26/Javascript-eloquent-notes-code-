@@ -106,7 +106,6 @@ canvas.height = 400;
 
 // 2. Warhol Images
 // a. Task: Create a filter for a single image
-
 function createFilteredImage(redScale, greenScale, blueScale, x, y) {
     let width
     let height
@@ -139,7 +138,6 @@ function createFilteredImage(redScale, greenScale, blueScale, x, y) {
 }
 
 // b. Task: Create a Warhol-style image
-
 function makeWarhol() {
     let row = 2;
     let column = 3;
@@ -163,7 +161,33 @@ function makeWarhol() {
     }
 }
 
-makeWarhol()
+// makeWarhol()
+
+// 3. Ghost
+let image1 = new Image();
+let image2 = new Image();
+let image3 = new Image();
+
+image1.src = "ghostImage/image6.jpg"
+image2.src = "ghostImage/image7.jpg"
+image3.src = "ghostImage/image8.jpg"
+
+window.addEventListener("load", () => {
+    let rgb = locations(image1, 2, 2)
+    console.log(rgb)
+})
+
+function locations(image, x, y) {
+    let width = image.width;
+    let height = image.height;
+    ctx.drawImage(image, 0, 0, image2.width, image2.height);
+
+    let imageData = ctx.getImageData(0, 0, image.width, image.height).data
+
+    let pos = (x * width * 4) + (4 * y);
+
+    return [imageData[pos], imageData[pos + 1], imageData[pos + 2]]
+}
 
 // Assignment #3: Lists and Images
 // => https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/08-assignment3.html
