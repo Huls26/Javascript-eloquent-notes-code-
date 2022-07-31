@@ -164,6 +164,10 @@ function makeWarhol() {
 // makeWarhol()
 
 // 3. Ghost
+// Ghost algorithm
+
+// a) Compute the average RGB values
+let div = document.createElement("div");
 let image1 = new Image();
 let image2 = new Image();
 let image3 = new Image();
@@ -171,12 +175,14 @@ let image3 = new Image();
 image1.src = "ghostImage/image6.jpg"
 image2.src = "ghostImage/image7.jpg"
 image3.src = "ghostImage/image8.jpg"
+div.appendChild(image1);
+div.appendChild(image2);
+div.appendChild(image3);
 
-window.addEventListener("load", () => {
-    let rgb = locations(image1, 2, 2)
-    console.log(rgb)
-})
+let images = div.querySelectorAll("img");
 
+// to get image data 
+// data position for x, y
 function locations(image, x, y) {
     let width = image.width;
     let height = image.height;
@@ -188,6 +194,37 @@ function locations(image, x, y) {
 
     return [imageData[pos], imageData[pos + 1], imageData[pos + 2]]
 }
+
+// b) Select the best pixel
+// compute the average rgb values
+function aveImage(array, x, y) {
+    let length = array.length;
+    console.log(length)
+
+    // compute the average rgb values
+    let collectRGB = array.reduce((con, element, index) => {
+        let [r, g, b] = locations(element, x, y);
+
+        con[0] += r;
+        con[1] += g;
+        con[2] += b; 
+        console.log(r, g, b)
+        if (index === length -1) {
+            con[0] = Math.floor(con[0] / length);
+            con[1] = Math.floor(con[1] / length);
+            con[2] = Math.floor(con[2] / length);
+        }
+
+        return con
+    }, [0, 0, 0])
+
+  return collectRGB
+}
+
+
+window.addEventListener("load", () => {
+    let ave = aveImage(Array.from(images), 0, 5);
+})
 
 // Assignment #3: Lists and Images
 // => https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/08-assignment3.html
