@@ -199,16 +199,17 @@ function locations(image, x, y) {
 // compute the average rgb values
 function aveImage(array, x, y) {
     let length = array.length;
-    console.log(length)
+    let imgRGB = [];
 
     // compute the average rgb values
     let collectRGB = array.reduce((con, element, index) => {
         let [r, g, b] = locations(element, x, y);
+        imgRGB.push([r, g, b]);
 
         con[0] += r;
         con[1] += g;
         con[2] += b; 
-        console.log(r, g, b)
+    
         if (index === length -1) {
             con[0] = Math.floor(con[0] / length);
             con[1] = Math.floor(con[1] / length);
@@ -218,9 +219,30 @@ function aveImage(array, x, y) {
         return con
     }, [0, 0, 0])
 
+   
+    let distance = colorDistance(imgRGB, collectRGB);
+    let outlier = Math.min(...distance);
+    let index = distance.indexOf(outlier)
+    console.log(outlier, index)
+    
   return collectRGB
 }
 
+function colorDistance(array, ave) {
+    let [aR, aG, aB] = ave;
+
+    let distance = array.reduce((prev, current) => {
+        let [r, g, b] = current;
+        // let colorDistance = Math.sqrt(Math.pow((r - aR), 2) + Math.pow((g - aG), 2) + Math.pow((b - aB), 2));
+        let distance = Math.pow((r - aR), 2) + Math.pow((g - aG), 2) + Math.pow((b - aB), 2);
+    
+        prev.push(distance)
+
+        return prev
+    }, [])
+
+    return distance
+}
 
 window.addEventListener("load", () => {
     let ave = aveImage(Array.from(images), 0, 5);
