@@ -186,16 +186,16 @@ let images = div.querySelectorAll("img");
 function locations(image, x, y) {
     let width = image.width;
     let height = image.height;
+
     ctx.drawImage(image, 0, 0, image2.width, image2.height);
 
     let imageData = ctx.getImageData(0, 0, image.width, image.height).data
-
     let pos = (x * width * 4) + (4 * y);
 
     return [imageData[pos], imageData[pos + 1], imageData[pos + 2]]
 }
 
-// b) Select the best pixel
+// a) Compute the average RGB values
 // compute the average rgb values
 function aveImage(array, x, y) {
     let length = array.length;
@@ -218,35 +218,106 @@ function aveImage(array, x, y) {
 
         return con
     }, [0, 0, 0])
-
-   
-    let distance = colorDistance(imgRGB, collectRGB);
-    let outlier = Math.min(...distance);
-    let index = distance.indexOf(outlier)
-    console.log(outlier, index)
     
-  return collectRGB
+  return {pixel: imgRGB, rgb:collectRGB}
 }
 
-function colorDistance(array, ave) {
-    let [aR, aG, aB] = ave;
-
-    let distance = array.reduce((prev, current) => {
+// b) Select the best pixel
+// Ghost code
+// a) Task: Calculating squared pixel distance
+function getPixelDistance(pixel, red, green, blue) {
+    let pixelList= pixel.reduce((prev, current) => {
         let [r, g, b] = current;
-        // let colorDistance = Math.sqrt(Math.pow((r - aR), 2) + Math.pow((g - aG), 2) + Math.pow((b - aB), 2));
-        let distance = Math.pow((r - aR), 2) + Math.pow((g - aG), 2) + Math.pow((b - aB), 2);
+        let container = {};
+        let colorDistance = Math.sqrt(Math.pow((r - red), 2) + Math.pow((g - green), 2) + Math.pow((b - blue), 2));
+
+        container["pixel"] = current;
+        container["colorDistance"] = colorDistance;
+        // let distance = Math.pow((r - red), 2) + Math.pow((g - green), 2) + Math.pow((b - blue), 2);
     
-        prev.push(distance)
+        prev.push(container);
 
         return prev
     }, [])
 
-    return distance
+    return  pixelList
 }
 
-window.addEventListener("load", () => {
-    let ave = aveImage(Array.from(images), 0, 5);
-})
+// b) Task: Find the best pixel
+function getBestPixel(pixelList) {
+    let pxl;
+
+    pixelList.reduce((lowest, current) => {
+        if (current.colorDistance < lowest.colorDistance || lowest.colorDistance === current.colorDistance) {
+            lowest = current.colorDistance
+            pxl = current.pixel
+        } 
+
+        return lowest
+    })
+
+    return pxl
+}
+
+// c) Task: Create a ghost image
+function createGhost(imageList) {
+    // for image
+    let recreate = imageList[imageList.length - 1];
+    let width = smallestWidth(imageList)
+    let height = smallestHeight(imageList);
+
+    // find the smallest size 
+    function smallestWidth(images) {
+        let width = images.reduce((lowest, current) => {
+            console.log(lowest.size)
+            console.log(current)
+            if (current.width < lowest || !lowest) {
+                lowest = current.width;
+            } 
+        })
+
+        return width
+    }
+
+    function smallestHeight(imageList) {
+        let height = images.reduce((lowest, current) => {
+            if (current.height < lowest || lowestheight === current.height) {
+                lowest = current.height;
+            } 
+        })
+
+        return height
+    }
+
+    recreate.addEventListener("load", () => {
+    ctx.drawImage(recreate, 0, 0, width, height);
+    let imageData = ctx.getImageData(0, 0, width, height).data;
+
+        for (let i = 0; i < height / 9; i++) {
+            for (let k = 0; k < width; k++) {
+                let {pixel, rgb} = aveImage(imageList, k, i);
+                let [r, g, b] = rgb;
+                let pixelList = getPixelDistance(pixel, r, g, b); 
+
+                let bestPxl = getBestPixel(pixelList);
+
+                console.log(pixelList)
+                console.log(bestPxl)
+                let [red, green, blue] = bestPxl;
+
+                let pos = (k * 4) + (i * height * 4);
+                imageData[pos] = red;
+                imageData[pos + 1] = green;
+                imageData[pos + 2] = blue;
+            }
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+    })
+}
+
+createGhost(Array.from(images))
+
 
 // Assignment #3: Lists and Images
 // => https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/08-assignment3.html
