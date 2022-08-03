@@ -27,7 +27,7 @@ function drawPyramid(ctx) {
         for (let k = 0; k < bricks; k++) {
             ctx.strokeRect(midPoint + (k * BRICK_WIDTH), 120 + y, BRICK_WIDTH, BRICK_HEIGHT)
         }
-        console.log(midPoint)
+  
         bricks++
         y += BRICK_HEIGHT;
     }
