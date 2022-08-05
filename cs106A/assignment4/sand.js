@@ -5,17 +5,19 @@ function doMove(grid, x1, y1, x2, y2) {
     let old = grid[y1][x1];
     grid[y1][x1] = null;
     grid[y2][x2] = old;
-   
-    
+
     return grid
 }
 
 // 2. Task: Checking legal moves
 function checkMove(grid, x1, y1, x2, y2) {
     // down
-    if (grid[y2][x2]) {
-        return false
+    if (grid[y2]) {
+        if (grid[y2][x2]) {
+            return false
+        }
     }
+   
 
     if (!grid[y2]) {
         return false
@@ -30,31 +32,63 @@ function checkMove(grid, x1, y1, x2, y2) {
 
 // 3. Task: Gravity
 function doGravity(grid, x, y) {
-    if (!grid[y][x] || y === grid.length -1) {
+    if (grid[y][x] && y === grid.length -1) {
         return grid
     }
 
     // bottom
     if (checkMove(grid, x, y, x, y + 1)) {
-        doMove(grid, x, y, x, y + 1)
+        return doMove(grid, x, y, x, y + 1)
     }
 
     // down left
     if (checkMove(grid, x, y, x - 1, y + 1)) {
         if (!grid[y][x-1]) {
-            doMove(grid, x, y, x - 1, y + 1)
+            return doMove(grid, x, y, x - 1, y + 1)
         }
     }
 
     // down right
     if (checkMove(grid, x, y, x + 1, y + 1)) {
         if (!grid[y][x + 1]) {
-        doMove(grid, x, y, x + 1, y + 1)
+            return doMove(grid, x, y, x + 1, y + 1)
         }
     }
 
-    return grid
+    if (!checkMove(grid, x, y, x, y + 1))  return grid
+
+    // return grid
 }
+
+// 4. Task: Loop through the whole grid
+function doWholeGrid(grid, brownian) {
+    let height = grid.length - 1;
+    let br
+
+    for (let i = height; i >= 0; i--) {
+        let row = grid[i].length - 1
+        for (let k = row; k >= 0; k--) {
+            br = doGravity(grid, k, i);
+        }
+    }
+
+    return br
+}
+
+let None = null;
+let grid = [[None, None, None], [None, 's', None]];
+console.log(doWholeGrid(grid, 0))
+
+grid = [[None, 's', None], [None, None, 's'], [None, None, None]]
+console.log(doWholeGrid(grid, 0))
+// [[None, None, None], [None, 's', None], [None, None, 's']]
+
+// 5. Task: Create Brownian motion
+function doBrownian(grid, x, y, brownian) {
+
+}
+
+
 
 // test
 function test() {
@@ -111,6 +145,6 @@ function test() {
     // [[None, None, None], [None, 's', None]]
 }
 
-test()
+// test()
 
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/11-assignment4.html
