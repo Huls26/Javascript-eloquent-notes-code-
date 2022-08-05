@@ -18,7 +18,6 @@ function checkMove(grid, x1, y1, x2, y2) {
         }
     }
    
-
     if (!grid[y2]) {
         return false
     }
@@ -69,26 +68,47 @@ function doWholeGrid(grid, brownian) {
         let row = grid[i].length - 1
         for (let k = row; k >= 0; k--) {
             br = doGravity(grid, k, i);
+            console.log(br)
+            let sam = doBrownian(grid, k, i, brownian)
+            if (sam) {
+                br = sam;
+            }
         }
     }
 
     return br
 }
 
-let None = null;
-let grid = [[None, None, None], [None, 's', None]];
-console.log(doWholeGrid(grid, 0))
-
-grid = [[None, 's', None], [None, None, 's'], [None, None, None]]
-console.log(doWholeGrid(grid, 0))
-// [[None, None, None], [None, 's', None], [None, None, 's']]
-
 // 5. Task: Create Brownian motion
 function doBrownian(grid, x, y, brownian) {
+    console.log(grid[y][x])
+    if (grid[y][x] === "s") {
+        let num = Math.floor(Math.random() * 100);
+        console.log(num)
+        if (num < brownian) {
+           let coin = Math.floor(Math.random() * 2);
+           let x2;
+           let y2 = y + 1
 
+           if (coin < 1) {
+                x2 = x - 1
+           } else {
+                x2 = x + 1
+           }
+
+           if (checkMove(grid, x, y, x2, y2)) {
+                return doMove(grid, x, y, x2, y2)
+           }
+        }
+    }
 }
 
+let None = null;
+let grid = [[None, 's', None], [None, None, None]]
+console.log(doWholeGrid(grid, 99))
 
+grid = [["s", 's', "s"], ["s", "s", 's'], [None, None, None]];
+console.log(doWholeGrid(grid, 99))
 
 // test
 function test() {
