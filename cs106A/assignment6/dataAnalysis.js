@@ -5,7 +5,17 @@ fetch("./data/disease1.txt").then(responce => {
     return responce.text()
 }).then(resp => {
     let data = loadData(resp);
-    console.log(data)
+    let cases = dailyCases(data);
+
+    console.log(cases)
+})
+
+// data disease2
+fetch("./data/disease2.txt").then(responce => {
+    return responce.text()
+}).then(resp => {
+    // let data = loadData(resp);
+    // console.log(data)
 })
 
 // Assignment #6: Dictionaries and Analyzing Data Bias
@@ -32,5 +42,26 @@ function loadData(filename) {
 
     }, {})
 }
+
+// Sandcastle Part B: Calculating the number of infections per day
+function dailyCases(cumulative) {
+    for (let place of Object.keys(cumulative)) {
+        let array = cumulative[place].reduce((prev, current, index) => {
+            if (prev.length > 0 ) {
+                let cases = current - cumulative[place][index - 1];
+                prev.push(cases);
+                return prev
+            } else {
+                prev.push(current);
+                return prev
+            }
+        }, [])
+        cumulative[place] = array;
+    }
+
+    return cumulative
+}
+
+// console.log(dailyCases({'Test': [1, 2, 3, 4, 4, 4, 4]}))
 
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/biasbars-handout.html
