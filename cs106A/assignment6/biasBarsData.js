@@ -1,6 +1,5 @@
 "use strict"
 
-
 const KEY_WOMEN = "W"
 const KEY_MEN = "M"
 
@@ -29,6 +28,36 @@ function addDataForWord(word_data, word, gender, rating) {
         word_data[word][gender][index]++;
     }
 }
+
+async function load(filename) {
+    let data = await (await fetch(filename)).text();
+    let next = data.split("\r\n").slice(1);
+
+    let word_data = readFile(next)
+}
+
+function readFile(file) {
+    let word_data = {};
+
+    for (let i = 0; i < file.length; i++) {
+            let [r, g, c] = file[i].split(",");
+            let split = c.split(" ");
+            for (let k = 0; k < split.length; k++) {
+                let word = split[k];
+                let gender = g;
+                let rating = r;
+                addDataForWord(word_data, word, gender, rating)
+            }
+    }
+
+    console.log(word_data)
+}
+
+load('data/small-one.txt').then(resolve => {
+    console.log(resolve)
+})
+//  {'okay': {'W': [0, 0, 0], 'M': [0, 1, 0]}, 'best': {'W': [0, 0, 1], 'M': [0, 0, 0]}}
+
 
 function testData() {
     let word_data = {};
@@ -61,7 +90,8 @@ function testData() {
     //{'good': {'W': [0, 1, 1], 'M': [0, 0, 1]}, 'bad': {'W': [0, 0, 0], 'M': [1, 0, 0]}}
 }
 
-testData()
+// testData()
+
 function testRating() {
     if ((convertRatingToIndex(1.0)) === 0) {
         console.log("Passed")
@@ -101,3 +131,5 @@ function testRating() {
 }
 
 // testRating()
+
+// https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/biasbars-handout.html
