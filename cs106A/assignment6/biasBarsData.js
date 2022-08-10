@@ -32,8 +32,9 @@ function addDataForWord(word_data, word, gender, rating) {
 async function load(filename) {
     let data = await (await fetch(filename)).text();
     let next = data.split("\r\n").slice(1);
-
     let word_data = readFile(next)
+
+    return word_data
 }
 
 function readFile(file) {
@@ -41,24 +42,62 @@ function readFile(file) {
 
     for (let i = 0; i < file.length; i++) {
             let [r, g, c] = file[i].split(",");
-            let split = c.split(" ");
-            for (let k = 0; k < split.length; k++) {
-                let word = split[k];
-                let gender = g;
-                let rating = r;
-                addDataForWord(word_data, word, gender, rating)
+            if (c) {
+                let split = c.split(" ");
+                for (let k = 0; k < split.length; k++) {
+                    let word = split[k];
+                    let gender = g;
+                    let rating = r;
+                    addDataForWord(word_data, word, gender, rating)
+                }
             }
     }
 
-    console.log(word_data)
+    return word_data
 }
 
-load('data/small-one.txt').then(resolve => {
-    console.log(resolve)
-})
+function searchWords(word_data, target) {
+    let t = target.toLowerCase();
+    let length = t.length;
+    let searcW = [];
+
+    for (let key of Object.keys(word_data)) {
+        let k = key.toLowerCase();
+        for (let i = 0; i <= k.length; i++) {
+            let letter = k.slice(i, i + length);
+            if (letter === target) {
+                searcW.push(k);
+                break;
+            }
+        }
+    }
+
+    return searcW
+}
+
+function printWord(word_data) {
+    for (let [key, value] of Object.entries(word_data)) {
+        let container = "";
+        for (let [gender, rating] of Object.entries(value)) {
+            container += `${gender} [${rating}] `
+        }
+        console.log(key, container)
+    }
+}
+
+function main() {
+    load('data/full-data.txt').then(resolve => {
+        // console.log(resolve);
+
+        printWord(resolve)
+        // let searchResult = searchWords(resolve, "pand");
+        // console.log(searchResult)
+    })
+
+}
+
 //  {'okay': {'W': [0, 0, 0], 'M': [0, 1, 0]}, 'best': {'W': [0, 0, 1], 'M': [0, 0, 0]}}
-
-
+main()
 function testData() {
     let word_data = {};
     addDataForWord(word_data, "good", "M", 5.0);
