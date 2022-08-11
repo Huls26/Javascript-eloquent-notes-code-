@@ -29,7 +29,7 @@ function addDataForWord(word_data, word, gender, rating) {
     }
 }
 
-async function load(filename) {
+export async function load(filename) {
     let data = await (await fetch(filename)).text();
     let next = data.split("\r\n").slice(1);
     let word_data = readFile(next)
@@ -56,7 +56,7 @@ function readFile(file) {
     return word_data
 }
 
-function searchWords(word_data, target) {
+export function searchWords(word_data, target) {
     let t = target.toLowerCase();
     let length = t.length;
     let searcW = [];
@@ -86,18 +86,17 @@ function printWord(word_data) {
 }
 
 function main() {
-    load('data/full-data.txt').then(resolve => {
+    load('data/small-three.txt').then(resolve => {
         // console.log(resolve);
-
         printWord(resolve)
         // let searchResult = searchWords(resolve, "pand");
         // console.log(searchResult)
     })
-
 }
 
 //  {'okay': {'W': [0, 0, 0], 'M': [0, 1, 0]}, 'best': {'W': [0, 0, 1], 'M': [0, 0, 0]}}
-main()
+// main()
+
 function testData() {
     let word_data = {};
     addDataForWord(word_data, "good", "M", 5.0);
