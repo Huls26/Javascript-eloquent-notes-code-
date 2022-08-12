@@ -19,11 +19,18 @@ const TEXT_DX = 2
 const NUM_VERTICAL_DIVISIONS = 7
 const TICK_WIDTH = 15
 
+function plotWord(canvas, word_data, word) {
+    const genderData = word_data[word];
+    const max = Math.max(genderData["M"][2], genderData["W"][2]);
+
+    return [genderData, max]
+}
+
 async function main() {
-    let word_data = await load("data/small-one.txt");
+    let word_data = await load("data/small-three.txt");
     console.log(word_data)
 
-    let c = makeGui(0, WINDOW_WIDTH, WINDOW_HEIGHT, word_data, 0, searchWords)
+    let c = makeGui(0, WINDOW_WIDTH, WINDOW_HEIGHT, word_data, plotWord, searchWords)
 }
 main()
 
