@@ -57,27 +57,34 @@ function createLine(width, canvas, ctx, max) {
     let y = VERTICAL_MARGIN;
     let lineCenter = width / 2;
     let spaces = (WINDOW_HEIGHT - (VERTICAL_MARGIN * 2)) / (NUM_VERTICAL_DIVISIONS);
+    let vD = (max / NUM_VERTICAL_DIVISIONS).toFixed(2);
 
+    console.log(vD)
     for (let i = 0; i < NUM_VERTICAL_DIVISIONS + 1; i++) {
         ctx.beginPath();
         ctx.moveTo(x - lineCenter, y);
         ctx.lineTo(x + lineCenter, y);
         ctx.stroke();
-        createText(x, y, spaces, max, ctx)
+        max = createText(x, y, spaces, max, ctx, vD)
         y += spaces;
     }
 }
 
-function createText(x, y, spaces, max, ctx) {
+function createText(x, y, spaces, max, ctx, vD) {
     ctx.font = ".8em Verdana"
     ctx.textAlign = "end"
-    ctx.fillText(String(max), x - 13, y + 3)
+    ctx.fillText(String(Math.round(max)), x - 13, y + 3)
+    max = max - vD
+
+    return max
 }
 
 function plotWord(canvas, word_data, word, ctx) {
+    console.log(word)
     const genderData = word_data[word];
     const max = Math.max(genderData["M"][2], genderData["W"][2]);
 
+    console.log(genderData)
     for (let i = 0; i < 3; i++) {
         createLine(TICK_WIDTH, canvas, ctx, max);
     }
@@ -89,7 +96,7 @@ async function main() {
     let word_data = await load("data/full-data.txt");
     console.log(word_data)
 
-    let {ctx, canvas} = makeGui(0, WINDOW_WIDTH, WINDOW_HEIGHT, word_data, plotWord, searchWords)
+    let {ctx, canvas} = await makeGui(0, WINDOW_WIDTH, WINDOW_HEIGHT, word_data, plotWord, searchWords)
 
     drawFixedContent(canvas, ctx)
 }

@@ -86,13 +86,18 @@ function printWord(word_data) {
 }
 
 function main() {
-    load('data/small-three.txt').then(resolve => {
+    load('data/full-data.txt').then(resolve => {
         // console.log(resolve);
-        printWord(resolve)
+        // printWord(resolve)
+        // console.log(resolve["teacher"])
+        // console.log(resolve["learn"])
+        // console.log(resolve["great"])
         // let searchResult = searchWords(resolve, "pand");
         // console.log(searchResult)
     })
 }
+
+main()
 
 //  {'okay': {'W': [0, 0, 0], 'M': [0, 1, 0]}, 'best': {'W': [0, 0, 1], 'M': [0, 0, 0]}}
 // main()
