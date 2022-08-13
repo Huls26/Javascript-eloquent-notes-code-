@@ -92,87 +92,25 @@ function main() {
         // console.log(resolve["teacher"])
         // console.log(resolve["learn"])
         // console.log(resolve["great"])
-        // let searchResult = searchWords(resolve, "pand");
-        // console.log(searchResult)
+        let searchResult = searchWords(resolve, "learn");
+
+        // getFrequency(searchResult, resolve)
     })
 }
 
+// function getFrequency(result, word_data) {
+//     console.log(result)
+//     let total = 0;
+
+//     for (let i = 0; i < result.length; i++) {
+//         let count = word_data[result[i]];
+
+//         total += count["W"][2];
+//     }
+   
+//     console.log(total)
+// }
+
 main()
-
-//  {'okay': {'W': [0, 0, 0], 'M': [0, 1, 0]}, 'best': {'W': [0, 0, 1], 'M': [0, 0, 0]}}
-// main()
-
-function testData() {
-    let word_data = {};
-    addDataForWord(word_data, "good", "M", 5.0);
-    console.log(word_data)
-    // "{'good': {'W': [0, 0, 0], 'M': [0, 0, 1]}}"
-    
-    addDataForWord(word_data, "good", "W", 4.5);
-    console.log(word_data)
-    // {'good': {'W': [0, 0, 1], 'M': [0, 0, 1]}}
-
-    // addDataForWord(word_data, "good", "M", 5.0);
-    // console.log(word_data)
-    // {'good': {'W': [0, 0, 1], 'M': [0, 0, 2]}}
-
-    addDataForWord(word_data, "good", "W", 3.0);
-    console.log(word_data)
-    // {'good': {'W': [0, 1, 1], 'M': [0, 0, 1]}}
-
-    // addDataForWord(word_data, "good", "W", 3.5);
-    // console.log(word_data)
-    // // {'good': {'W': [0, 1, 1], 'M': [0, 0, 1]}}
-
-    // addDataForWord(word_data, "good", "M", 2.5);
-    // console.log(word_data)
-    // // {'good': {'W': [0, 1, 1], 'M': [0, 0, 1]}}
-
-    addDataForWord(word_data, "bad", "M", 1.5);
-    console.log(word_data)  
-    //{'good': {'W': [0, 1, 1], 'M': [0, 0, 1]}, 'bad': {'W': [0, 0, 0], 'M': [1, 0, 0]}}
-}
-
-// testData()
-
-function testRating() {
-    if ((convertRatingToIndex(1.0)) === 0) {
-        console.log("Passed")
-    } else {
-        console.log("failed", convertRatingToIndex(1.0))
-    }
-
-    if ((convertRatingToIndex(1.5)) === 0) {
-        console.log("Passed")
-    } else {
-        console.log("failed", convertRatingToIndex(1.0))
-    }
-
-    if ((convertRatingToIndex(3.0)) === 1) {
-        console.log("Passed")
-    } else {
-        console.log("failed", convertRatingToIndex(3.0))
-    }
-
-    if ((convertRatingToIndex(3.5)) === 1) {
-        console.log("Passed")
-    } else {
-        console.log("failed", convertRatingToIndex(3.5))
-    }
-
-    if ((convertRatingToIndex(4.0)) === 2) {
-        console.log("Passed")
-    } else {
-        console.log("failed", convertRatingToIndex(4.0))
-    }
-
-    if ((convertRatingToIndex(5.5)) === 2) {
-        console.log("Passed")
-    } else {
-        console.log("failed", convertRatingToIndex(5.5))
-    }
-}
-
-// testRating()
 
 // https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/biasbars-handout.html
