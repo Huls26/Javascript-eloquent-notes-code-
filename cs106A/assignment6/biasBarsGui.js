@@ -8,6 +8,9 @@ function makeGui(top, width, height, word_data, plot_word, search_words) {
     let canvas = document.querySelector("canvas");
     canvas.width = width;
     canvas.height = height;
+    // canvas.style.border = "solid 2px red";
+
+    let ctx = canvas.getContext("2d");
 
     // search
     let search = document.querySelector(".search");
@@ -17,7 +20,8 @@ function makeGui(top, width, height, word_data, plot_word, search_words) {
     // event
     wordPlot.addEventListener("keydown", event => {
         if (event.key === "Enter") {
-           handlePlot(wordPlot.value, 0, word_data, 0, plot_word)
+           let h = handlePlot(wordPlot.value, 0, word_data, 0, plot_word);
+           console.log(h)
         }
     })
 
@@ -31,6 +35,8 @@ function makeGui(top, width, height, word_data, plot_word, search_words) {
             }
         }
     })
+
+    return {ctx, canvas}
 }
 
 function handlePlot(entry, canvas, word_data, error_out, plot) {
@@ -46,17 +52,14 @@ function handlePlot(entry, canvas, word_data, error_out, plot) {
     if (!entry) {
         p.innerText = "Please enter a non-empty word."
     } else if (entry.split("").includes(" ")) {
-        console.log(entry)
         p.innerText = "The program cannot search for multiple words at a time. Please enter a single word with no spaces."
     } else if (!key.includes(entry)) {
         p.innerText = `${entry} is not contained in the word database.`
     } else {
-        console.log(plot(canvas, word_data, entry))
+        return plot(canvas, word_data, entry)
     }
 
-  
     wordPlot.appendChild(p)
-    
 }
 
 function handleSearch(search_entry, word_data, search) {
