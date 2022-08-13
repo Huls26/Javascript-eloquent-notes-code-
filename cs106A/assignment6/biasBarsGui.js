@@ -1,4 +1,5 @@
 "use strict"
+import {drawFixedContent} from "./biasBars.js"
 
 function makeGui(top, width, height, word_data, plot_word, search_words) {
     // plot
@@ -20,8 +21,9 @@ function makeGui(top, width, height, word_data, plot_word, search_words) {
     // event
     wordPlot.addEventListener("keydown", event => {
         if (event.key === "Enter") {
-           let h = handlePlot(wordPlot.value, 0, word_data, 0, plot_word);
-           console.log(h)
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawFixedContent(canvas, ctx);
+            handlePlot(wordPlot.value, canvas, word_data, 0, plot_word, ctx);
         }
     })
 
@@ -39,7 +41,7 @@ function makeGui(top, width, height, word_data, plot_word, search_words) {
     return {ctx, canvas}
 }
 
-function handlePlot(entry, canvas, word_data, error_out, plot) {
+function handlePlot(entry, canvas, word_data, error_out, plot, ctx) {
     let wordPlot = document.querySelector(".word-plot");
     let p = document.createElement("p");
     let key = Object.keys(word_data);
@@ -56,7 +58,7 @@ function handlePlot(entry, canvas, word_data, error_out, plot) {
     } else if (!key.includes(entry)) {
         p.innerText = `${entry} is not contained in the word database.`
     } else {
-        return plot(canvas, word_data, entry)
+        return plot(canvas, word_data, entry, ctx)
     }
 
     wordPlot.appendChild(p)

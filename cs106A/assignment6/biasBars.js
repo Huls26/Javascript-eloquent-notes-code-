@@ -21,10 +21,10 @@ const TICK_WIDTH = 15
 
 function getCenteredXCoordinate(width, idx, ctx) {
     let l = width / 3;
-    let centerL = parseFloat((l / 2).toFixed(1));
+    // let centerL = parseFloat((l / 2).toFixed(1));
     let x = (l / 2) + LEFT_MARGIN
-    let y = VERTICAL_MARGIN;
-    let height = 600 - VERTICAL_MARGIN;
+    // let y = VERTICAL_MARGIN;
+    // let height = 600 - VERTICAL_MARGIN;
     let container = [];
 
     for (let i = 0; i < 3; i++) {
@@ -39,29 +39,54 @@ function getCenteredXCoordinate(width, idx, ctx) {
     return container[idx]
 }
 
-function drawFixedContent(canvas, ctx) {
+export function drawFixedContent(canvas, ctx) {
     let width = canvas.width - LEFT_MARGIN - RIGHT_MARGIN;
-    let height = canvas.height - (VERTICAL_MARGIN *2);
+    let height = canvas.height - (VERTICAL_MARGIN * 2);
 
     for (let i = 0; i < 3; i++) {
-        ctx.strokeRect(60, VERTICAL_MARGIN, width, height);
+        ctx.strokeRect(LEFT_MARGIN, VERTICAL_MARGIN, width, height);
         let x = getCenteredXCoordinate(width, i, ctx);
         ctx.font = ".8em Verdana"
         ctx.textAlign = "center"
         ctx.fillText(LABELS[i], x, height + VERTICAL_MARGIN + LABEL_OFFSET + 9)
-        
+    } 
+}
+
+function createLine(width, canvas, ctx, max) {
+    let x = LEFT_MARGIN;
+    let y = VERTICAL_MARGIN;
+    let lineCenter = width / 2;
+    let spaces = (WINDOW_HEIGHT - (VERTICAL_MARGIN * 2)) / (NUM_VERTICAL_DIVISIONS);
+
+    for (let i = 0; i < NUM_VERTICAL_DIVISIONS + 1; i++) {
+        ctx.beginPath();
+        ctx.moveTo(x - lineCenter, y);
+        ctx.lineTo(x + lineCenter, y);
+        ctx.stroke();
+        createText(x, y, spaces, max, ctx)
+        y += spaces;
     }
 }
 
-function plotWord(canvas, word_data, word) {
+function createText(x, y, spaces, max, ctx) {
+    ctx.font = ".8em Verdana"
+    ctx.textAlign = "end"
+    ctx.fillText(String(max), x - 13, y + 3)
+}
+
+function plotWord(canvas, word_data, word, ctx) {
     const genderData = word_data[word];
     const max = Math.max(genderData["M"][2], genderData["W"][2]);
 
+    for (let i = 0; i < 3; i++) {
+        createLine(TICK_WIDTH, canvas, ctx, max);
+    }
+    
     return [word, genderData, max]
 }
 
 async function main() {
-    let word_data = await load("data/small-three.txt");
+    let word_data = await load("data/full-data.txt");
     console.log(word_data)
 
     let {ctx, canvas} = makeGui(0, WINDOW_WIDTH, WINDOW_HEIGHT, word_data, plotWord, searchWords)
