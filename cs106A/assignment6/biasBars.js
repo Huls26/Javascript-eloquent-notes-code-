@@ -32,7 +32,6 @@ function getCenteredXCoordinate(width, idx, ctx) {
 
     for (let i = 0; i < 3; i++) {
         container.push(parseFloat(x.toFixed(1)));
-
         // line label
         // ctx.beginPath();
         // ctx.moveTo(x, y);
