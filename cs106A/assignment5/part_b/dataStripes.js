@@ -23,11 +23,16 @@ function drawStripes(width, height, fracs, title) {
 
     // draw rectangle
     for (let i = 0; i < numberOfFracs; i++) {
-        let red = BASE + parseFloat(DELTA * fracs[i])
-        ctx.fillStyle = `rgb(${red}, ${BASE}, ${BASE})`
+        let red = BASE + parseFloat(DELTA * fracs[i]);
+        let blue = BASE - parseFloat(DELTA * fracs[i]);
+        ctx.fillStyle = `rgb(${red}, ${BASE}, ${blue})`
         ctx.fillRect(x, y, Math.ceil(widthOfRect), height)
         x += parseFloat(widthOfRect);
     }
+
+    ctx.fillStyle = "white";
+    ctx.font = "2em Times New Roman"
+    ctx.fillText(title, 10, 30);
 }
 
 async function readFracs(filename) {
@@ -54,6 +59,17 @@ function main() {
     let width = 800
     let height = 400
 
+    function callStripe() {
+        let dataFile = readFracs("../dataFile/data-climate.txt");
+        dataFile.then(resolve => {
+            let fracs = resolve;
+            const title = fracs.shift();
+    
+            drawStripes(width, height, fracs, title);
+        })
+    }
+    
+    callStripe()
     window.addEventListener("click", event => {
         let w = document.getElementById("width");
         let h = document.getElementById("height");
@@ -64,16 +80,10 @@ function main() {
         width = wValue;
         height = hValue;
 
-        let dataFile = readFracs("../dataFile/data-test.txt");
-        dataFile.then(resolve => {
-            let fracs = resolve;
-            const title = fracs.shift();
-    
-            drawStripes(width, height, fracs, title);
-        })
+        if (width && height) {
+            callStripe()
+        }  
     })
-
- 
 }   
 
 main()
