@@ -12,7 +12,7 @@ function drawStripes(width, height, fracs, title) {
     canvas.style.border = "dashed black 2px";
     document.body.style.display = "flex";
     document.body.style.justifyContent = "center"
-    canvas.style.marginTop = "4em"
+    canvas.style.marginTop = "1em"
   
     let ctx = canvas.getContext("2d");
 
@@ -21,6 +21,7 @@ function drawStripes(width, height, fracs, title) {
     let x = 0;
     let y = 0;
 
+    // draw rectangle
     for (let i = 0; i < numberOfFracs; i++) {
         let red = BASE + parseFloat(DELTA * fracs[i])
         ctx.fillStyle = `rgb(${red}, ${BASE}, ${BASE})`
@@ -50,16 +51,29 @@ async function readFracs(filename) {
 
 
 function main() {
-    const width = 800
-    const height = 400
+    let width = 800
+    let height = 400
 
-    let dataFile = readFracs("../dataFile/data-test.txt");
-    dataFile.then(resolve => {
-        let fracs = resolve;
-        const title = fracs.shift();
+    window.addEventListener("click", event => {
+        let w = document.getElementById("width");
+        let h = document.getElementById("height");
 
-        drawStripes(width, height, fracs, title);
+        const wValue = Number(w.value);
+        const hValue = Number(h.value);
+        
+        width = wValue;
+        height = hValue;
+
+        let dataFile = readFracs("../dataFile/data-test.txt");
+        dataFile.then(resolve => {
+            let fracs = resolve;
+            const title = fracs.shift();
+    
+            drawStripes(width, height, fracs, title);
+        })
     })
+
+ 
 }   
 
 main()
