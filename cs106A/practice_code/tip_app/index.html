@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip App</title>
+    <script defer src="../../../cs106A/practice_code/tip_app/tipComputation.js"></script>
+</head>
+<body>
+    <div class="widget">
+        <header class="header">
+            <label for="sub-total">Meal subtotal: $</label>
+            <input type="text" name="total" id="sub-total">
+
+            <div class="radio-btn">
+                <input type="radio" name="tip" value=".15" id="tip-15">
+                <label for="15%">15%</label>
+
+                <input type="radio" name="tip" value=".18" id="tip-18">
+                <label for="18%">18%</label>
+            </div>
+
+            <button class="btn">Calculate Tip!</button>
+        </header>
+
+        <p class="tip">$0.00</p>
+    </div>
+</body>
+</html>
