@@ -20,3 +20,5 @@ console.log(common(['a', 'b', 'c'], ['x', 'y', 'z']))
 // ([])
 console.log(common(['a', 'a', 'b'], ['a', 'a', 'x']))
 // ['a']
+
+// => https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1226/handouts/bajillion.html
